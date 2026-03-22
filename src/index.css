@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #002E3E;
+  --color-accent: #FDC003;
+  --color-accent-light: #FFD247;
+  --color-accent-dark: #6C5000;
+  --color-gray-medium: #474747;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-slate-900;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
