@@ -11,13 +11,13 @@ const DetailSidebar = ({ car }) => {
     model,
     year,
     location,
-    rentalPrice,
+    pricePerDay,
     salePrice,
     type
   } = car;
 
   const isRental = type === 'rental';
-  const price = isRental ? rentalPrice : salePrice;
+  const price = isRental ? pricePerDay : salePrice;
   const formattedPrice = price?.toLocaleString();
 
   return (

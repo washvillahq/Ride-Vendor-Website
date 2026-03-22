@@ -24,7 +24,7 @@ const DetailedCarCard = ({ car, className }) => {
     type,
     category,
     location,
-    rentalPrice,
+    pricePerDay,
     salePrice,
     mileage,
     transmission,
@@ -36,7 +36,7 @@ const DetailedCarCard = ({ car, className }) => {
   const primaryImage = images.find(img => img.isPrimary)?.url || images[0]?.url || 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800';
 
   const isRental = type === 'rental';
-  const price = isRental ? rentalPrice : salePrice;
+  const price = isRental ? pricePerDay : salePrice;
   const formattedPrice = price?.toLocaleString();
 
   return (
@@ -92,7 +92,7 @@ const DetailedCarCard = ({ car, className }) => {
           
           <div className="flex items-center gap-3">
              <Link 
-               to={`/cars/${_id}`} 
+               to={isRental ? `/car-hire/${_id}` : `/cars/${_id}`} 
                className="text-[11px] font-black text-slate-900 uppercase tracking-widest border-b-2 border-accent pb-0.5 hover:text-accent transition-colors"
              >
                View Details

@@ -36,27 +36,32 @@ const Hero = () => (
       {/* Service Icons */}
       <div className="grid grid-cols-3 md:grid-cols-6 gap-8 pt-4">
         {[
-          { icon: Car, label: "Rentals & Services" },
-          { icon: Tag, label: "Car Sales" },
-          { icon: Wrench, label: "Accessories & Spare Parts" },
-          { icon: Droplets, label: "Car Washing" },
-          { icon: Truck, label: "Vehicle Consignment" },
-          { icon: ShieldCheck, label: "Vehicle Tracking & Security" },
+          { icon: Car, label: "Rentals & Services", path: "/car-hire" },
+          { icon: Tag, label: "Car Sales", path: "/car-sales" },
+          { icon: Wrench, label: "Accessories & Spare Parts", path: "/services/parts" },
+          { icon: Droplets, label: "Car Washing", path: "/services/washing" },
+          { icon: Truck, label: "Vehicle Consignment", path: "/services/consignment" },
+          { icon: ShieldCheck, label: "Vehicle Tracking & Security", path: "/services/tracking" },
         ].map((service, i) => (
-          <div key={i} className="flex flex-col items-center gap-3 group cursor-pointer animate-in fade-in zoom-in duration-500" style={{ animationDelay: `${i * 100}ms` }}>
+          <Link 
+            key={i} 
+            to={service.path}
+            className="flex flex-col items-center gap-3 group cursor-pointer animate-in fade-in zoom-in duration-500" 
+            style={{ animationDelay: `${i * 100}ms` }}
+          >
             <div className="h-12 w-12 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 group-hover:bg-accent group-hover:scale-110 transition-all duration-300">
                <service.icon className="w-5 h-5 text-slate-700 group-hover:text-primary" />
             </div>
             <span className="text-[10px] font-bold text-slate-600 group-hover:text-slate-900 transition-colors uppercase tracking-widest text-center leading-tight">
               {service.label}
             </span>
-          </div>
+          </Link>
         ))}
       </div>
 
       {/* Hero CTA Boxes */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto pt-8">
-        <div className="relative overflow-hidden bg-primary text-white p-8 rounded-[2rem] text-left group cursor-pointer hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500">
+        <Link to="/car-hire" className="relative overflow-hidden bg-primary text-white p-8 rounded-[2rem] text-left group cursor-pointer hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500">
           <div className="relative z-10 space-y-4">
             <h3 className="text-2xl font-black">Book a Car Now</h3>
             <p className="text-slate-400 text-xs font-medium max-w-[200px]">Clean vehicles. Fast bookings. Reliable service.</p>
@@ -64,9 +69,9 @@ const Hero = () => (
           <div className="absolute right-[-20px] bottom-[-20px] opacity-10 group-hover:opacity-20 transition-opacity rotate-[-15deg] group-hover:rotate-0 duration-500">
              <Car size={160} strokeWidth={1} />
           </div>
-        </div>
+        </Link>
 
-        <div className="relative overflow-hidden bg-accent text-slate-900 p-8 rounded-[2rem] text-left group cursor-pointer hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500">
+        <Link to="/car-sales" className="relative overflow-hidden bg-accent text-slate-900 p-8 rounded-[2rem] text-left group cursor-pointer hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500">
           <div className="relative z-10 space-y-4">
             <h3 className="text-2xl font-black">List Your Car For Sale</h3>
             <p className="text-slate-800 text-xs font-medium max-w-[200px]">Reach verified buyers and sell faster in Ilorin.</p>
@@ -74,13 +79,15 @@ const Hero = () => (
           <div className="absolute right-[-20px] bottom-[-20px] opacity-10 group-hover:opacity-20 transition-opacity rotate-[-15deg] group-hover:rotate-0 duration-500">
              <ShieldCheck size={160} strokeWidth={1} />
           </div>
-        </div>
+        </Link>
       </div>
       
       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] pt-4">Trusted by individuals and local businesses since 2012.</p>
     </div>
   </section>
 );
+
+import RentalCarCard from '../features/cars/components/RentalCarCard';
 
 const FeatureSection = ({ type = 'rental', title }) => {
   const { data, isLoading } = useCars({ type, limit: 4 });
@@ -104,7 +111,11 @@ const FeatureSection = ({ type = 'rental', title }) => {
           {isLoading ? (
             Array(4).fill(0).map((_, i) => <CarCardSkeleton key={i} />)
           ) : cars.length > 0 ? (
-            cars.map(car => <CarCard key={car._id} car={car} />)
+            cars.map(car => (
+              type === 'rental' 
+                ? <RentalCarCard key={car._id} car={car} />
+                : <CarCard key={car._id} car={car} />
+            ))
           ) : (
             <div className="col-span-full text-center py-20 bg-slate-50 rounded-[2.5rem] border-2 border-dashed border-slate-200">
                <p className="text-slate-400 font-bold uppercase tracking-widest">No {type} cars available right now.</p>

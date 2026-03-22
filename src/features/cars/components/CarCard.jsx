@@ -20,7 +20,7 @@ const CarCard = ({ car, className }) => {
     type,
     category,
     location,
-    rentalPrice,
+    pricePerDay,
     salePrice,
     images = [],
     status
@@ -29,7 +29,7 @@ const CarCard = ({ car, className }) => {
   const primaryImage = images.find(img => img.isPrimary)?.url || images[0]?.url || 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800';
 
   const isRental = type === 'rental';
-  const price = isRental ? rentalPrice : salePrice;
+  const price = isRental ? pricePerDay : salePrice;
   const formattedPrice = price?.toLocaleString();
 
   return (
@@ -81,14 +81,14 @@ const CarCard = ({ car, className }) => {
           </span>
           <div className="flex items-baseline gap-1">
             <span className="text-2xl font-black text-slate-900 tracking-tighter">
-              ${formattedPrice}
+              ₦{formattedPrice}
             </span>
             {isRental && <span className="text-sm font-bold text-slate-500 tracking-tight">/ Day</span>}
           </div>
         </div>
 
         <div className="pt-2 flex items-center gap-3">
-          <Link to={`/cars/${_id}`} className="flex-1">
+          <Link to={isRental ? `/car-hire/${_id}` : `/cars/${_id}`} className="flex-1">
             <Button className="w-full bg-primary hover:bg-slate-900 text-white rounded-xl py-6 font-bold flex items-center justify-center gap-2 transition-all active:scale-95">
               Book Now
             </Button>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useCars } from '../features/cars/hooks';
 import CarCard from '../features/cars/components/CarCard';
+import RentalCarCard from '../features/cars/components/RentalCarCard';
 import CarCardSkeleton from '../features/cars/components/CarCardSkeleton';
 import { PageHeader } from '../components/shared/Headers';
 import Input from '../components/ui/Input';
@@ -143,7 +144,9 @@ const CarsList = () => {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {cars.map(car => (
-              <CarCard key={car._id} car={car} />
+              car.type === 'rental' 
+                ? <RentalCarCard key={car._id} car={car} />
+                : <CarCard key={car._id} car={car} />
             ))}
           </div>
           <div className="mt-12 flex justify-center">

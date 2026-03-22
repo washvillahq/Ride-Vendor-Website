@@ -29,6 +29,7 @@ const NotFound = lazy(() => import('../pages/NotFound'));
 const Unauthorized = lazy(() => import('../pages/Unauthorized'));
 
 const CarDetails = lazy(() => import('../pages/CarDetails'));
+const CarRentalDetails = lazy(() => import('../pages/CarRentalDetails'));
 const DashboardHome = lazy(() => import('../pages/dashboard/DashboardHome'));
 const MyBookings = lazy(() => import('../pages/dashboard/MyBookings'));
 const MyOrders = lazy(() => import('../pages/dashboard/MyOrders'));
@@ -50,6 +51,7 @@ export const router = createBrowserRouter([
       { path: 'car-hire', element: <Suspense fallback={<PageLoading />}><CarRentals /></Suspense> },
       { path: 'cars', element: <Suspense fallback={<PageLoading />}><CarsList /></Suspense> },
       { path: 'cars/:carId', element: <Suspense fallback={<PageLoading />}><CarDetails /></Suspense> },
+      { path: 'car-hire/:carId', element: <Suspense fallback={<PageLoading />}><CarRentalDetails /></Suspense> },
     ],
   },
   {
