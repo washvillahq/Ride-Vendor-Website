@@ -1,10 +1,10 @@
 import React from 'react';
-import { useAdminStats } from '../../features/admin/hooks';
-import { PageHeader } from '../../components/shared/Headers';
+import { useAdminStats } from '../features/admin/hooks';
+import { PageHeader } from '../components/shared/Headers';
 import { Card, CardContent } from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import Skeleton from '../components/ui/Skeleton';
-import ErrorState from '../../components/feedback/ErrorState';
+import ErrorState from '../components/feedback/ErrorState';
 
 const StatCard = ({ title, value, icon, color }) => (
   <Card className="overflow-hidden border-slate-200">
