@@ -16,6 +16,8 @@ import {
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+dayjs.extend(isSameOrAfter);
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 import Textarea from '../../../components/ui/Textarea';
@@ -232,7 +234,7 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
                      mode="range"
                      selected={dateRange}
                      onSelect={setDateRange}
-                     disabled={{ before: new Date() }}
+                     disabled={{ before: dayjs().startOf('day').toDate() }}
                      numberOfMonths={1}
                      className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100"
                      styles={{

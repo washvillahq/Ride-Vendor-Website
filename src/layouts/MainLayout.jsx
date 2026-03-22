@@ -40,6 +40,7 @@ const Navbar = () => {
 
   const firstLetter = user?.name?.charAt(0) || 'U';
   const firstName = user?.name?.split(' ')[0] || 'User';
+  const dashboardPath = user?.role === 'admin' ? '/admin' : '/dashboard';
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -73,7 +74,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-2">
             {isAuthenticated ? (
               <div className="flex items-center gap-4 bg-slate-50 p-1.5 pr-4 rounded-full border border-slate-100 shadow-sm">
-                <Link to="/dashboard" className="flex items-center gap-2 group">
+                <Link to={dashboardPath} className="flex items-center gap-2 group">
                   <div className="h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center font-black text-xs shadow-md group-hover:bg-slate-900 transition-colors">
                     {firstLetter}
                   </div>
@@ -107,7 +108,7 @@ const Navbar = () => {
 
           {/* Mobile Auth State (Just Icon if logged in) */}
           {isAuthenticated && (
-            <Link to="/dashboard" className="md:hidden flex items-center justify-center h-10 w-10 rounded-full bg-primary text-white shadow-md active:scale-90 transition-all font-black text-xs">
+            <Link to={dashboardPath} className="md:hidden flex items-center justify-center h-10 w-10 rounded-full bg-primary text-white shadow-md active:scale-90 transition-all font-black text-xs">
               {firstLetter}
             </Link>
           )}
@@ -144,7 +145,7 @@ const Navbar = () => {
               {isAuthenticated ? (
                 <>
                   <Link
-                    to="/dashboard"
+                    to={dashboardPath}
                     onClick={() => setIsMenuOpen(false)}
                     className="flex items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100"
                   >

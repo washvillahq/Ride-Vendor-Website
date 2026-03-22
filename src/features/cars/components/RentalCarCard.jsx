@@ -15,7 +15,7 @@ const RentalCarCard = ({ car, className }) => {
 
   const {
     _id,
-    name,
+    title,
     brand,
     model,
     year,
@@ -48,7 +48,7 @@ const RentalCarCard = ({ car, className }) => {
       <div className="p-8 space-y-8">
         <div className="space-y-3">
           <h3 className="font-black text-2xl text-slate-900 leading-tight">
-            {name || `${brand} ${model}`}
+            {title || `${brand} ${model}`}
           </h3>
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-black text-[#8A6D3B] uppercase tracking-widest opacity-80">Price</span>

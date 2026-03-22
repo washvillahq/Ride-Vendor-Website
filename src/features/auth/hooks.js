@@ -17,7 +17,11 @@ export const useLogin = () => {
       setAuth(user, token);
       queryClient.setQueryData(QUERY_KEYS.auth.me(), data);
       toast.success(`Welcome back, ${user.name}!`);
-      navigate('/dashboard');
+      if (user.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
     },
     // Error handled globally in react-query.js
   });

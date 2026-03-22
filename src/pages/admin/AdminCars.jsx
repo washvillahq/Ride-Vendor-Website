@@ -16,7 +16,7 @@ import Badge from '../../components/ui/Badge';
 import StatusBadge from '../../components/ui/StatusBadge';
 
 const carSchema = z.object({
-  name: z.string().min(2, 'Name is required'),
+  title: z.string().min(2, 'Title is required'),
   brand: z.string().min(1, 'Brand is required'),
   model: z.string().min(1, 'Model is required'),
   year: z.string().min(4, 'Valid year required'),
@@ -33,16 +33,16 @@ const carSchema = z.object({
   seatingCapacity: z.string().optional(),
   doors: z.string().optional(),
   suitcases: z.string().optional(),
-  rentalPrice: z.string().optional(),
+  pricePerDay: z.string().optional(),
   salePrice: z.string().optional(),
   imageUrl: z.string().url('Invalid image URL'),
 }).refine((data) => {
-  if (data.type === 'rental' && !data.rentalPrice) return false;
+  if (data.type === 'rental' && !data.pricePerDay) return false;
   if (data.type === 'sale' && !data.salePrice) return false;
   return true;
 }, {
   message: 'Price is required for the selected type',
-  path: ['rentalPrice'], // Simplification: path can only be one
+  path: ['pricePerDay'], // Simplification: path can only be one
 });
 
 const AdminCars = () => {
@@ -70,8 +70,8 @@ const AdminCars = () => {
       // API expects image URL in an array of objects
       const payload = {
         ...data,
-        images: [{ url: data.imageUrl, public_id: 'initial_upload' }],
-        rentalPrice: data.rentalPrice ? Number(data.rentalPrice) : undefined,
+        images: [{ url: data.imageUrl, public_id: 'initial_upload', isPrimary: true }],
+        pricePerDay: data.pricePerDay ? Number(data.pricePerDay) : undefined,
         salePrice: data.salePrice ? Number(data.salePrice) : undefined,
         year: Number(data.year),
         mileage: data.mileage ? Number(data.mileage) : undefined,
@@ -124,10 +124,10 @@ const AdminCars = () => {
                   <TableCell>
                     <div className="flex items-center gap-4">
                       <div className="h-12 w-16 rounded-xl bg-slate-100 overflow-hidden border shrink-0">
-                        <img src={car.images[0]?.url} className="h-full w-full object-cover" alt={car.name} />
+                        <img src={car.images[0]?.url} className="h-full w-full object-cover" alt={car.title} />
                       </div>
                       <div>
-                         <p className="font-black text-slate-900 leading-tight">{car.name}</p>
+                         <p className="font-black text-slate-900 leading-tight">{car.title}</p>
                          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">{car.brand} · {car.category}</p>
                       </div>
                     </div>
@@ -138,7 +138,7 @@ const AdminCars = () => {
                     </Badge>
                   </TableCell>
                   <TableCell className="font-bold">
-                    ${car.type === 'rental' ? `${car.rentalPrice}/day` : car.salePrice?.toLocaleString()}
+                    ${car.type === 'rental' ? `${car.pricePerDay}/day` : car.salePrice?.toLocaleString()}
                   </TableCell>
                   <TableCell className="text-sm font-medium text-slate-600">{car.location}</TableCell>
                   <TableCell><StatusBadge status={car.status} /></TableCell>
@@ -166,7 +166,7 @@ const AdminCars = () => {
       >
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pt-4 px-1">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-             <Input label="Vehicle Name" placeholder="e.g. Tesla Model S Plaid" {...register('name')} error={errors.name} />
+             <Input label="Vehicle Name" placeholder="e.g. Tesla Model S Plaid" {...register('title')} error={errors.title} />
              <div className="grid grid-cols-2 gap-4">
                 <Input label="Brand" placeholder="e.g. Tesla" {...register('brand')} error={errors.brand} />
                 <Input label="Model" placeholder="e.g. Model S" {...register('model')} error={errors.model} />
@@ -235,7 +235,7 @@ const AdminCars = () => {
                 error={errors.type}
              />
              {carType === 'rental' ? (
-                <Input label="Rental Price (per day)" icon={<span className="text-slate-400">$</span>} type="number" {...register('rentalPrice')} error={errors.rentalPrice} />
+                <Input label="Rental Price (per day)" icon={<span className="text-slate-400">$</span>} type="number" {...register('pricePerDay')} error={errors.pricePerDay} />
              ) : (
                 <Input label="Sale Price (Total)" icon={<span className="text-slate-400">$</span>} type="number" {...register('salePrice')} error={errors.salePrice} />
              )}

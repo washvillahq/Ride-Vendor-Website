@@ -15,7 +15,7 @@ const RentalDetailSidebar = ({ car, onBookNow }) => {
   if (!car) return null;
 
   const {
-    name,
+    title,
     brand,
     model,
     year,
@@ -36,7 +36,7 @@ const RentalDetailSidebar = ({ car, onBookNow }) => {
       <div className="space-y-6 bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm">
         <div className="space-y-2">
           <h1 className="text-3xl font-black text-slate-900 leading-tight">
-            {year} {name || `${brand} ${model}`}
+            {year} {title || `${brand} ${model}`}
           </h1>
           <div className="flex items-center gap-2 text-slate-400">
             <MapPin className="w-4 h-4" />

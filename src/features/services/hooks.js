@@ -8,10 +8,10 @@ export const useServices = (category) => {
     queryFn: async () => {
       const response = await serviceApi.getServices();
       // Temporary frontend filtering if backend doesn't support it
-      if (category && response.data) {
+      if (category && response.data?.services) {
         return {
           ...response,
-          data: response.data.filter(s => !s.category || s.category === category)
+          data: response.data.services.filter(s => !s.applicableTo || s.applicableTo.includes(category))
         };
       }
       return response;

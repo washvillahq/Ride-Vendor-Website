@@ -63,7 +63,7 @@ const BookingWidget = ({ car }) => {
     
     if (days <= 0) return null;
 
-    const basePrice = days * car.rentalPrice;
+    const basePrice = days * car.pricePerDay;
     const servicesPrice = selectedServices.reduce((acc, serviceId) => {
       const service = services.find(s => s._id === serviceId);
       return acc + (service?.price || 0);
@@ -75,7 +75,7 @@ const BookingWidget = ({ car }) => {
       servicesPrice,
       total: basePrice + servicesPrice
     };
-  }, [watchedValues.startDate, watchedValues.endDate, selectedServices, services, car.rentalPrice]);
+  }, [watchedValues.startDate, watchedValues.endDate, selectedServices, services, car.pricePerDay]);
 
   // Auto-check availability when dates change
   useEffect(() => {
@@ -158,7 +158,7 @@ const BookingWidget = ({ car }) => {
         <div className="mb-6">
           <p className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-1">Rental Rate</p>
           <div className="flex items-baseline gap-1 focus-within:">
-            <span className="text-4xl font-black tracking-tighter">${car.rentalPrice}</span>
+            <span className="text-4xl font-black tracking-tighter">${car.pricePerDay}</span>
             <span className="text-slate-500 font-bold">/ day</span>
           </div>
         </div>
@@ -235,7 +235,7 @@ const BookingWidget = ({ car }) => {
                   <span>{priceSummary.days} days</span>
                 </div>
                 <div className="flex justify-between items-baseline">
-                  <span className="text-sm text-slate-400 font-medium">${car.rentalPrice} / day</span>
+                  <span className="text-sm text-slate-400 font-medium">${car.pricePerDay} / day</span>
                   <span className="font-black text-lg">${priceSummary.basePrice.toLocaleString()}</span>
                 </div>
               </div>

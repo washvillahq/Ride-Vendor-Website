@@ -40,7 +40,7 @@ const Unauthorized = () => {
         </Card>
 
         <div className="flex flex-col gap-3">
-          <Link to="/dashboard">
+          <Link to={useAuthStore.getState().user?.role === 'admin' ? '/admin' : '/dashboard'}>
             <Button className="w-full h-14 rounded-2xl font-black bg-white text-black hover:bg-slate-200">Go to Dashboard</Button>
           </Link>
           <Link to="/">
