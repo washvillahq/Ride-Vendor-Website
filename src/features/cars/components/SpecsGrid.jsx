@@ -2,12 +2,15 @@ import React from 'react';
 
 const SpecsGrid = ({ specs = {} }) => {
   const specItems = [
-    { label: 'Mileage', value: specs.mileage ? `${specs.mileage.toLocaleString()} km` : '42,000 km' },
-    { label: 'Engine', value: specs.engine || '3.5L V6' },
-    { label: 'Transmission', value: specs.transmission || 'Automatic' },
-    { label: 'Fuel Type', value: specs.fuelType || 'Petrol' },
-    { label: 'Color', value: specs.color || 'Graphite Gray' },
-    { label: 'Condition', value: specs.condition || 'Tokunbo' },
+    { label: 'Mileage', value: specs.mileage ? `${specs.mileage.toLocaleString()} km` : 'Not specified' },
+    { label: 'Engine', value: specs.engine || 'Not specified' },
+    { label: 'Transmission', value: specs.transmission || 'Not specified' },
+    { label: 'Fuel Type', value: specs.fuelType || 'Not specified' },
+    { label: 'Color', value: specs.color || 'Not specified' },
+    { label: 'Condition', value: specs.condition || 'Not specified' },
+    { label: 'Seating', value: specs.seatingCapacity ? `${specs.seatingCapacity} Seats` : 'Not specified' },
+    { label: 'Doors', value: specs.doors ? `${specs.doors} Doors` : 'Not specified' },
+    { label: 'Suitcases', value: specs.suitcases ? `${specs.suitcases} Bags` : '0' },
   ];
 
   return (

@@ -1,6 +1,5 @@
 import React from 'react';
-import { useMyBookings } from '../../features/bookings/hooks';
-import { useUpdateBookingStatus } from '../../features/admin/hooks';
+import { useAdminBookings, useUpdateBookingStatus } from '../../features/admin/hooks';
 import { PageHeader } from '../../components/shared/Headers';
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '../../components/ui/Table';
 import StatusBadge from '../../components/ui/StatusBadge';
@@ -8,12 +7,10 @@ import Select from '../../components/ui/Select';
 import dayjs from 'dayjs';
 
 const AdminBookings = () => {
-  // Using useMyBookings but on admin it should ideally use a generic fetchAll if backend supports it.
-  // In our requirements, we reuse the pattern.
-  const { data, isLoading, refetch } = useMyBookings();
+  const { data, isLoading, refetch } = useAdminBookings();
   const { mutateAsync: updateStatus, isLoading: isUpdating } = useUpdateBookingStatus();
   
-  const bookings = data?.data?.bookings || [];
+  const bookings = data?.data?.data || data?.data?.bookings || [];
 
   const handleStatusChange = async (id, status) => {
     await updateStatus({ id, status });

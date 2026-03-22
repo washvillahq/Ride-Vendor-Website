@@ -6,6 +6,7 @@ import SpecsGrid from '../features/cars/components/SpecsGrid';
 import RentalDetailSidebar from '../features/cars/components/RentalDetailSidebar';
 import RentalCarCard from '../features/cars/components/RentalCarCard';
 import CarCardSkeleton from '../features/cars/components/CarCardSkeleton';
+import HireCheckoutModal from '../features/cars/components/HireCheckoutModal';
 import Breadcrumbs from '../components/shared/Breadcrumbs';
 import Skeleton from '../components/ui/Skeleton';
 import ErrorState from '../components/feedback/ErrorState';
@@ -29,6 +30,7 @@ const CarRentalDetails = () => {
   const { carId } = useParams();
   const { data, isLoading, isError, refetch } = useCar(carId);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   
   const car = data?.data;
   
@@ -119,7 +121,7 @@ const CarRentalDetails = () => {
 
           {/* Right Column (Sidebar) */}
           <div className="lg:col-span-4">
-             <RentalDetailSidebar car={car} />
+             <RentalDetailSidebar car={car} onBookNow={() => setIsCheckoutOpen(true)} />
           </div>
         </div>
 
@@ -144,6 +146,15 @@ const CarRentalDetails = () => {
            )}
          </div>
       </div>
+      
+      {/* Checkout Modal */}
+      {car && (
+        <HireCheckoutModal 
+          isOpen={isCheckoutOpen} 
+          onClose={() => setIsCheckoutOpen(false)} 
+          car={car} 
+        />
+      )}
     </div>
   );
 };

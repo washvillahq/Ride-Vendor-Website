@@ -17,6 +17,20 @@ export const useAdminUsers = () => {
   });
 };
 
+export const useAdminBookings = (params = {}) => {
+  return useQuery({
+    queryKey: [...QUERY_KEYS.admin.base, 'bookings', params],
+    queryFn: () => adminApi.getAdminBookings(params),
+  });
+};
+
+export const useAdminOrders = (params = {}) => {
+  return useQuery({
+    queryKey: [...QUERY_KEYS.admin.base, 'orders', params],
+    queryFn: () => adminApi.getAdminOrders(params),
+  });
+};
+
 export const useBlockUser = () => {
   const queryClient = useQueryClient();
   return useMutation({

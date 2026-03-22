@@ -1,6 +1,5 @@
 import React from 'react';
-import { useMyOrders } from '../../features/orders/hooks';
-import { useUpdateOrderStatus } from '../../features/admin/hooks';
+import { useAdminOrders, useUpdateOrderStatus } from '../../features/admin/hooks';
 import { PageHeader } from '../../components/shared/Headers';
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '../../components/ui/Table';
 import StatusBadge from '../../components/ui/StatusBadge';
@@ -8,10 +7,10 @@ import Select from '../../components/ui/Select';
 import dayjs from 'dayjs';
 
 const AdminOrders = () => {
-  const { data, isLoading, refetch } = useMyOrders();
+  const { data, isLoading, refetch } = useAdminOrders();
   const { mutateAsync: updateStatus, isLoading: isUpdating } = useUpdateOrderStatus();
   
-  const orders = data?.data?.orders || [];
+  const orders = data?.data?.data || data?.data?.orders || [];
 
   const handleStatusChange = async (id, status) => {
     await updateStatus({ id, status });

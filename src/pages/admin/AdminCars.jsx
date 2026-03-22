@@ -24,6 +24,15 @@ const carSchema = z.object({
   description: z.string().min(10, 'Description is too short'),
   type: z.enum(['rental', 'sale']),
   category: z.string().min(1, 'Category is required'),
+  mileage: z.string().optional(),
+  engine: z.string().optional(),
+  transmission: z.enum(['Automatic', 'Manual', 'CVT']).optional(),
+  fuelType: z.enum(['Petrol', 'Diesel', 'Hybrid', 'Electric', 'Gas']).optional(),
+  color: z.string().optional(),
+  condition: z.string().optional(),
+  seatingCapacity: z.string().optional(),
+  doors: z.string().optional(),
+  suitcases: z.string().optional(),
   rentalPrice: z.string().optional(),
   salePrice: z.string().optional(),
   imageUrl: z.string().url('Invalid image URL'),
@@ -65,6 +74,10 @@ const AdminCars = () => {
         rentalPrice: data.rentalPrice ? Number(data.rentalPrice) : undefined,
         salePrice: data.salePrice ? Number(data.salePrice) : undefined,
         year: Number(data.year),
+        mileage: data.mileage ? Number(data.mileage) : undefined,
+        seatingCapacity: data.seatingCapacity ? Number(data.seatingCapacity) : undefined,
+        doors: data.doors ? Number(data.doors) : undefined,
+        suitcases: data.suitcases ? Number(data.suitcases) : undefined,
       };
       delete payload.imageUrl;
       
@@ -174,6 +187,41 @@ const AdminCars = () => {
                 error={errors.category}
              />
              <Input label="Location" placeholder="Lagos, Nigeria" {...register('location')} error={errors.location} />
+          </div>
+
+          <div className="space-y-4 pt-4 border-t border-slate-100">
+             <h3 className="text-sm font-black text-slate-900">Vehicle Specifications</h3>
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                 <Input label="Mileage (km)" type="number" placeholder="42000" {...register('mileage')} error={errors.mileage} />
+                 <Input label="Engine" placeholder="e.g. 3.5L V6" {...register('engine')} error={errors.engine} />
+                 <Select 
+                    label="Transmission"
+                    options={[
+                      { value: 'Automatic', label: 'Automatic' },
+                      { value: 'Manual', label: 'Manual' },
+                      { value: 'CVT', label: 'CVT' },
+                    ]}
+                    {...register('transmission')}
+                    error={errors.transmission}
+                 />
+                 <Select 
+                    label="Fuel Type"
+                    options={[
+                      { value: 'Petrol', label: 'Petrol' },
+                      { value: 'Diesel', label: 'Diesel' },
+                      { value: 'Hybrid', label: 'Hybrid' },
+                      { value: 'Electric', label: 'Electric' },
+                      { value: 'Gas', label: 'Gas' },
+                    ]}
+                    {...register('fuelType')}
+                    error={errors.fuelType}
+                 />
+                 <Input label="Color" placeholder="Graphite Gray" {...register('color')} error={errors.color} />
+                 <Input label="Condition" placeholder="Foreign Used" {...register('condition')} error={errors.condition} />
+                 <Input label="Seating Capacity" type="number" placeholder="5" {...register('seatingCapacity')} error={errors.seatingCapacity} />
+                 <Input label="Doors" type="number" placeholder="4" {...register('doors')} error={errors.doors} />
+                 <Input label="Suitcases" type="number" placeholder="2" {...register('suitcases')} error={errors.suitcases} />
+             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-slate-50 rounded-2xl border">

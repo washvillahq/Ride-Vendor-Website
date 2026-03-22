@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   MapPin, 
   MessageCircle, 
@@ -10,7 +11,7 @@ import {
 } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 
-const RentalDetailSidebar = ({ car }) => {
+const RentalDetailSidebar = ({ car, onBookNow }) => {
   if (!car) return null;
 
   const {
@@ -52,7 +53,10 @@ const RentalDetailSidebar = ({ car }) => {
         </div>
 
         <div className="space-y-3 pt-4">
-          <Button className="w-full bg-[#002D3A] hover:bg-[#001D26] text-white py-7 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg shadow-[#002D3A]/20">
+          <Button 
+            onClick={onBookNow}
+            className="w-full bg-[#002D3A] hover:bg-[#001D26] text-white py-7 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg shadow-[#002D3A]/20"
+          >
             Book This Car Now
           </Button>
           <Button variant="outline" className="w-full border-[#8A6D3B]/20 hover:bg-slate-50 text-[#8A6D3B] py-7 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all active:scale-95">
