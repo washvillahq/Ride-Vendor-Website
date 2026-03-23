@@ -1,73 +1,173 @@
 import React from 'react';
 import { useMyBookings } from '../../features/bookings/hooks';
-import { PageHeader } from '../../components/shared/Headers';
 import StatusBadge from '../../components/ui/StatusBadge';
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '../../components/ui/Table';
 import EmptyState from '../../components/ui/EmptyState';
 import ErrorState from '../../components/feedback/ErrorState';
 import dayjs from 'dayjs';
+import { 
+  Car, 
+  Calendar, 
+  MapPin, 
+  Clock, 
+  MoreVertical, 
+  FileText, 
+  MessageCircle,
+  ArrowRight,
+  CreditCard
+} from 'lucide-react';
+import { useReInitializePayment } from '../../features/payments/hooks';
+import { toast } from 'react-hot-toast';
+
+const BookingCard = ({ booking }) => {
+  const { mutate: reInitializePayment, isLoading: isReInitializing } = useReInitializePayment();
+
+  const handlePayment = () => {
+    reInitializePayment(
+      { type: 'booking', relatedId: booking._id },
+      {
+        onSuccess: (response) => {
+          if (response?.data?.authorization_url) {
+            window.location.href = response.data.authorization_url;
+          } else {
+            toast.error('Failed to get payment URL');
+          }
+        },
+        onError: (error) => {
+          toast.error(error.response?.data?.message || 'Failed to initialize payment');
+        },
+      }
+    );
+  };
+
+  return (
+    <div className="bg-white rounded-[2rem] border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group">
+      <div className="relative h-56 overflow-hidden">
+        {booking.car?.images?.[0]?.url ? (
+          <img src={booking.car.images[0].url} alt={booking.car.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+        ) : (
+          <div className="w-full h-full bg-slate-100 flex items-center justify-center">
+            <Car size={48} className="text-slate-300" />
+          </div>
+        )}
+        <div className="absolute top-4 left-4 flex gap-2">
+          <div className={`px-4 py-1.5 rounded-full backdrop-blur-md border text-[9px] font-black uppercase tracking-widest ${
+            booking.status === 'confirmed' ? 'bg-emerald-500/80 border-emerald-400/30 text-white' :
+            booking.status === 'active' ? 'bg-blue-500/80 border-blue-400/30 text-white' :
+            'bg-slate-900/80 border-white/20 text-white'
+          }`}>
+            {booking.status}
+          </div>
+          {booking.paymentStatus === 'pending' && (
+            <div className="px-4 py-1.5 rounded-full backdrop-blur-md border bg-amber-500/80 border-amber-400/30 text-white text-[9px] font-black uppercase tracking-widest">
+              Unpaid
+            </div>
+          )}
+        </div>
+        <button className="absolute top-4 right-4 h-10 w-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-all">
+          <MoreVertical size={18} />
+        </button>
+      </div>
+
+      <div className="p-8 space-y-6">
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="text-xl font-black text-slate-900 tracking-tight">{booking.car?.title || 'Luxury Vehicle'}</h3>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">{booking.car?.brand || 'Premium Hire'}</p>
+          </div>
+          <div className="text-right">
+            <p className="text-2xl font-black text-[#002E3E]">₦{booking.totalPrice?.toLocaleString()}</p>
+            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Total Price</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 pt-2">
+          <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100">
+             <div className="text-slate-400"><Calendar size={16} /></div>
+             <div>
+                <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Pick-up</p>
+                <p className="text-[11px] font-bold text-slate-900">{dayjs(booking.startDate).format('MMM D, YYYY')}</p>
+             </div>
+          </div>
+          <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100">
+             <div className="text-slate-400"><Clock size={16} /></div>
+             <div>
+                <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Duration</p>
+                <p className="text-[11px] font-bold text-slate-900">{booking.totalDays} Rental Days</p>
+             </div>
+          </div>
+        </div>
+
+        <div className="pt-4 flex flex-col gap-3">
+           <div className="flex items-center gap-3">
+              <button className="flex-1 h-12 rounded-xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-accent hover:text-primary transition-all group/btn">
+                 View Details <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+              </button>
+              <button className="h-12 w-12 rounded-xl border border-slate-200 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all">
+                 <FileText size={18} />
+              </button>
+           </div>
+           
+           {booking.paymentStatus === 'pending' && booking.status !== 'cancelled' && (
+             <button 
+               onClick={handlePayment}
+               disabled={isReInitializing}
+               className="w-full h-12 rounded-xl bg-accent text-primary text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-accent/90 transition-all shadow-md active:scale-95 disabled:opacity-50"
+             >
+               {isReInitializing ? (
+                 <div className="h-4 w-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+               ) : (
+                 <>
+                   <CreditCard size={14} />
+                   Complete Payment
+                 </>
+               )}
+             </button>
+           )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const MyBookings = () => {
   const { data, isLoading, isError, refetch } = useMyBookings();
   const bookings = data?.data?.bookings || [];
 
   return (
-    <div className="space-y-6">
-      <PageHeader 
-        title="My Bookings" 
-        description="Manage your active and upcoming vehicle rentals."
-      />
+    <div className="space-y-10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="space-y-2">
+          <h1 className="text-4xl font-black text-slate-900 tracking-tighter">My Bookings</h1>
+          <p className="text-slate-500 font-medium tracking-tight">You have {bookings.length} historical bookings in your account.</p>
+        </div>
+        <div className="flex bg-slate-100 p-1 rounded-2xl">
+           <button className="px-6 py-2 bg-white rounded-xl text-xs font-black uppercase tracking-widest shadow-sm">Active</button>
+           <button className="px-6 py-2 text-slate-400 text-xs font-black uppercase tracking-widest">History</button>
+        </div>
+      </div>
 
       {isError ? (
         <ErrorState onRetry={refetch} />
       ) : bookings.length > 0 ? (
-        <div className="bg-white border rounded-2xl overflow-hidden shadow-sm">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Vehicle</TableHead>
-                <TableHead>Dates</TableHead>
-                <TableHead>Total Price</TableHead>
-                <TableHead>Booking Status</TableHead>
-                <TableHead>Payment</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {bookings.map((booking) => (
-                <TableRow key={booking._id}>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-lg bg-slate-100 flex items-center justify-center font-bold group-hover:bg-slate-200 transition-colors">
-                        {booking.car?.brand?.charAt(0)}
-                      </div>
-                      <div className="font-bold">{booking.car?.name || 'Deleted Car'}</div>
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-sm font-medium">
-                    {dayjs(booking.startDate).format('MMM DD')} - {dayjs(booking.endDate).format('MMM DD, YYYY')}
-                  </TableCell>
-                  <TableCell className="font-black text-slate-900">
-                    ${booking.totalPrice?.toLocaleString()}
-                  </TableCell>
-                  <TableCell>
-                    <StatusBadge status={booking.status} />
-                  </TableCell>
-                  <TableCell>
-                    <StatusBadge status={booking.paymentStatus} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {bookings.map((booking) => (
+            <BookingCard key={booking._id} booking={booking} />
+          ))}
         </div>
       ) : !isLoading ? (
         <EmptyState 
           title="No bookings yet" 
           description="You haven't made any bookings. Explore our catalog to find your next ride!"
+          action={{
+            label: "Explore Cars",
+            onClick: () => window.location.href = '/car-hire'
+          }}
         />
       ) : (
-        <div className="p-12 text-center text-slate-400 font-bold uppercase tracking-widest animate-pulse">
-           Loading Bookings...
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+           {Array(4).fill(0).map((_, i) => (
+             <div key={i} className="h-[450px] bg-slate-100 rounded-[2rem] animate-pulse" />
+           ))}
         </div>
       )}
     </div>

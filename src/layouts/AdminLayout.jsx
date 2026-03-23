@@ -36,9 +36,9 @@ const AdminLayout = () => {
           </Link>
         </nav>
         <div className="p-4 border-t border-slate-800">
-          <Button 
-            variant="ghost" 
-            className="w-full justify-start text-slate-400 hover:text-white hover:bg-slate-800" 
+          <Button
+            variant="ghost"
+            className="w-full justify-start text-slate-400 hover:text-white hover:bg-slate-800"
             onClick={() => logout()}
             isLoading={isLoading}
           >
@@ -51,12 +51,12 @@ const AdminLayout = () => {
         <header className="h-16 bg-white border-b flex items-center px-6 justify-between">
           <div className="font-bold md:hidden">Admin</div>
           <div className="flex items-center gap-4">
-             <Link to="/">
-               <Button variant="outline" size="sm">View Site</Button>
-             </Link>
-             <div className="h-8 w-8 rounded-full bg-slate-200 border flex items-center justify-center font-bold text-xs uppercase">
-                {user?.name?.charAt(0) || 'A'}
-             </div>
+            <Link to="/">
+              <Button variant="outline" size="sm">View Site</Button>
+            </Link>
+            <div className="h-8 w-8 rounded-full bg-slate-200 border flex items-center justify-center font-bold text-xs uppercase">
+              {user?.name?.charAt(0) || 'A'}
+            </div>
           </div>
         </header>
         <main className="p-4 md:p-8">

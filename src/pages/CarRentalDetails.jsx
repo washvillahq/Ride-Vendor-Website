@@ -31,14 +31,14 @@ const CarRentalDetails = () => {
   const { data, isLoading, isError, refetch } = useCar(carId);
   const [searchTerm, setSearchTerm] = useState('');
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  
+
   const car = data?.data;
-  
+
   // Fetch similar rental cars
-  const { data: similarData, isLoading: isSimilarLoading } = useCars({ 
+  const { data: similarData, isLoading: isSimilarLoading } = useCars({
     type: 'rental',
     category: car?.category,
-    limit: 4 
+    limit: 4
   });
   const similarCars = similarData?.data?.cars?.filter(c => c._id !== carId) || [];
 
@@ -58,19 +58,19 @@ const CarRentalDetails = () => {
       <div className="container px-4 py-8 space-y-10">
         {/* Top Header Row */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <Breadcrumbs 
+          <Breadcrumbs
             items={[
               { label: 'Services', link: '/services' },
               { label: 'Car Hire', link: '/car-hire' },
               { label: `${year} ${brand} ${model}` }
-            ]} 
+            ]}
           />
-          
+
           <div className="relative w-full max-w-xl group">
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-accent transition-colors" />
-            <input 
-              type="text" 
-              placeholder="Search for car hire..." 
+            <input
+              type="text"
+              placeholder="Search for car hire..."
               className="w-full bg-slate-50 border border-slate-100 rounded-full pl-14 pr-6 py-4 text-sm font-medium outline-none focus:ring-2 focus:ring-accent transition-all"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -82,77 +82,77 @@ const CarRentalDetails = () => {
           {/* Left Column */}
           <div className="lg:col-span-8 space-y-12">
             <CarGallery images={images} />
-            
+
             <SpecsGrid specs={car} />
 
             {/* Condition Certificate */}
             <div className="bg-slate-50 p-10 rounded-[2.5rem] border border-slate-100 relative overflow-hidden">
-               <div className="relative z-10 space-y-6">
-                 <div className="flex items-center gap-3">
-                   <div className="h-10 w-10 rounded-full bg-accent flex items-center justify-center">
-                     <ShieldCheck className="w-6 h-6 text-primary" />
-                   </div>
-                   <h2 className="text-2xl font-black text-slate-900 tracking-tight">Condition Certificate</h2>
-                 </div>
-                 <p className="text-slate-500 text-sm font-medium leading-relaxed max-w-2xl">
-                   This vehicle has passed our 150-point safety and condition inspection. We ensure every hire vehicle meets our premium standards for reliability and cleanliness.
-                 </p>
-                 <div className="flex flex-wrap gap-4 pt-4">
-                   {['Brakes Verified', 'AC Functional', 'Tires Inspected', 'Clean Interior'].map((item, i) => (
-                     <div key={i} className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
-                       <CheckCircle2 className="w-4 h-4 text-accent" />
-                       <span className="text-[10px] font-black uppercase tracking-widest text-slate-700">{item}</span>
-                     </div>
-                   ))}
-                 </div>
-               </div>
-               <div className="absolute right-[-40px] top-1/2 -translate-y-1/2 opacity-[0.03] rotate-12 pointer-events-none">
-                 <ShieldCheck size={300} strokeWidth={1} />
-               </div>
+              <div className="relative z-10 space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-accent flex items-center justify-center">
+                    <ShieldCheck className="w-6 h-6 text-primary" />
+                  </div>
+                  <h2 className="text-2xl font-black text-slate-900 tracking-tight">Condition Certificate</h2>
+                </div>
+                <p className="text-slate-500 text-sm font-medium leading-relaxed max-w-2xl">
+                  This vehicle has passed our 150-point safety and condition inspection. We ensure every hire vehicle meets our premium standards for reliability and cleanliness.
+                </p>
+                <div className="flex flex-wrap gap-4 pt-4">
+                  {['Brakes Verified', 'AC Functional', 'Tires Inspected', 'Clean Interior'].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
+                      <CheckCircle2 className="w-4 h-4 text-accent" />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-700">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="absolute right-[-40px] top-1/2 -translate-y-1/2 opacity-[0.03] rotate-12 pointer-events-none">
+                <ShieldCheck size={300} strokeWidth={1} />
+              </div>
             </div>
 
             <div className="space-y-6">
-               <h2 className="text-2xl font-black text-slate-900 tracking-tight">Hire Description</h2>
-               <p className="text-slate-500 text-sm font-medium leading-relaxed">
-                 {description || "No description provided for this hire vehicle. Contact vendor for specific details."}
-               </p>
+              <h2 className="text-2xl font-black text-slate-900 tracking-tight">Hire Description</h2>
+              <p className="text-slate-500 text-sm font-medium leading-relaxed">
+                {description || "No description provided for this hire vehicle. Contact vendor for specific details."}
+              </p>
             </div>
           </div>
 
           {/* Right Column (Sidebar) */}
           <div className="lg:col-span-4">
-             <RentalDetailSidebar car={car} onBookNow={() => setIsCheckoutOpen(true)} />
+            <RentalDetailSidebar car={car} onBookNow={() => setIsCheckoutOpen(true)} />
           </div>
         </div>
 
         {/* Similar Hire Cars Section */}
         <div className="space-y-8 pt-12 border-t border-slate-100">
-           <h2 className="text-3xl font-black text-slate-900 tracking-tight">Explore More Hire Vehicles</h2>
-           
-           {isSimilarLoading ? (
-             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-               {Array(4).fill(0).map((_, i) => <CarCardSkeleton key={i} />)}
-             </div>
-           ) : (
-             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-               {similarCars.length > 0 ? (
-                 similarCars.map(car => (
-                   <RentalCarCard key={car._id} car={car} />
-                 ))
-               ) : (
-                 <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">No similar hire vehicles found at the moment.</p>
-               )}
-             </div>
-           )}
-         </div>
+          <h2 className="text-3xl font-black text-slate-900 tracking-tight">Explore More Hire Vehicles</h2>
+
+          {isSimilarLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {Array(4).fill(0).map((_, i) => <CarCardSkeleton key={i} />)}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {similarCars.length > 0 ? (
+                similarCars.map(car => (
+                  <RentalCarCard key={car._id} car={car} />
+                ))
+              ) : (
+                <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">No similar hire vehicles found at the moment.</p>
+              )}
+            </div>
+          )}
+        </div>
       </div>
-      
+
       {/* Checkout Modal */}
       {car && (
-        <HireCheckoutModal 
-          isOpen={isCheckoutOpen} 
-          onClose={() => setIsCheckoutOpen(false)} 
-          car={car} 
+        <HireCheckoutModal
+          isOpen={isCheckoutOpen}
+          onClose={() => setIsCheckoutOpen(false)}
+          car={car}
         />
       )}
     </div>

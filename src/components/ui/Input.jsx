@@ -4,29 +4,38 @@ import { cn } from '../../utils/cn';
 const Input = React.forwardRef(({ 
   label, 
   error, 
+  icon,
   className, 
   type = 'text', 
   ...props 
 }, ref) => {
   return (
-    <div className="w-full space-y-1.5">
+    <div className="w-full space-y-2">
       {label && (
-        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+        <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-1">
           {label}
         </label>
       )}
-      <input
-        type={type}
-        className={cn(
-          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all",
-          error ? "border-red-500 focus-visible:ring-red-500" : "border-slate-200 focus-visible:ring-black",
-          className
+      <div className="relative group">
+        {icon && (
+          <div className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-accent transition-colors">
+            {icon}
+          </div>
         )}
-        ref={ref}
-        {...props}
-      />
+        <input
+          type={type}
+          className={cn(
+            "flex h-12 w-full rounded-2xl border-2 border-slate-50 bg-slate-50 px-6 py-2 text-sm font-bold ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/20 focus-visible:border-accent disabled:cursor-not-allowed disabled:opacity-50 transition-all",
+            icon && "pl-12",
+            error ? "border-red-500 bg-red-50/50 focus-visible:border-red-500 focus-visible:ring-red-500/10" : "hover:border-slate-100",
+            className
+          )}
+          ref={ref}
+          {...props}
+        />
+      </div>
       {error && (
-        <p className="text-xs font-medium text-red-500 mt-1">
+        <p className="text-[10px] font-black uppercase tracking-wider text-red-500 mt-1.5 ml-1">
           {error.message || error}
         </p>
       )}

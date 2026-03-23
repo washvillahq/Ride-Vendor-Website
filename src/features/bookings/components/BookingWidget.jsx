@@ -29,12 +29,12 @@ const bookingSchema = z.object({
 const BookingWidget = ({ car }) => {
   const [isAvailable, setIsAvailable] = useState(null); // null, true, false
   const [checking, setChecking] = useState(false);
-  
+
   const { mutateAsync: checkAvailability } = useCheckAvailability();
   const { mutateAsync: createBooking, isLoading: isBooking } = useCreateBooking();
   const { mutateAsync: initPayment, isLoading: isPaying } = useInitializePayment();
   const { data: servicesData, isLoading: loadingServices } = useServices(car.category);
-  
+
   const services = servicesData?.data?.services || [];
 
   const {
@@ -56,11 +56,11 @@ const BookingWidget = ({ car }) => {
   // Price Calculation
   const priceSummary = useMemo(() => {
     if (!watchedValues.startDate || !watchedValues.endDate) return null;
-    
+
     const start = dayjs(watchedValues.startDate);
     const end = dayjs(watchedValues.endDate);
     const days = end.diff(start, 'day');
-    
+
     if (days <= 0) return null;
 
     const basePrice = days * car.pricePerDay;
@@ -137,7 +137,7 @@ const BookingWidget = ({ car }) => {
       });
 
       const bookingId = bookingRes.data._id;
-      
+
       const paymentRes = await initPayment({
         type: 'booking',
         relatedId: bookingId
@@ -165,7 +165,7 @@ const BookingWidget = ({ car }) => {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
-            <Input 
+            <Input
               label="Start Date"
               type="date"
               min={dayjs().format('YYYY-MM-DD')}
@@ -176,13 +176,13 @@ const BookingWidget = ({ car }) => {
                 setIsAvailable(null);
               }}
             />
-            <Input 
+            <Input
               label="End Date"
               type="date"
               min={watchedValues.startDate || dayjs().format('YYYY-MM-DD')}
               {...register('endDate')}
               error={errors.endDate}
-               onChange={(e) => {
+              onChange={(e) => {
                 register('endDate').onChange(e);
                 setIsAvailable(null);
               }}
@@ -197,16 +197,15 @@ const BookingWidget = ({ car }) => {
               </div>
               <div className="space-y-3 max-h-56 overflow-y-auto pr-2 custom-scrollbar">
                 {services.map((service) => (
-                  <label 
-                    key={service._id} 
-                    className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all cursor-pointer ${
-                      selectedServices.includes(service._id) 
-                        ? 'border-black bg-slate-50 shadow-sm' 
+                  <label
+                    key={service._id}
+                    className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all cursor-pointer ${selectedServices.includes(service._id)
+                        ? 'border-black bg-slate-50 shadow-sm'
                         : 'border-slate-100 bg-white hover:border-slate-200'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center gap-3">
-                      <Checkbox 
+                      <Checkbox
                         value={service._id}
                         {...register('services')}
                         className="h-5 w-5 rounded-lg"
@@ -228,7 +227,7 @@ const BookingWidget = ({ car }) => {
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                 <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               </div>
-              
+
               <div className="space-y-2">
                 <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-slate-500">
                   <span>Standard Rental</span>
@@ -286,17 +285,17 @@ const BookingWidget = ({ car }) => {
             ) : null}
 
             {isAvailable === true ? (
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full h-16 text-xl font-black rounded-3xl bg-black hover:bg-black/90 shadow-2xl transition-all hover:scale-[1.02] active:scale-95"
                 isLoading={isBooking || isPaying}
               >
                 Book & Pay Now
               </Button>
             ) : (
-              <Button 
-                type="button" 
-                variant="outline" 
+              <Button
+                type="button"
+                variant="outline"
                 className="w-full h-16 text-lg font-black rounded-3xl border-2 transition-all"
                 onClick={onCheckAvailability}
                 isLoading={checking}
@@ -305,16 +304,16 @@ const BookingWidget = ({ car }) => {
                 {checking ? 'Evaluating...' : 'Check Availability'}
               </Button>
             )}
-            
+
             <div className="flex justify-center items-center gap-4 py-2">
-               <div className="flex -space-x-2">
-                 {[1,2,3].map(i => (
-                   <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-slate-200" />
-                 ))}
-               </div>
-               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                 12 others booked this car recently
-               </p>
+              <div className="flex -space-x-2">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-slate-200" />
+                ))}
+              </div>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                12 others booked this car recently
+              </p>
             </div>
           </div>
         </form>

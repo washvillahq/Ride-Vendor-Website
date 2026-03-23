@@ -15,6 +15,14 @@ import Modal from '../../components/ui/Modal';
 import Badge from '../../components/ui/Badge';
 import StatusBadge from '../../components/ui/StatusBadge';
 
+import { 
+  CAR_TYPES, 
+  CAR_CONDITIONS, 
+  CAR_TRANSMISSIONS, 
+  CAR_FUEL_TYPES,
+  SERVICE_CATEGORIES
+} from '../../features/cars/constants';
+
 const carSchema = z.object({
   title: z.string().min(2, 'Title is required'),
   brand: z.string().min(1, 'Brand is required'),
@@ -26,8 +34,8 @@ const carSchema = z.object({
   category: z.string().min(1, 'Category is required'),
   mileage: z.string().optional(),
   engine: z.string().optional(),
-  transmission: z.enum(['Automatic', 'Manual', 'CVT']).optional(),
-  fuelType: z.enum(['Petrol', 'Diesel', 'Hybrid', 'Electric', 'Gas']).optional(),
+  transmission: z.string().optional(),
+  fuelType: z.string().optional(),
   color: z.string().optional(),
   condition: z.string().optional(),
   seatingCapacity: z.string().optional(),
@@ -36,13 +44,6 @@ const carSchema = z.object({
   pricePerDay: z.string().optional(),
   salePrice: z.string().optional(),
   imageUrl: z.string().url('Invalid image URL'),
-}).refine((data) => {
-  if (data.type === 'rental' && !data.pricePerDay) return false;
-  if (data.type === 'sale' && !data.salePrice) return false;
-  return true;
-}, {
-  message: 'Price is required for the selected type',
-  path: ['pricePerDay'], // Simplification: path can only be one
 });
 
 const AdminCars = () => {
@@ -177,14 +178,18 @@ const AdminCars = () => {
              <Input label="Year" placeholder="2024" {...register('year')} error={errors.year} />
              <Select 
                 label="Category"
-                options={[
-                  { value: 'Sedan', label: 'Sedan' },
-                  { value: 'SUV', label: 'SUV' },
-                  { value: 'Luxury', label: 'Luxury' },
-                  { value: 'Sports', label: 'Sports' },
-                ]}
+                options={CAR_TYPES.map(t => ({ value: t, label: t }))}
                 {...register('category')}
                 error={errors.category}
+             />
+             <Select 
+                label="Service Category (Optional)"
+                options={[
+                  { value: '', label: 'None' },
+                  ...SERVICE_CATEGORIES.map(t => ({ value: t, label: t }))
+                ]}
+                {...register('serviceCategory')}
+                error={errors.serviceCategory}
              />
              <Input label="Location" placeholder="Lagos, Nigeria" {...register('location')} error={errors.location} />
           </div>
@@ -196,28 +201,23 @@ const AdminCars = () => {
                  <Input label="Engine" placeholder="e.g. 3.5L V6" {...register('engine')} error={errors.engine} />
                  <Select 
                     label="Transmission"
-                    options={[
-                      { value: 'Automatic', label: 'Automatic' },
-                      { value: 'Manual', label: 'Manual' },
-                      { value: 'CVT', label: 'CVT' },
-                    ]}
+                    options={CAR_TRANSMISSIONS.map(t => ({ value: t, label: t }))}
                     {...register('transmission')}
                     error={errors.transmission}
                  />
                  <Select 
                     label="Fuel Type"
-                    options={[
-                      { value: 'Petrol', label: 'Petrol' },
-                      { value: 'Diesel', label: 'Diesel' },
-                      { value: 'Hybrid', label: 'Hybrid' },
-                      { value: 'Electric', label: 'Electric' },
-                      { value: 'Gas', label: 'Gas' },
-                    ]}
+                    options={CAR_FUEL_TYPES.map(t => ({ value: t, label: t }))}
                     {...register('fuelType')}
                     error={errors.fuelType}
                  />
                  <Input label="Color" placeholder="Graphite Gray" {...register('color')} error={errors.color} />
-                 <Input label="Condition" placeholder="Foreign Used" {...register('condition')} error={errors.condition} />
+                 <Select 
+                    label="Condition"
+                    options={CAR_CONDITIONS.map(c => ({ value: c, label: c }))}
+                    {...register('condition')}
+                    error={errors.condition}
+                 />
                  <Input label="Seating Capacity" type="number" placeholder="5" {...register('seatingCapacity')} error={errors.seatingCapacity} />
                  <Input label="Doors" type="number" placeholder="4" {...register('doors')} error={errors.doors} />
                  <Input label="Suitcases" type="number" placeholder="2" {...register('suitcases')} error={errors.suitcases} />

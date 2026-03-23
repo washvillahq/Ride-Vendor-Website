@@ -20,12 +20,11 @@ import {
   User
 } from 'lucide-react';
 
+import logo from '../assets/ridevendor_logo.png';
+
 const Logo = () => (
   <Link to="/" className="flex items-center gap-2 group">
-    <div className="bg-accent p-1.5 rounded-lg group-hover:bg-accent-light transition-colors shadow-sm">
-      <Car className="w-5 h-5 text-primary fill-primary/10" />
-    </div>
-    <span className="font-black text-xl tracking-tight text-primary">Ridevendor</span>
+    <img src={logo} alt="Ridevendor Logo" className="h-8 w-auto group-hover:scale-105 transition-transform duration-300" />
   </Link>
 );
 
@@ -191,24 +190,23 @@ const Navbar = () => {
   );
 };
 
+import visaIcon from '../assets/logos_visa.png';
+import mastercardIcon from '../assets/logos_mastercard.png';
+
 const Footer = () => (
   <footer className="bg-[#0F172A] text-slate-300 pt-20 pb-10">
-    <div className="container px-4">
+    <div className="container mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         <div className="space-y-6">
-          <div className="flex items-center gap-2">
-            <div className="bg-accent p-1.5 rounded-lg">
-              <Car className="w-5 h-5 text-primary" />
-            </div>
-            <span className="font-black text-xl tracking-tight text-white">RideVendor</span>
-          </div>
+          <Link to="/" className="flex items-center gap-2">
+            <img src={logo} alt="Ridevendor" className="h-6 w-auto" />
+          </Link>
           <p className="text-sm leading-relaxed max-w-xs opacity-80">
             Shayongi Complex, No 84A, Tite Bridge Road, Ilorin 24001, Kwara
           </p>
           <div className="flex gap-4 pt-4">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Visa_2021.svg" alt="Visa" className="h-4 opacity-50 grayscale hover:grayscale-0 transition-all cursor-pointer" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" className="h-4 opacity-50 grayscale hover:grayscale-0 transition-all cursor-pointer" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-4 opacity-50 grayscale hover:grayscale-0 transition-all cursor-pointer" />
+            <img src={visaIcon} alt="Visa" className="h-4 opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition-all cursor-pointer" />
+            <img src={mastercardIcon} alt="Mastercard" className="h-5 opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition-all cursor-pointer" />
           </div>
         </div>
 
@@ -272,10 +270,10 @@ const Footer = () => (
 
 const MainLayout = () => {
   return (
-    <div className="flex items-center justify-center flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen">
       <ScrollRestoration />
       <Navbar />
-      <main className=" flex-1">
+      <main className="flex items-center justify-center flex-1">
         <Outlet />
       </main>
       <Footer />

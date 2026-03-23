@@ -20,6 +20,7 @@ const Button = React.forwardRef(({
     outline: 'border border-slate-200 bg-white hover:bg-slate-50 text-slate-900',
     ghost: 'hover:bg-slate-100 text-slate-700',
     danger: 'bg-red-600 text-white hover:bg-red-700 shadow-sm',
+    accent: 'bg-accent text-primary hover:bg-accent/90 shadow-lg shadow-accent/20',
     link: 'text-primary underline-offset-4 hover:underline !p-0 !h-auto',
   };
 
@@ -27,6 +28,7 @@ const Button = React.forwardRef(({
     sm: 'h-8 px-3 text-xs',
     md: 'h-10 px-4 py-2 text-sm',
     lg: 'h-12 px-6 text-base',
+    xl: 'h-14 px-8 text-sm font-black uppercase tracking-[0.2em]',
     icon: 'h-10 w-10',
   };
 

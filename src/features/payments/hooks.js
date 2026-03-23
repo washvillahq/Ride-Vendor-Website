@@ -6,3 +6,15 @@ export const useInitializePayment = () => {
     mutationFn: paymentApi.initializePayment,
   });
 };
+
+export const useReInitializePayment = () => {
+  return useMutation({
+    mutationFn: paymentApi.reInitializePayment,
+  });
+};
+
+export const useVerifyPayment = () => {
+  return useMutation({
+    mutationFn: paymentApi.verifyPayment,
+  });
+};

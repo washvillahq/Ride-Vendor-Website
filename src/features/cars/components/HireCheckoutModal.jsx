@@ -2,13 +2,13 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useServices } from '../../services/hooks';
 import { useCreateBooking } from '../../bookings/hooks';
-import { 
-  ChevronRight, 
-  ChevronLeft, 
-  Calendar as CalendarIcon, 
-  MapPin, 
-  CheckCircle2, 
-  Clock, 
+import {
+  ChevronRight,
+  ChevronLeft,
+  Calendar as CalendarIcon,
+  MapPin,
+  CheckCircle2,
+  Clock,
   ShieldCheck,
   CreditCard,
   Info
@@ -40,14 +40,12 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedServices, setSelectedServices] = useState([]);
-  const [dateRange, setDateRange] = useState({ from: undefined, to: undefined });
+  const [selectedDates, setSelectedDates] = useState([]);
   const [details, setDetails] = useState({ pickupLocation: '', dropoffLocation: '', specialRequests: '' });
 
   const totalDays = useMemo(() => {
-    if (!dateRange.from || !dateRange.to) return 0;
-    const diff = dayjs(dateRange.to).diff(dayjs(dateRange.from), 'day');
-    return Math.max(1, diff + 1);
-  }, [dateRange]);
+    return selectedDates.length;
+  }, [selectedDates]);
 
   const totalPrice = useMemo(() => {
     if (!car) return 0;
@@ -60,8 +58,8 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
   }, [car, services, selectedServices, totalDays]);
 
   const handleNext = () => {
-    if (currentStep === 2 && (!dateRange.from || !dateRange.to)) {
-      toast.error('Please select both start and end dates');
+    if (currentStep === 2 && selectedDates.length === 0) {
+      toast.error('Please select at least one date');
       return;
     }
     if (currentStep === 3 && (!details.pickupLocation || !details.dropoffLocation)) {
@@ -80,18 +78,24 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
   };
 
   const handleServiceToggle = (serviceId) => {
-    setSelectedServices(prev => 
-      prev.includes(serviceId) 
+    setSelectedServices(prev =>
+      prev.includes(serviceId)
         ? prev.filter(id => id !== serviceId)
         : [...prev, serviceId]
     );
   };
 
   const handleBooking = () => {
+    // Sort dates to get start and end for backend compatibility
+    const sortedDates = [...selectedDates].sort((a, b) => new Date(a) - new Date(b));
+    const startDate = sortedDates[0];
+    const endDate = sortedDates[sortedDates.length - 1];
+
     const bookingData = {
       carId: car._id,
-      startDate: dateRange.from,
-      endDate: dateRange.to,
+      startDate: startDate,
+      endDate: endDate,
+      dates: selectedDates,
       services: selectedServices,
       pickupLocation: details.pickupLocation,
       dropoffLocation: details.dropoffLocation,
@@ -103,9 +107,9 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
         toast.success('Booking initiated! Proceeding to payment...');
         onClose();
         if (response?.data?.paymentUrl) {
-           window.location.href = response.data.paymentUrl;
+          window.location.href = response.data.paymentUrl;
         } else {
-           navigate(`/dashboard/bookings`);
+          navigate(`/dashboard/bookings`);
         }
       },
       onError: (error) => {
@@ -120,7 +124,7 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
       setTimeout(() => {
         setCurrentStep(1);
         setSelectedServices([]);
-        setDateRange({ from: undefined, to: undefined });
+        setSelectedDates([]);
         setDetails({ pickupLocation: '', dropoffLocation: '', specialRequests: '' });
       }, 300); // Wait for modal close animation
     }
@@ -129,9 +133,9 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
   if (!car) return null;
 
   return (
-    <Modal 
-      isOpen={isOpen} 
-      onClose={onClose} 
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
       title={`Hire ${car.brand} ${car.model}`}
       maxWidth="4xl"
       className="max-h-[85vh] flex flex-col"
@@ -143,14 +147,13 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
             const Icon = step.icon;
             const isActive = currentStep === step.id;
             const isCompleted = currentStep > step.id;
-            
+
             return (
               <React.Fragment key={step.id}>
                 <div className="flex flex-col items-center gap-2">
-                  <div className={`flex items-center justify-center h-10 w-10 rounded-xl transition-all duration-300 ${
-                    isActive ? 'bg-accent text-primary shadow-md scale-110' : 
-                    isCompleted ? 'bg-emerald-500 text-white' : 'bg-white text-slate-300 border border-slate-200'
-                  }`}>
+                  <div className={`flex items-center justify-center h-10 w-10 rounded-xl transition-all duration-300 ${isActive ? 'bg-accent text-primary shadow-md scale-110' :
+                      isCompleted ? 'bg-emerald-500 text-white' : 'bg-white text-slate-300 border border-slate-200'
+                    }`}>
                     {isCompleted ? <CheckCircle2 className="w-5 h-5" /> : <Icon className="w-4 h-4" />}
                   </div>
                   <span className={`text-[10px] font-bold uppercase tracking-wider ${isActive ? 'text-slate-900' : 'text-slate-400'}`}>
@@ -168,7 +171,7 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
 
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+
           {/* Main Content Area */}
           <div className="lg:col-span-8 space-y-8">
             {currentStep === 1 && (
@@ -186,35 +189,33 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {services.length > 0 ? (
                       services.map(service => (
-                        <div 
+                        <div
                           key={service._id}
                           onClick={() => handleServiceToggle(service._id)}
-                          className={`group relative p-4 rounded-2xl border-2 transition-all cursor-pointer ${
-                            selectedServices.includes(service._id)
+                          className={`group relative p-4 rounded-2xl border-2 transition-all cursor-pointer ${selectedServices.includes(service._id)
                               ? 'border-accent bg-accent/5'
                               : 'border-slate-50 bg-slate-50 hover:border-slate-200 hover:bg-white'
-                          }`}
+                            }`}
                         >
-                           <div className="flex items-start justify-between gap-2">
-                             <div className="space-y-1">
-                               <h4 className="font-bold text-slate-900 text-sm leading-tight">{service.name}</h4>
-                               <p className="text-[10px] text-slate-500 uppercase tracking-wide">{service.description}</p>
-                             </div>
-                             <div className={`shrink-0 h-5 w-5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                               selectedServices.includes(service._id) ? 'bg-accent border-accent text-primary' : 'border-slate-200'
-                             }`}>
-                               {selectedServices.includes(service._id) && <CheckCircle2 className="w-3 h-3" />}
-                             </div>
-                           </div>
-                           <div className="pt-3">
-                              <span className="text-sm font-black text-slate-900">₦{service.pricePerDay?.toLocaleString()}</span>
-                              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest ml-1">/ Day</span>
-                           </div>
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="space-y-1">
+                              <h4 className="font-bold text-slate-900 text-sm leading-tight">{service.name}</h4>
+                              <p className="text-[10px] text-slate-500 uppercase tracking-wide">{service.description}</p>
+                            </div>
+                            <div className={`shrink-0 h-5 w-5 rounded-full border-2 flex items-center justify-center transition-colors ${selectedServices.includes(service._id) ? 'bg-accent border-accent text-primary' : 'border-slate-200'
+                              }`}>
+                              {selectedServices.includes(service._id) && <CheckCircle2 className="w-3 h-3" />}
+                            </div>
+                          </div>
+                          <div className="pt-3">
+                            <span className="text-sm font-black text-slate-900">₦{service.pricePerDay?.toLocaleString()}</span>
+                            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest ml-1">/ Day</span>
+                          </div>
                         </div>
                       ))
                     ) : (
                       <div className="col-span-full py-10 text-center space-y-2">
-                         <p className="text-slate-400 font-bold uppercase text-xs">No extra services available.</p>
+                        <p className="text-slate-400 font-bold uppercase text-xs">No extra services available.</p>
                       </div>
                     )}
                   </div>
@@ -224,124 +225,133 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
 
             {currentStep === 2 && (
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                 <div className="space-y-1">
-                   <h2 className="text-xl font-black text-slate-900 leading-tight">When would you like it?</h2>
-                   <p className="text-slate-500 text-sm">Select your preferred start and return dates.</p>
-                 </div>
+                <div className="space-y-1">
+                  <h2 className="text-xl font-black text-slate-900 leading-tight">When would you like it?</h2>
+                  <p className="text-slate-500 text-sm">Select your preferred start and return dates.</p>
+                </div>
 
-                 <div className="bg-slate-50 p-4 sm:p-6 rounded-3xl border border-slate-100 flex justify-center">
-                   <DayPicker
-                     mode="range"
-                     selected={dateRange}
-                     onSelect={setDateRange}
-                     disabled={{ before: dayjs().startOf('day').toDate() }}
-                     numberOfMonths={1}
-                     className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100"
-                     styles={{
-                       day: { fontWeight: '700', fontSize: '0.8rem' },
-                       head_cell: { textTransform: 'uppercase', fontSize: '0.7rem' }
-                     }}
-                   />
-                 </div>
+                <div className="bg-slate-50 p-4 sm:p-6 rounded-3xl border border-slate-100 flex justify-center">
+                  <DayPicker
+                    mode="multiple"
+                    selected={selectedDates}
+                    onSelect={setSelectedDates}
+                    disabled={{ before: dayjs().startOf('day').toDate() }}
+                    numberOfMonths={1}
+                    className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100"
+                    styles={{
+                      day: { fontWeight: '700', fontSize: '0.8rem' },
+                      head_cell: { textTransform: 'uppercase', fontSize: '0.7rem' }
+                    }}
+                  />
+                </div>
               </div>
             )}
 
             {currentStep === 3 && (
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                 <div className="space-y-1">
-                   <h2 className="text-xl font-black text-slate-900 leading-tight">Delivery & Logistics</h2>
-                   <p className="text-slate-500 text-sm">Tell us where we should meet you.</p>
-                 </div>
+                <div className="space-y-1">
+                  <h2 className="text-xl font-black text-slate-900 leading-tight">Delivery & Logistics</h2>
+                  <p className="text-slate-500 text-sm">Tell us where we should meet you.</p>
+                </div>
 
-                 <div className="space-y-4">
-                    <Input 
-                      label="Pickup Location"
-                      placeholder="e.g. Airport Arrivals, Hotel, or Home"
-                      icon={<MapPin size={16} />}
-                      value={details.pickupLocation}
-                      onChange={(e) => setDetails(prev => ({...prev, pickupLocation: e.target.value}))}
-                    />
-                    <Input 
-                      label="Dropoff Location"
-                      placeholder="e.g. Same as pickup"
-                      icon={<MapPin size={16} />}
-                      value={details.dropoffLocation}
-                      onChange={(e) => setDetails(prev => ({...prev, dropoffLocation: e.target.value}))}
-                    />
-                    <Textarea 
-                      label="Special Requests"
-                      placeholder="Any other preferences we should know about?"
-                      value={details.specialRequests}
-                      onChange={(e) => setDetails(prev => ({...prev, specialRequests: e.target.value}))}
-                    />
-                 </div>
+                <div className="space-y-4">
+                  <Input
+                    label="Pickup Location"
+                    placeholder="e.g. Airport Arrivals, Hotel, or Home"
+                    icon={<MapPin size={16} />}
+                    value={details.pickupLocation}
+                    onChange={(e) => setDetails(prev => ({ ...prev, pickupLocation: e.target.value }))}
+                  />
+                  <Input
+                    label="Dropoff Location"
+                    placeholder="e.g. Same as pickup"
+                    icon={<MapPin size={16} />}
+                    value={details.dropoffLocation}
+                    onChange={(e) => setDetails(prev => ({ ...prev, dropoffLocation: e.target.value }))}
+                  />
+                  <Textarea
+                    label="Special Requests"
+                    placeholder="Any other preferences we should know about?"
+                    value={details.specialRequests}
+                    onChange={(e) => setDetails(prev => ({ ...prev, specialRequests: e.target.value }))}
+                  />
+                </div>
               </div>
             )}
 
             {currentStep === 4 && (
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                 <div className="space-y-1">
-                   <h2 className="text-xl font-black text-slate-900 leading-tight">Review Your Booking</h2>
-                   <p className="text-slate-500 text-sm">Please verify all details before payment.</p>
-                 </div>
+                <div className="space-y-1">
+                  <h2 className="text-xl font-black text-slate-900 leading-tight">Review Your Booking</h2>
+                  <p className="text-slate-500 text-sm">Please verify all details before payment.</p>
+                </div>
 
-                 <div className="space-y-4">
-                    <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
-                       <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Logistics</h3>
-                       <div className="flex items-start gap-2 text-sm">
-                          <MapPin className="w-4 h-4 text-accent mt-0.5 shrink-0" />
-                          <span className="font-bold text-slate-700">{details.pickupLocation} → {details.dropoffLocation}</span>
-                       </div>
+                <div className="space-y-4">
+                  <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
+                    <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Logistics</h3>
+                    <div className="flex items-start gap-2 text-sm">
+                      <MapPin className="w-4 h-4 text-accent mt-0.5 shrink-0" />
+                      <span className="font-bold text-slate-700">{details.pickupLocation} → {details.dropoffLocation}</span>
                     </div>
+                  </div>
 
-                    <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
-                       <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Dates & Duration</h3>
-                       <div className="flex justify-between items-center text-sm font-bold text-slate-700">
-                         <span>{dateRange.from ? dayjs(dateRange.from).format('MMM D') : 'N/A'} - {dateRange.to ? dayjs(dateRange.to).format('MMM D, YYYY') : 'N/A'}</span>
-                         <span>{totalDays} Days</span>
-                       </div>
+                  <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
+                    <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Selected Dates</h3>
+                    <div className="space-y-1">
+                      <div className="flex flex-wrap gap-2">
+                        {selectedDates.sort((a, b) => a - b).map((date, i) => (
+                          <span key={i} className="bg-accent/10 text-primary text-[10px] font-bold px-2 py-1 rounded-full border border-accent/20">
+                            {dayjs(date).format('MMM D, YYYY')}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex justify-between items-center text-sm font-bold text-slate-700 pt-2 border-t border-slate-200 mt-2">
+                        <span>Total Duration</span>
+                        <span>{totalDays} Days</span>
+                      </div>
                     </div>
-                 </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
 
           {/* Sidebar Summary */}
           <div className="lg:col-span-4">
-             <div className="bg-[#002D3A] rounded-3xl p-6 text-white space-y-6 shadow-xl relative overflow-hidden">
-                <div className="relative z-10 space-y-4">
-                  <div className="space-y-0.5">
-                     <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Pricing Summary</p>
-                     <p className="text-sm font-bold border-b border-white/10 pb-2">
-                       ₦{car.pricePerDay?.toLocaleString()} × {totalDays} days
-                     </p>
-                  </div>
-
-                  {selectedServices.length > 0 && (
-                    <div className="space-y-2 border-b border-white/10 pb-4">
-                       <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Services added</p>
-                       {selectedServices.map(id => {
-                         const s = services.find(x => x._id === id);
-                         return (
-                           <div key={id} className="flex justify-between items-center text-xs">
-                             <span className="text-slate-300">{s?.name}</span>
-                             <span className="font-bold">₦{(s?.pricePerDay * totalDays).toLocaleString()}</span>
-                           </div>
-                         );
-                       })}
-                    </div>
-                  )}
-
-                  <div className="pt-2">
-                     <p className="text-[9px] font-black text-accent uppercase tracking-[0.2em] mb-1">Total</p>
-                     <span className="text-3xl font-black text-accent tracking-tighter">₦{totalPrice?.toLocaleString()}</span>
-                  </div>
+            <div className="bg-[#002D3A] rounded-3xl p-6 text-white space-y-6 shadow-xl relative overflow-hidden">
+              <div className="relative z-10 space-y-4">
+                <div className="space-y-0.5">
+                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Pricing Summary</p>
+                  <p className="text-sm font-bold border-b border-white/10 pb-2">
+                    ₦{car.pricePerDay?.toLocaleString()} × {totalDays} days
+                  </p>
                 </div>
-                
-                <div className="absolute right-[-20px] bottom-[-20px] opacity-10 rotate-[-15deg] pointer-events-none">
-                  <ShieldCheck size={120} strokeWidth={1} />
+
+                {selectedServices.length > 0 && (
+                  <div className="space-y-2 border-b border-white/10 pb-4">
+                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Services added</p>
+                    {selectedServices.map(id => {
+                      const s = services.find(x => x._id === id);
+                      return (
+                        <div key={id} className="flex justify-between items-center text-xs">
+                          <span className="text-slate-300">{s?.name}</span>
+                          <span className="font-bold">₦{(s?.pricePerDay * totalDays).toLocaleString()}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+                <div className="pt-2">
+                  <p className="text-[9px] font-black text-accent uppercase tracking-[0.2em] mb-1">Total</p>
+                  <span className="text-3xl font-black text-accent tracking-tighter">₦{totalPrice?.toLocaleString()}</span>
                 </div>
-             </div>
+              </div>
+
+              <div className="absolute right-[-20px] bottom-[-20px] opacity-10 rotate-[-15deg] pointer-events-none">
+                <ShieldCheck size={120} strokeWidth={1} />
+              </div>
+            </div>
           </div>
 
         </div>
@@ -349,30 +359,30 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
 
       {/* Footer Navigation */}
       <div className="bg-slate-50 border-t border-slate-100 p-4 sm:p-6 shrink-0 flex items-center justify-between">
-         <Button 
-           variant="ghost" 
-           onClick={handleBack}
-           className="text-xs uppercase tracking-wider"
-         >
-           {currentStep === 1 ? 'Cancel' : 'Back'}
-         </Button>
-         
-         {currentStep < 4 ? (
-           <Button 
-             onClick={handleNext}
-             className="px-8 bg-black hover:bg-slate-800 text-white rounded-xl text-xs uppercase tracking-widest shadow-md"
-           >
-             Continue
-           </Button>
-         ) : (
-           <Button 
-             onClick={handleBooking}
-             isLoading={isCreating}
-             className="bg-accent hover:bg-accent/90 text-primary px-8 rounded-xl text-xs font-black uppercase tracking-widest shadow-md"
-           >
-             Pay ₦{totalPrice?.toLocaleString()}
-           </Button>
-         )}
+        <Button
+          variant="ghost"
+          onClick={handleBack}
+          className="text-xs uppercase tracking-wider"
+        >
+          {currentStep === 1 ? 'Cancel' : 'Back'}
+        </Button>
+
+        {currentStep < 4 ? (
+          <Button
+            onClick={handleNext}
+            className="px-8 bg-black hover:bg-slate-800 text-white rounded-xl text-xs uppercase tracking-widest shadow-md"
+          >
+            Continue
+          </Button>
+        ) : (
+          <Button
+            onClick={handleBooking}
+            isLoading={isCreating}
+            className="bg-accent hover:bg-accent/90 text-primary px-8 rounded-xl text-xs font-black uppercase tracking-widest shadow-md"
+          >
+            Pay ₦{totalPrice?.toLocaleString()}
+          </Button>
+        )}
       </div>
     </Modal>
   );

@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { cn } from '../../../utils/cn';
 import Button from '../../../components/ui/Button';
+import { CAR_CONDITIONS, CAR_TYPES, SERVICE_CATEGORIES } from '../constants';
 
 const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -59,7 +60,7 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
         <div className="space-y-4">
           <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Condition</label>
           <div className="flex flex-wrap gap-2">
-            {['Tokunbo', 'Local Used', 'New'].map((c) => (
+            {CAR_CONDITIONS.map((c) => (
               <button
                 key={c}
                 onClick={() => onFilterChange('condition', filters.condition === c ? '' : c)}
@@ -91,6 +92,9 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
               <option value="Mercedes">Mercedes</option>
               <option value="BMW">BMW</option>
               <option value="Lexus">Lexus</option>
+              <option value="Tesla">Tesla</option>
+              <option value="Ford">Ford</option>
+              <option value="Nissan">Nissan</option>
             </select>
             <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
           </div>
@@ -139,6 +143,24 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
           </div>
         </div>
 
+        {/* Service Category */}
+        <div className="space-y-4">
+          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Service Category</label>
+          <div className="relative">
+            <select 
+              value={filters.serviceCategory || ''}
+              onChange={(e) => onFilterChange('serviceCategory', e.target.value)}
+              className="w-full bg-slate-50 border-slate-50 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none appearance-none cursor-pointer"
+            >
+              <option value="">Select Category</option>
+              {SERVICE_CATEGORIES.map((cat) => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+          </div>
+        </div>
+
         {/* Transmission */}
         <div className="space-y-4">
           <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Transmission</label>
@@ -160,7 +182,93 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
           </div>
         </div>
 
-        {/* Color */}
+        {/* Fuel Type */}
+        <div className="space-y-4">
+          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Fuel Type</label>
+          <div className="flex flex-wrap gap-2">
+            {['Petrol', 'Diesel', 'Hybrid', 'Electric'].map((f) => (
+              <button
+                key={f}
+                onClick={() => onFilterChange('fuelType', filters.fuelType === f ? '' : f)}
+                className={cn(
+                  "px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border",
+                  filters.fuelType === f 
+                    ? "bg-accent border-accent text-primary" 
+                    : "bg-slate-50 border-slate-50 text-slate-500 hover:border-slate-200"
+                )}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Year Range */}
+        <div className="space-y-4">
+          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Year Range</label>
+          <div className="grid grid-cols-2 gap-3 items-center">
+            <input 
+              type="number" 
+              placeholder="Min Year" 
+              className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
+              value={filters.minYear || ''}
+              onChange={(e) => onFilterChange('minYear', e.target.value)}
+            />
+            <input 
+              type="number" 
+              placeholder="Max Year" 
+              className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
+              value={filters.maxYear || ''}
+              onChange={(e) => onFilterChange('maxYear', e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Mileage (for sales) */}
+        {onFilterChange && (
+          <div className="space-y-4">
+            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Mileage Range (km)</label>
+            <div className="grid grid-cols-2 gap-3 items-center">
+              <input 
+                type="number" 
+                placeholder="Min" 
+                className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
+                value={filters.minMileage || ''}
+                onChange={(e) => onFilterChange('minMileage', e.target.value)}
+              />
+              <input 
+                type="number" 
+                placeholder="Max" 
+                className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
+                value={filters.maxMileage || ''}
+                onChange={(e) => onFilterChange('maxMileage', e.target.value)}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Seating Capacity */}
+        <div className="space-y-4">
+          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Min Seats</label>
+          <div className="flex gap-2">
+            {[2, 4, 5, 7, 8].map((s) => (
+              <button
+                key={s}
+                onClick={() => onFilterChange('minSeats', filters.minSeats === s ? '' : s)}
+                className={cn(
+                  "flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border",
+                  filters.minSeats === s 
+                    ? "bg-accent border-accent text-primary" 
+                    : "bg-white border-slate-100 text-slate-500 hover:border-slate-200"
+                )}
+              >
+                {s}+
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Color Palette */}
         <div className="space-y-4">
           <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Color Palette</label>
           <div className="flex flex-wrap gap-4 pt-1">

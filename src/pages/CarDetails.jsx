@@ -30,13 +30,13 @@ const CarDetails = () => {
   const { carId } = useParams();
   const { data, isLoading, isError, refetch } = useCar(carId);
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   const car = data?.data;
-  
+
   // Fetch similar cars
-  const { data: similarData, isLoading: isSimilarLoading } = useCars({ 
+  const { data: similarData, isLoading: isSimilarLoading } = useCars({
     category: car?.category,
-    limit: 4 
+    limit: 4
   });
   const similarCars = similarData?.data?.cars?.filter(c => c._id !== carId) || [];
 
@@ -56,19 +56,19 @@ const CarDetails = () => {
       <div className="container px-4 py-8 space-y-10">
         {/* Top Header Row */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <Breadcrumbs 
+          <Breadcrumbs
             items={[
               { label: 'Services', link: '/services' },
               { label: 'Car Sales', link: '/car-sales' },
               { label: `${year} ${brand} ${model}` }
-            ]} 
+            ]}
           />
-          
+
           <div className="relative w-full max-w-xl group">
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-accent transition-colors" />
-            <input 
-              type="text" 
-              placeholder="Search by brand, model, or year..." 
+            <input
+              type="text"
+              placeholder="Search by brand, model, or year..."
               className="w-full bg-slate-50 border border-slate-100 rounded-full pl-14 pr-6 py-4 text-sm font-medium outline-none focus:ring-2 focus:ring-accent transition-all"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -80,44 +80,44 @@ const CarDetails = () => {
           {/* Left Column */}
           <div className="lg:col-span-8 space-y-12">
             <CarGallery images={images} />
-            
+
             <SpecsGrid specs={car} />
 
             <InspectionReport />
 
             <div className="space-y-6">
-               <h2 className="text-2xl font-black text-slate-900 tracking-tight">Vehicle Description</h2>
-               <p className="text-slate-500 text-sm font-medium leading-relaxed">
-                 {description || "No description provided for this vehicle."}
-               </p>
+              <h2 className="text-2xl font-black text-slate-900 tracking-tight">Vehicle Description</h2>
+              <p className="text-slate-500 text-sm font-medium leading-relaxed">
+                {description || "No description provided for this vehicle."}
+              </p>
             </div>
           </div>
 
           {/* Right Column (Sidebar) */}
           <div className="lg:col-span-4">
-             <DetailSidebar car={car} />
+            <DetailSidebar car={car} />
           </div>
         </div>
 
         {/* Similar Cars Section */}
         <div className="space-y-8 pt-12 border-t border-slate-100">
-           <h2 className="text-3xl font-black text-slate-900 tracking-tight">You might also like</h2>
-           
-           {isSimilarLoading ? (
-             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-               {Array(4).fill(0).map((_, i) => <CarCardSkeleton key={i} />)}
-             </div>
-           ) : (
-             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-               {similarCars.length > 0 ? (
-                 similarCars.map(car => (
-                   <DetailedCarCard key={car._id} car={car} />
-                 ))
-               ) : (
-                 <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">No similar vehicles found at the moment.</p>
-               )}
-             </div>
-           )}
+          <h2 className="text-3xl font-black text-slate-900 tracking-tight">You might also like</h2>
+
+          {isSimilarLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {Array(4).fill(0).map((_, i) => <CarCardSkeleton key={i} />)}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {similarCars.length > 0 ? (
+                similarCars.map(car => (
+                  <DetailedCarCard key={car._id} car={car} />
+                ))
+              ) : (
+                <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">No similar vehicles found at the moment.</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

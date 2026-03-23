@@ -39,11 +39,11 @@ const CarRentals = () => {
     <div className="bg-white min-h-screen pb-20">
       <div className="container px-4 py-8 space-y-12">
         {/* Breadcrumbs */}
-        <Breadcrumbs 
+        <Breadcrumbs
           items={[
             { label: 'Services', link: '/services' },
             { label: 'Car Hire & Rentals' }
-          ]} 
+          ]}
         />
 
         {/* Hero Section */}
@@ -52,7 +52,7 @@ const CarRentals = () => {
         {/* Category Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {categories.map((cat, i) => (
-            <RentalCategoryCard 
+            <RentalCategoryCard
               key={i}
               title={cat.title}
               description={cat.description}

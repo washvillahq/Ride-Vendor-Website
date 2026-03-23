@@ -21,7 +21,16 @@ const EmptyState = ({
       <p className="text-sm text-slate-500 max-w-[250px] mt-2 mb-6">
         {description}
       </p>
-      {action}
+      {action && (
+        !React.isValidElement(action) && typeof action === 'object' && action.label ? (
+          <button 
+            onClick={action.onClick}
+            className="px-6 py-2 bg-slate-900 text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-accent hover:text-primary transition-all shadow-lg shadow-slate-200"
+          >
+            {action.label}
+          </button>
+        ) : action
+      )}
     </div>
   );
 };

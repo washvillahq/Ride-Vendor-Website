@@ -14,7 +14,7 @@ import { Search, Car, ShieldCheck, ChevronDown, Calendar } from 'lucide-react';
 const CarHireListing = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState(searchParams.get('searchTerm') || '');
-  
+
   // Extract filters from URL
   const filters = useMemo(() => ({
     type: 'rental',
@@ -26,6 +26,13 @@ const CarHireListing = () => {
     transmission: searchParams.get('transmission') || '',
     color: searchParams.get('color') || '',
     condition: searchParams.get('condition') || '',
+    serviceCategory: searchParams.get('serviceCategory') || '',
+    fuelType: searchParams.get('fuelType') || '',
+    minYear: searchParams.get('minYear') || '',
+    maxYear: searchParams.get('maxYear') || '',
+    minMileage: searchParams.get('minMileage') || '',
+    maxMileage: searchParams.get('maxMileage') || '',
+    minSeats: searchParams.get('minSeats') || '',
     searchTerm: searchParams.get('searchTerm') || '',
     sort: searchParams.get('sort') || '-createdAt',
     page: parseInt(searchParams.get('page') || '1'),
@@ -57,19 +64,19 @@ const CarHireListing = () => {
       <div className="container px-4 py-8 space-y-8">
         {/* Top Header Row */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <Breadcrumbs 
+          <Breadcrumbs
             items={[
               { label: 'Services', link: '/services' },
               { label: 'Car Hire', link: '/car-hire' },
               { label: 'All Vehicles' }
-            ]} 
+            ]}
           />
-          
+
           <form onSubmit={handleSearchSubmit} className="relative w-full max-w-xl group">
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-accent transition-colors" />
-            <input 
-              type="text" 
-              placeholder="Search for rental vehicles..." 
+            <input
+              type="text"
+              placeholder="Search for rental vehicles..."
               className="w-full bg-white border border-slate-100 rounded-full pl-14 pr-6 py-4 text-sm font-medium shadow-sm outline-none focus:ring-2 focus:ring-accent transition-all"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -80,8 +87,8 @@ const CarHireListing = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Sidebar */}
           <div className="lg:col-span-3">
-            <SidebarFilters 
-              filters={filters} 
+            <SidebarFilters
+              filters={filters}
               onFilterChange={handleFilterChange}
               onApply={() => refetch()}
             />
@@ -99,7 +106,7 @@ const CarHireListing = () => {
                   </p>
                 </div>
                 <div className="absolute right-[-20px] top-[-20px] opacity-10 group-hover:opacity-20 transition-opacity rotate-[-15deg] group-hover:rotate-0 duration-500 scale-150">
-                   <Calendar size={140} strokeWidth={1} />
+                  <Calendar size={140} strokeWidth={1} />
                 </div>
               </div>
 
@@ -111,24 +118,24 @@ const CarHireListing = () => {
                   </p>
                 </div>
                 <div className="absolute right-[-20px] top-[-20px] opacity-10 group-hover:opacity-20 transition-opacity rotate-[-15deg] group-hover:rotate-0 duration-500 scale-150">
-                   <ShieldCheck size={140} strokeWidth={1} />
+                  <ShieldCheck size={140} strokeWidth={1} />
                 </div>
               </div>
             </div>
 
             {/* Results Header */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-6">
-               <h2 className="text-2xl font-black text-slate-900">
-                 Showing {isLoading ? '...' : data?.data?.total || 0} Rental Results
-               </h2>
-               
-               <div className="flex items-center gap-3">
-                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sort By:</span>
-                 <button className="flex items-center gap-2 bg-white border border-slate-100 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-900 group">
-                   {filters.sort === '-createdAt' ? 'Newest First' : 'Price: Low to High'}
-                   <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors" />
-                 </button>
-               </div>
+              <h2 className="text-2xl font-black text-slate-900">
+                Showing {isLoading ? '...' : data?.data?.total || 0} Rental Results
+              </h2>
+
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sort By:</span>
+                <button className="flex items-center gap-2 bg-white border border-slate-100 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-900 group">
+                  {filters.sort === '-createdAt' ? 'Newest First' : 'Price: Low to High'}
+                  <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors" />
+                </button>
+              </div>
             </div>
 
             {/* Car Grid */}
@@ -146,7 +153,7 @@ const CarHireListing = () => {
                   ))}
                 </div>
                 <div className="mt-16 flex justify-center">
-                  <Pagination 
+                  <Pagination
                     currentPage={filters.page}
                     totalPages={pagination.totalPages}
                     onPageChange={(page) => handleFilterChange('page', page)}
@@ -154,7 +161,7 @@ const CarHireListing = () => {
                 </div>
               </>
             ) : (
-              <EmptyState 
+              <EmptyState
                 title="No rental vehicles found"
                 description="Try adjusting your filters or search term to find the perfect rental car."
                 action={
