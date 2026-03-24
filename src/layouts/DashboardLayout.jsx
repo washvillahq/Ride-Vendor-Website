@@ -11,9 +11,16 @@ import {
   LogOut, 
   Bell,
   Menu,
-  ShieldCheck
+  ShieldCheck,
+  Search,
+  HelpCircle,
+  Car,
+  List,
+  Heart,
+  CreditCard,
+  LogOut as LogOutIcon
 } from 'lucide-react';
-import logo from '../assets/ridevendor_logo.png';
+import logo from '../assets/ridevendor_white.png';
 
 const DashboardLayout = () => {
   const { user } = useAuthStore();
@@ -22,9 +29,11 @@ const DashboardLayout = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   const navLinks = [
-    { name: 'Overview', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'My Bookings', path: '/dashboard/bookings', icon: CalendarClock },
-    { name: 'Orders', path: '/dashboard/orders', icon: ShoppingBag },
+    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { name: 'My Rentals', path: '/dashboard/bookings', icon: Car },
+    { name: 'My Listings', path: '/dashboard/listings', icon: List },
+    { name: 'Saved Vehicles', path: '/dashboard/saved', icon: Heart },
+    { name: 'My Purchases', path: '/dashboard/orders', icon: CreditCard },
     { name: 'Profile', path: '/dashboard/profile', icon: User },
   ];
 
@@ -50,7 +59,7 @@ const DashboardLayout = () => {
           </button>
         </div>
 
-        <nav className="flex-1 px-4 space-y-2">
+        <nav className="flex-1 px-4 space-y-1">
           {navLinks.map((link) => {
             const Icon = link.icon;
             const isActive = location.pathname === link.path;
@@ -60,41 +69,38 @@ const DashboardLayout = () => {
                 key={link.path} 
                 to={link.path} 
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center gap-4 px-5 py-4 text-xs font-black uppercase tracking-widest rounded-2xl transition-all duration-300 ${
+                className={`flex items-center gap-4 px-5 py-3 text-sm font-medium rounded-xl transition-all duration-300 ${
                   isActive 
-                    ? 'bg-accent text-primary shadow-xl shadow-accent/10 translate-x-2' 
+                    ? 'bg-accent text-black shadow-lg shadow-accent/20' 
                     : 'text-slate-400 hover:text-white hover:bg-white/5'
                 }`}
               >
-                <Icon size={18} className={isActive ? 'text-primary' : 'text-slate-400'} />
+                <Icon size={20} className={isActive ? 'text-black' : 'text-slate-400'} />
                 {link.name}
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-6 mt-auto">
-          <div className="bg-white/5 rounded-[2rem] p-6 space-y-4 border border-white/5">
-             <div className="flex items-center gap-3">
-               <div className="h-10 w-10 rounded-full bg-accent/20 flex items-center justify-center text-accent">
-                 <ShieldCheck size={20} />
-               </div>
-               <div>
-                 <p className="text-[10px] font-black uppercase tracking-widest text-slate-300">Account status</p>
-                 <p className="text-xs font-bold text-white">Verified Member</p>
-               </div>
-             </div>
-             <Button 
-                variant="ghost" 
-                className="w-full justify-start text-[10px] font-black uppercase tracking-widest text-red-400 hover:text-red-300 hover:bg-red-950/30 rounded-xl px-4 py-3" 
-                onClick={() => logout()}
-                isLoading={isLoading}
-              >
-                <LogOut size={16} className="mr-3" />
-                Sign Out
-              </Button>
-          </div>
+        <div className="px-4 py-6 border-t border-white/5 flex flex-col gap-1">
+            <Link 
+              to="/help" 
+              className="flex items-center gap-4 px-5 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-all"
+            >
+              <HelpCircle size={20} />
+              Help Center
+            </Link>
+            <button 
+              onClick={() => logout()}
+              disabled={isLoading}
+              className="flex items-center gap-4 px-5 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-all w-full"
+            >
+              <LogOutIcon size={20} />
+              Logout
+            </button>
         </div>
+
+
       </aside>
 
       {/* Main Content Area */}
@@ -104,9 +110,15 @@ const DashboardLayout = () => {
             <Menu size={20} />
           </button>
           
-          <div className="hidden lg:flex items-center gap-2 text-slate-400">
-             <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-             <span className="text-[10px] font-black uppercase tracking-widest">System Operational</span>
+          <div className="flex-1 max-w-md mx-8 hidden lg:block">
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-accent transition-colors" size={18} />
+              <input 
+                type="text" 
+                placeholder="Search orders..."
+                className="w-full bg-slate-50 border-none rounded-xl py-2.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-accent/20 transition-all outline-none"
+              />
+            </div>
           </div>
 
           <div className="flex items-center gap-6">
@@ -122,8 +134,8 @@ const DashboardLayout = () => {
                    <p className="text-sm font-black text-slate-900 leading-tight">{user?.name || 'User'}</p>
                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">{user?.role || 'customer'}</p>
                 </div>
-                <div className="h-11 w-11 rounded-2xl bg-[#002E3E] border-4 border-white shadow-xl flex items-center justify-center font-black text-white overflow-hidden">
-                   {user?.name?.charAt(0) || 'U'}
+                <div className="h-10 w-10 rounded-full bg-[#002E3E] border border-slate-100 flex items-center justify-center font-bold text-white overflow-hidden text-sm">
+                   {user?.name?.split(' ').map(n => n[0]).join('') || 'JD'}
                 </div>
              </div>
           </div>

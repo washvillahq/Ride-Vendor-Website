@@ -35,6 +35,8 @@ const DashboardHome = lazy(() => import('../pages/dashboard/DashboardHome'));
 const MyBookings = lazy(() => import('../pages/dashboard/MyBookings'));
 const MyOrders = lazy(() => import('../pages/dashboard/MyOrders'));
 const Profile = lazy(() => import('../pages/dashboard/Profile'));
+const SavedVehicles = lazy(() => import('../pages/dashboard/SavedVehicles'));
+const Listings = lazy(() => import('../pages/dashboard/Listings'));
 const PaymentSuccess = lazy(() => import('../pages/PaymentSuccess'));
 const AdminCars = lazy(() => import('../pages/admin/AdminCars'));
 const AdminServices = lazy(() => import('../pages/admin/AdminServices'));
@@ -82,6 +84,8 @@ export const router = createBrowserRouter([
           { path: 'bookings', element: <Suspense fallback={<PageLoading />}><MyBookings /></Suspense> },
           { path: 'orders', element: <Suspense fallback={<PageLoading />}><MyOrders /></Suspense> },
           { path: 'profile', element: <Suspense fallback={<PageLoading />}><Profile /></Suspense> },
+          { path: 'saved', element: <Suspense fallback={<PageLoading />}><SavedVehicles /></Suspense> },
+          { path: 'listings', element: <Suspense fallback={<PageLoading />}><Listings /></Suspense> },
         ]
       }
     ]

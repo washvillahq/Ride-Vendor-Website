@@ -77,6 +77,7 @@ const DashboardHome = () => {
           <Button
             variant="outline"
             className="px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.1em] border-slate-100"
+            onClick={() => window.location.href = '/dashboard/profile'}
           >
             Manage Profile
           </Button>
@@ -93,22 +94,26 @@ const DashboardHome = () => {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <SummaryCard
-          title="Active Rentals"
-          value={activeBookings}
-          isLoading={loadingBookings}
-          icon={<Calendar className="w-6 h-6 text-emerald-400" />}
-          colorClass="bg-emerald-500/20"
-          gradientClass="bg-[#002E3E]"
-        />
-        <SummaryCard
-          title="Total Orders"
-          value={orders.length}
-          isLoading={loadingOrders}
-          icon={<ShoppingBag className="w-6 h-6 text-blue-400" />}
-          colorClass="bg-blue-500/20"
-          gradientClass="bg-slate-900"
-        />
+        <div onClick={() => window.location.href = '/dashboard/bookings'} className="cursor-pointer">
+          <SummaryCard
+            title="Active Rentals"
+            value={activeBookings}
+            isLoading={loadingBookings}
+            icon={<Calendar className="w-6 h-6 text-emerald-400" />}
+            colorClass="bg-emerald-500/20"
+            gradientClass="bg-[#002E3E]"
+          />
+        </div>
+        <div onClick={() => window.location.href = '/dashboard/orders'} className="cursor-pointer">
+          <SummaryCard
+            title="Total Orders"
+            value={orders.length}
+            isLoading={loadingOrders}
+            icon={<ShoppingBag className="w-6 h-6 text-blue-400" />}
+            colorClass="bg-blue-500/20"
+            gradientClass="bg-slate-900"
+          />
+        </div>
       </div>
 
       <div className="space-y-6">
@@ -130,7 +135,7 @@ const DashboardHome = () => {
                 <div key={booking._id} className="group p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:bg-slate-50 transition-all duration-300">
                   <div className="flex items-center gap-5">
                     <div className="h-14 w-14 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center font-black text-slate-900 relative overflow-hidden group-hover:scale-110 transition-transform">
-                      {booking.car?.images?.[0] ? <img src={booking.car.images[0]} alt="" className="object-cover w-full h-full" /> : <Car size={24} className="text-slate-300" />}
+                      {booking.car?.images?.[0]?.url ? <img src={booking.car.images[0].url} alt="" className="object-cover w-full h-full" /> : <Car size={24} className="text-slate-300" />}
                     </div>
                     <div className="space-y-1">
                       <p className="font-black text-slate-900 leading-none">{booking.car?.title || 'Luxury Hire'}</p>

@@ -19,3 +19,8 @@ export const getCurrentUser = async () => {
   const response = await api.get('/auth/me');
   return response;
 };
+
+export const updateProfile = async ({ userId, data }) => {
+  const response = await api.patch(`/users/${userId}`, data);
+  return response;
+};

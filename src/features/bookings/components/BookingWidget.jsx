@@ -158,7 +158,7 @@ const BookingWidget = ({ car }) => {
         <div className="mb-6">
           <p className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-1">Rental Rate</p>
           <div className="flex items-baseline gap-1 focus-within:">
-            <span className="text-4xl font-black tracking-tighter">${car.pricePerDay}</span>
+            <span className="text-4xl font-black tracking-tighter">₦{car.pricePerDay}</span>
             <span className="text-slate-500 font-bold">/ day</span>
           </div>
         </div>
@@ -215,7 +215,7 @@ const BookingWidget = ({ car }) => {
                         <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-tighter">One-time fee</p>
                       </div>
                     </div>
-                    <span className="text-sm font-black text-black bg-white px-2 py-1 rounded-lg border shadow-sm">${service.price}</span>
+                    <span className="text-sm font-black text-black bg-white px-2 py-1 rounded-lg border shadow-sm">₦{service.price}</span>
                   </label>
                 ))}
               </div>
@@ -234,8 +234,8 @@ const BookingWidget = ({ car }) => {
                   <span>{priceSummary.days} days</span>
                 </div>
                 <div className="flex justify-between items-baseline">
-                  <span className="text-sm text-slate-400 font-medium">${car.pricePerDay} / day</span>
-                  <span className="font-black text-lg">${priceSummary.basePrice.toLocaleString()}</span>
+                  <span className="text-sm text-slate-400 font-medium">₦{car.pricePerDay} / day</span>
+                  <span className="font-black text-lg">₦{priceSummary.basePrice.toLocaleString()}</span>
                 </div>
               </div>
 
@@ -246,7 +246,7 @@ const BookingWidget = ({ car }) => {
                   </div>
                   <div className="flex justify-between items-baseline">
                     <span className="text-sm text-slate-400 font-medium">Selected Services</span>
-                    <span className="font-black text-lg">${priceSummary.servicesPrice.toLocaleString()}</span>
+                    <span className="font-black text-lg">₦{priceSummary.servicesPrice.toLocaleString()}</span>
                   </div>
                 </div>
               )}
@@ -254,7 +254,7 @@ const BookingWidget = ({ car }) => {
               <div className="pt-4 border-t border-white/20 flex justify-between items-end">
                 <div className="flex flex-col">
                   <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Grand Total</span>
-                  <span className="text-3xl font-black text-white tracking-tighter">${priceSummary.total.toLocaleString()}</span>
+                  <span className="text-3xl font-black text-white tracking-tighter">₦{priceSummary.total.toLocaleString()}</span>
                 </div>
                 <span className="text-[10px] text-slate-500 font-bold uppercase mb-1">Tax Incl.</span>
               </div>

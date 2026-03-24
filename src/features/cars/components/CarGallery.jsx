@@ -29,10 +29,18 @@ const CarGallery = ({ images = [] }) => {
         </div>
 
         {/* Navigation Arrows */}
-        <button onClick={prevSlide} className="absolute left-6 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-white/40">
+        <button 
+          onClick={(e) => { e.preventDefault(); prevSlide(); }} 
+          className="absolute left-6 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-black/20 backdrop-blur-md text-white flex items-center justify-center z-10 transition-all hover:bg-black/60 active:scale-90"
+          aria-label="Previous image"
+        >
           <ChevronLeft className="w-6 h-6" />
         </button>
-        <button onClick={nextSlide} className="absolute right-6 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-white/40">
+        <button 
+          onClick={(e) => { e.preventDefault(); nextSlide(); }} 
+          className="absolute right-6 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-black/20 backdrop-blur-md text-white flex items-center justify-center z-10 transition-all hover:bg-black/60 active:scale-90"
+          aria-label="Next image"
+        >
           <ChevronRight className="w-6 h-6" />
         </button>
       </div>

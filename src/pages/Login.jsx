@@ -9,7 +9,7 @@ import Button from '../components/ui/Button';
 import { Mail, Lock } from 'lucide-react';
 
 const LoginPage = () => {
-  const { mutate: login, isLoading } = useLogin();
+  const { mutate: login, isPending: isLoading } = useLogin();
   
   const {
     register,

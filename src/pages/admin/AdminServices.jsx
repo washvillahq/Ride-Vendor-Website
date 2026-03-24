@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'react-hot-toast';
-import { useServices, useCreateService } from '../../features/services/hooks';
+import { useServices, useCreateService, useUpdateService, useDeleteService } from '../../features/services/hooks';
 import { PageHeader } from '../../components/shared/Headers';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
@@ -13,6 +13,17 @@ import ErrorState from '../../components/feedback/ErrorState';
 import Modal from '../../components/ui/Modal';
 import Badge from '../../components/ui/Badge';
 import Checkbox from '../../components/ui/Checkbox';
+import { cn } from '../../utils/cn';
+import { 
+  Plus, 
+  Settings2, 
+  Trash2, 
+  Edit3, 
+  Layers, 
+  Search,
+  CheckCircle2,
+  DollarSign
+} from 'lucide-react';
 
 const serviceSchema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -23,8 +34,11 @@ const serviceSchema = z.object({
 
 const AdminServices = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingService, setEditingService] = useState(null);
   const { data, isLoading, isError, refetch } = useServices();
-  const { mutateAsync: createService, isLoading: isSubmitting } = useCreateService();
+  const { mutateAsync: createService, isLoading: isCreating } = useCreateService();
+  const { mutateAsync: updateService, isLoading: isUpdating } = useUpdateService();
+  const { mutateAsync: deleteService } = useDeleteService();
   
   const services = data?.data?.services || [];
   const categories = ['Sedan', 'SUV', 'Luxury', 'Sports', 'Truck', 'Van'];
@@ -39,62 +53,136 @@ const AdminServices = () => {
     defaultValues: { applicableTo: [] }
   });
 
-  const onSubmit = async (data) => {
-    try {
-      await createService({
-        ...data,
-        price: Number(data.price)
-      });
-      toast.success('Service created successfully!');
-      setIsModalOpen(false);
-      reset();
-    } catch (err) {
-      // Handled globally
+  const handleEdit = (service) => {
+    setEditingService(service);
+    reset({
+      name: service.name,
+      description: service.description,
+      price: service.price.toString(),
+      applicableTo: service.applicableTo,
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this service?')) {
+      try {
+        await deleteService(id);
+        toast.success('Service deleted successfully');
+      } catch (err) {}
     }
   };
 
+  const onSubmit = async (data) => {
+    try {
+      const payload = {
+        ...data,
+        price: Number(data.price)
+      };
+
+      if (editingService) {
+        await updateService({ id: editingService._id, data: payload });
+        toast.success('Service updated successfully!');
+      } else {
+        await createService(payload);
+        toast.success('Service created successfully!');
+      }
+      
+      setIsModalOpen(false);
+      setEditingService(null);
+      reset();
+    } catch (err) {}
+  };
+
+  const isSubmitting = isCreating || isUpdating;
+
   return (
-    <div className="space-y-8">
-      <PageHeader 
-        title="Extra Services" 
-        description="Configure add-on services like Insurance, GPS, and Chauffeurs for rentals."
-        actions={
-          <Button onClick={() => setIsModalOpen(true)}>
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
-            Add Service
+    <div className="space-y-10 pb-20">
+      <section className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+           <h1 className="text-4xl font-black text-slate-900 tracking-tight">Extra Services</h1>
+           <p className="text-slate-500 mt-1 font-medium">Configure add-on services like Insurance, GPS, and Chauffeurs.</p>
+        </div>
+        <div className="flex items-center gap-4">
+           <div className="relative group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-black transition-colors" />
+              <input 
+                type="text" 
+                placeholder="Search services..." 
+                className="pl-11 pr-6 py-3 bg-white border border-slate-200 rounded-2xl text-sm focus:ring-2 focus:ring-black outline-none transition-all w-64 shadow-sm"
+              />
+           </div>
+           <Button 
+            className="rounded-2xl px-6 py-6 shadow-lg shadow-slate-900/10"
+            onClick={() => {
+              setEditingService(null);
+              reset({ applicableTo: [] });
+              setIsModalOpen(true);
+            }}
+           >
+            <Plus className="w-5 h-5 mr-2" />
+            Define Service
           </Button>
-        }
-      />
+        </div>
+      </section>
 
       {isError ? (
         <ErrorState onRetry={refetch} />
       ) : services.length > 0 ? (
-        <div className="bg-white border rounded-[2rem] overflow-hidden shadow-sm">
+        <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
           <Table>
-            <TableHeader>
+            <TableHeader className="bg-slate-50/50">
               <TableRow>
-                <TableHead>Service Name</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Applicable Categories</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead className="py-5 px-8 font-black uppercase tracking-widest text-[10px]">Service Identity</TableHead>
+                <TableHead className="py-5 font-black uppercase tracking-widest text-[10px]">Registry Cost</TableHead>
+                <TableHead className="py-5 font-black uppercase tracking-widest text-[10px]">Applicable Scope</TableHead>
+                <TableHead className="py-5 px-8 font-black uppercase tracking-widest text-[10px] text-right">Management</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {services.map((service) => (
-                <TableRow key={service._id}>
-                  <TableCell className="font-black text-slate-900">{service.name}</TableCell>
-                  <TableCell className="text-slate-500 text-sm max-w-xs truncate">{service.description}</TableCell>
-                  <TableCell className="font-bold">${service.price}</TableCell>
-                  <TableCell>
-                    <div className="flex flex-wrap gap-1">
+                <TableRow key={service._id} className="group hover:bg-slate-50/50 transition-colors">
+                  <TableCell className="py-6 px-8">
+                     <div className="flex items-center gap-4">
+                        <div className="h-12 w-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-xs shadow-lg shadow-slate-900/10">
+                           {service.name.charAt(0)}
+                        </div>
+                        <div>
+                           <p className="font-black text-slate-900 leading-none text-base">{service.name}</p>
+                           <p className="text-[10px] font-bold text-slate-400 mt-1.5 uppercase tracking-widest line-clamp-1 max-w-xs">{service.description}</p>
+                        </div>
+                     </div>
+                  </TableCell>
+                  <TableCell className="py-6">
+                    <div className="flex flex-col">
+                       <span className="font-black text-slate-900 text-base">₦{service.price?.toLocaleString()}</span>
+                       <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Base Rate</span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="py-6">
+                    <div className="flex flex-wrap gap-1.5">
                       {service.applicableTo.map(cat => (
-                        <Badge key={cat} variant="outline" className="text-[10px] uppercase font-bold">{cat}</Badge>
+                        <Badge key={cat} className="text-[9px] uppercase font-black tracking-widest px-2.5 py-1 bg-slate-100 text-slate-500 rounded-lg">{cat}</Badge>
                       ))}
                     </div>
                   </TableCell>
-                   <TableCell className="text-right">
-                    <button className="text-red-500 hover:text-red-700 font-bold text-xs uppercase transition-colors">Delete</button>
+                   <TableCell className="py-6 px-8 text-right">
+                    <div className="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button 
+                        onClick={() => handleEdit(service)}
+                        className="p-2.5 bg-white text-slate-600 hover:text-black border border-slate-100 hover:border-slate-300 shadow-sm rounded-xl transition-all"
+                        title="Modify Record"
+                      >
+                        <Edit3 size={16} />
+                      </button>
+                      <button 
+                         onClick={() => handleDelete(service._id)}
+                         className="p-2.5 bg-white text-slate-400 hover:text-red-500 border border-slate-100 hover:border-red-100 shadow-sm rounded-xl transition-all"
+                         title="Archive Service"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -104,13 +192,39 @@ const AdminServices = () => {
       ) : !isLoading ? (
         <EmptyState title="No services configured" description="Add your first rental service to get started." />
       ) : (
-        <div className="p-12 text-center text-slate-400 font-bold animate-pulse uppercase tracking-widest">Loading Services...</div>
+        <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
+          <Table>
+            <TableHeader className="bg-slate-50/50">
+              <TableRow>
+                <TableHead className="py-5 px-8 font-black uppercase tracking-widest text-[10px]">Service Identity</TableHead>
+                <TableHead className="py-5 font-black uppercase tracking-widest text-[10px]">Registry Cost</TableHead>
+                <TableHead className="py-5 font-black uppercase tracking-widest text-[10px]">Applicable Scope</TableHead>
+                <TableHead className="py-5 px-8 font-black uppercase tracking-widest text-[10px] text-right">Management</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {Array(5).fill(0).map((_, i) => (
+                <TableRow key={i}>
+                  <TableCell className="py-6 px-8" colSpan={4}>
+                    <div className="flex items-center gap-4">
+                      <Skeleton className="h-12 w-12 rounded-2xl" />
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-48" />
+                        <Skeleton className="h-3 w-32" />
+                      </div>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       )}
 
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)}
-        title="Create New Service"
+        title={editingService ? 'Edit Service' : 'Create New Service'}
         size="md"
       >
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pt-4">
@@ -126,7 +240,7 @@ const AdminServices = () => {
              {errors.description && <p className="text-xs text-red-500 font-bold">{errors.description.message}</p>}
           </div>
 
-          <Input label="Price ($)" type="number" {...register('price')} error={errors.price} />
+          <Input label="Price (₦)" type="number" {...register('price')} error={errors.price} />
 
           <div className="space-y-3">
              <label className="text-sm font-bold text-slate-700 leading-none">Applicable Car Categories</label>
@@ -146,7 +260,9 @@ const AdminServices = () => {
 
           <div className="flex justify-end gap-3 pt-4">
              <Button variant="ghost" type="button" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-             <Button type="submit" isLoading={isSubmitting}>Create Service</Button>
+             <Button type="submit" isLoading={isSubmitting}>
+                {editingService ? 'Update Service' : 'Create Service'}
+             </Button>
           </div>
         </form>
       </Modal>

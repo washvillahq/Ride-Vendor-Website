@@ -9,7 +9,7 @@ import Button from '../components/ui/Button';
 import { User, Mail, Phone, Lock } from 'lucide-react';
 
 const RegisterPage = () => {
-  const { mutate: registerUser, isLoading } = useRegister();
+  const { mutate: registerUser, isPending: isLoading } = useRegister();
   
   const {
     register,

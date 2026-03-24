@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../../features/auth/hooks';
+import { useAuth, useUpdateProfile } from '../../features/auth/hooks';
 import Button from '../../components/ui/Button';
 import dayjs from 'dayjs';
 import { 
@@ -15,21 +15,73 @@ import {
   Lock
 } from 'lucide-react';
 
-const InfoSection = ({ label, value, icon: Icon }) => (
+const InfoSection = ({ label, value, icon: Icon, isEditing, onChange, name, placeholder }) => (
   <div className="flex items-center gap-4 p-6 rounded-[2rem] bg-slate-50 border border-slate-100 group hover:border-accent/30 transition-all duration-300">
     <div className="h-12 w-12 rounded-2xl bg-white flex items-center justify-center text-slate-400 group-hover:text-accent group-hover:bg-accent/5 transition-all">
       <Icon size={20} />
     </div>
     <div className="flex-1">
       <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">{label}</p>
-      <p className="text-sm font-black text-slate-900 tracking-tight">{value || 'Not provided'}</p>
+      {isEditing && onChange ? (
+        <input 
+          type="text" 
+          name={name}
+          value={value || ''} 
+          onChange={onChange}
+          placeholder={placeholder}
+          className="w-full bg-transparent text-sm font-black text-slate-900 tracking-tight outline-none border-b border-slate-300 focus:border-accent placeholder:font-medium placeholder:text-slate-300 pb-1"
+        />
+      ) : (
+        <p className="text-sm font-black text-slate-900 tracking-tight cursor-default">{value || 'Not provided'}</p>
+      )}
     </div>
-    <ChevronRight size={16} className="text-slate-300 opacity-0 group-hover:opacity-100 transition-all" />
+    {!isEditing && <ChevronRight size={16} className="text-slate-300 opacity-0 group-hover:opacity-100 transition-all" />}
   </div>
 );
 
 const Profile = () => {
   const { user } = useAuth();
+  const { mutate: updateProfile, isPending } = useUpdateProfile();
+  
+  const [isEditing, setIsEditing] = React.useState(false);
+  const [formData, setFormData] = React.useState({
+    name: user?.name || '',
+    phone: user?.phone || ''
+  });
+
+  // Sync state if user data updates externally
+  React.useEffect(() => {
+    if (!isEditing) {
+      setFormData({
+        name: user?.name || '',
+        phone: user?.phone || ''
+      });
+    }
+  }, [user, isEditing]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleUpdate = () => {
+    if (isEditing) {
+      // Save changes
+      updateProfile({
+        userId: user._id,
+        data: {
+          name: formData.name,
+          phone: formData.phone
+        }
+      }, {
+        onSuccess: () => {
+          setIsEditing(false);
+        }
+      });
+    } else {
+      setIsEditing(true);
+    }
+  };
 
   return (
     <div className="space-y-12 max-w-6xl pb-10">
@@ -38,9 +90,26 @@ const Profile = () => {
           <h1 className="text-4xl font-black text-slate-900 tracking-tighter">Account Profile</h1>
           <p className="text-slate-500 font-medium tracking-tight">Manage your personal identification and secure credentials.</p>
         </div>
-        <Button variant="accent" className="rounded-2xl px-8 py-4 text-[10px] font-black uppercase tracking-widest shadow-xl shadow-accent/20">
-          Update Profile
-        </Button>
+        <div className="flex gap-4">
+          {isEditing && (
+            <Button 
+              variant="outline" 
+              onClick={() => setIsEditing(false)}
+              disabled={isPending}
+              className="rounded-2xl px-6 py-4 text-[10px] font-black uppercase tracking-widest border-slate-200"
+            >
+              Cancel
+            </Button>
+          )}
+          <Button 
+            variant="accent" 
+            onClick={handleUpdate}
+            disabled={isPending}
+            className="rounded-2xl px-8 py-4 text-[10px] font-black uppercase tracking-widest shadow-xl shadow-accent/20"
+          >
+            {isPending ? 'Saving...' : (isEditing ? 'Save Changes' : 'Update Profile')}
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -99,10 +168,35 @@ const Profile = () => {
         <div className="lg:col-span-8 space-y-8">
            <div className="bg-white rounded-[2.5rem] border border-slate-100 p-4 shadow-sm">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                 <InfoSection label="Legal Name" value={user?.name} icon={User} />
-                 <InfoSection label="Contact Email" value={user?.email} icon={Mail} />
-                 <InfoSection label="Verified Phone" value={user?.phone} icon={Phone} />
-                 <InfoSection label="Member Since" value={dayjs(user?.createdAt).format('MMMM D, YYYY')} icon={Calendar} />
+                 <InfoSection 
+                   label="Legal Name" 
+                   value={isEditing ? formData.name : user?.name} 
+                   icon={User} 
+                   isEditing={isEditing}
+                   name="name"
+                   onChange={handleChange}
+                   placeholder="Enter your full name"
+                 />
+                 <InfoSection 
+                   label="Contact Email" 
+                   value={user?.email} 
+                   icon={Mail} 
+                   // Email is usually not editable freely without verification
+                 />
+                 <InfoSection 
+                   label="Verified Phone" 
+                   value={isEditing ? formData.phone : user?.phone} 
+                   icon={Phone} 
+                   isEditing={isEditing}
+                   name="phone"
+                   onChange={handleChange}
+                   placeholder="Enter phone number"
+                 />
+                 <InfoSection 
+                   label="Member Since" 
+                   value={dayjs(user?.createdAt).format('MMMM D, YYYY')} 
+                   icon={Calendar} 
+                 />
               </div>
            </div>
 

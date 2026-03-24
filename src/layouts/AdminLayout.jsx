@@ -1,66 +1,122 @@
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useLogout } from '../features/auth/hooks';
 import Button from '../components/ui/Button';
+import { cn } from '../utils/cn';
+import {
+  LayoutDashboard,
+  Car,
+  Settings,
+  CalendarClock,
+  ShoppingBag,
+  Users,
+  LogOut,
+  Bell,
+  Search,
+  ChevronDown
+} from 'lucide-react';
+import logo from '../assets/ridevendor_white.png';
 
 const AdminLayout = () => {
   const { user } = useAuthStore();
   const { mutate: logout, isLoading } = useLogout();
+  const location = useLocation();
+
+  const navLinks = [
+    { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
+    { name: 'Manage Cars', path: '/admin/cars', icon: Car },
+    { name: 'Services', path: '/admin/services', icon: Settings },
+    { name: 'Bookings', path: '/admin/bookings', icon: CalendarClock },
+    { name: 'Orders', path: '/admin/orders', icon: ShoppingBag },
+    { name: 'Users', path: '/admin/users', icon: Users },
+  ];
 
   return (
-    <div className="flex min-h-screen bg-slate-900">
-      <aside className="w-64 border-r border-slate-800 hidden md:flex flex-col">
-        <div className="p-6 border-b border-slate-800 flex items-center gap-2">
-          <div className="h-8 w-8 bg-red-600 rounded-lg flex items-center justify-center font-bold text-white">A</div>
-          <span className="font-bold text-xl text-white tracking-tighter">RideVendor Admin</span>
+    <div className="flex min-h-screen bg-[#F8FAFB]">
+      {/* Sidebar */}
+      <aside className="w-72 bg-[#00212E] hidden lg:flex flex-col text-white shadow-[10px_0_40px_rgba(0,0,0,0.04)] border-r border-white/5">
+        <div className="p-8 pb-12">
+          <Link to="/admin" className="flex items-center gap-3 group">
+            <img src={logo} alt="Ridevendor" className="h-10 w-auto transition-transform group-hover:scale-105 duration-300" />
+          </Link>
         </div>
-        <nav className="flex-1 p-4 space-y-1">
-          <Link to="/admin" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
-            Dashboard
-          </Link>
-          <Link to="/admin/cars" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
-            Manage Cars
-          </Link>
-          <Link to="/admin/services" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
-            Services
-          </Link>
-          <Link to="/admin/bookings" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
-            Bookings
-          </Link>
-          <Link to="/admin/orders" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
-            Orders
-          </Link>
-          <Link to="/admin/users" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-300 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
-            Users
-          </Link>
+
+        <nav className="flex-1 px-5 space-y-2">
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+            const isActive = location.pathname === link.path;
+
+            return (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={cn(
+                  "flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest rounded-2xl transition-all duration-500",
+                  isActive
+                    ? 'bg-accent text-black shadow-xl shadow-accent/10'
+                    : 'text-slate-400 hover:text-white hover:bg-white/5'
+                )}
+              >
+                <Icon size={18} className={cn("transition-colors duration-500", isActive ? 'text-black' : 'text-slate-500 group-hover:text-white')} />
+                {link.name}
+              </Link>
+            );
+          })}
         </nav>
-        <div className="p-4 border-t border-slate-800">
+
+        <div className="p-8 mt-auto border-t border-white/5">
           <Button
             variant="ghost"
-            className="w-full justify-start text-slate-400 hover:text-white hover:bg-slate-800"
+            className="w-full justify-start text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-red-400 hover:bg-red-400/5 rounded-2xl px-5 py-4 transition-all"
             onClick={() => logout()}
             isLoading={isLoading}
           >
-            Exit Admin
+            <LogOut size={18} className="mr-4" />
+            Terminate Session
           </Button>
         </div>
       </aside>
 
-      <div className="flex-1 flex flex-col bg-slate-50">
-        <header className="h-16 bg-white border-b flex items-center px-6 justify-between">
-          <div className="font-bold md:hidden">Admin</div>
-          <div className="flex items-center gap-4">
-            <Link to="/">
-              <Button variant="outline" size="sm">View Site</Button>
-            </Link>
-            <div className="h-8 w-8 rounded-full bg-slate-200 border flex items-center justify-center font-bold text-xs uppercase">
-              {user?.name?.charAt(0) || 'A'}
+      <div className="flex-1 flex flex-col min-h-screen">
+        <header className="h-20 bg-white border-b border-slate-100 flex items-center px-8 justify-between sticky top-0 z-10">
+          <div className="flex-1 max-w-md hidden lg:block">
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+              <input
+                type="text"
+                placeholder="Global admin search..."
+                className="w-full bg-slate-50 border-none rounded-xl py-2.5 pl-12 pr-4 text-sm outline-none focus:ring-2 focus:ring-accent/20 transition-all"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-6">
+            <button className="relative h-12 w-12 flex items-center justify-center text-slate-400 hover:text-black hover:bg-slate-50 rounded-2xl transition-all">
+              <Bell size={20} />
+              <span className="absolute top-3.5 right-3.5 h-2 w-2 bg-red-500 rounded-full border-2 border-white shadow-sm" />
+            </button>
+            <div className="h-8 w-[1px] bg-slate-100 mx-1" />
+            <div className="flex items-center gap-4 pl-2 cursor-pointer group">
+              <div className="text-right hidden sm:block">
+                <p className="text-[11px] font-black text-slate-900 leading-none uppercase tracking-widest">{user?.name || 'Administrator'}</p>
+                <p className="text-[9px] font-bold text-blue-500 uppercase tracking-[0.2em] mt-1.5 opacity-70">Super Admin</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="h-11 w-11 rounded-2xl bg-white border-2 border-slate-100 p-0.5 transition-transform group-hover:scale-105 duration-300">
+                  <div className="h-full w-full rounded-xl bg-slate-900 flex items-center justify-center font-black text-white text-[11px] uppercase tracking-tighter">
+                    {user?.name?.split(' ').map(n => n[0]).join('') || 'AD'}
+                  </div>
+                </div>
+                <ChevronDown size={14} className="text-slate-300 group-hover:text-black transition-colors md:block hidden" />
+              </div>
             </div>
           </div>
         </header>
-        <main className="p-4 md:p-8">
-          <Outlet />
+        <main className="flex-1 p-8 overflow-x-hidden bg-slate-50/50">
+          <div className="max-w-7xl mx-auto">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>
@@ -68,3 +124,4 @@ const AdminLayout = () => {
 };
 
 export default AdminLayout;
+

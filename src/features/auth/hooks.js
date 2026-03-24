@@ -70,3 +70,31 @@ export const useAuth = () => {
   const { user, isAuthenticated, isLoading } = useAuthStore();
   return { user, isAuthenticated, isLoading };
 };
+
+export const useUpdateProfile = () => {
+  const queryClient = useQueryClient();
+  const { setUser } = useAuthStore();
+  
+  return useMutation({
+    mutationFn: authApi.updateProfile,
+    onSuccess: (data) => {
+      const updatedUser = data.data;
+      setUser(updatedUser);
+      // Also update the cached auth user data
+      queryClient.setQueryData(QUERY_KEYS.auth.me(), (oldData) => {
+        if (!oldData) return oldData;
+        return {
+          ...oldData,
+          data: {
+             ...oldData.data,
+             user: updatedUser
+          }
+        };
+      });
+      toast.success('Profile updated successfully!');
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || 'Failed to update profile');
+    }
+  });
+};

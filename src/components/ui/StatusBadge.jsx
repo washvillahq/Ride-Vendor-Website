@@ -8,6 +8,8 @@ const StatusBadge = ({ status }) => {
       case 'completed':
       case 'confirmed':
       case 'success':
+      case 'shipped':
+      case 'delivered':
         return { variant: 'success', label: s };
       case 'pending':
       case 'waiting':

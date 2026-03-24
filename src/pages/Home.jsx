@@ -6,6 +6,14 @@ import CarCardSkeleton from '../features/cars/components/CarCardSkeleton';
 import Button from '../components/ui/Button';
 import { SectionHeader } from '../components/shared/Headers';
 
+import carhire from '../assets/carhire.png';
+import carsale from '../assets/carsale.png';
+import caraccessories from '../assets/caraccessories.png';
+import carleasing from '../assets/carleasing.png';
+import consignement from '../assets/consignement.png';
+import vehicletracking from '../assets/vehicletracking.png';
+import blogImage from '../assets/blog_image.png';
+
 import {
   Car,
   Tag,
@@ -36,12 +44,12 @@ const Hero = () => (
       {/* Service Icons */}
       <div className="grid grid-cols-3 md:grid-cols-6 gap-8 pt-4">
         {[
-          { icon: Car, label: "Rentals & Services", path: "/car-hire" },
-          { icon: Tag, label: "Car Sales", path: "/car-sales" },
-          { icon: Wrench, label: "Accessories & Spare Parts", path: "/services/parts" },
-          { icon: Droplets, label: "Car Washing", path: "/services/washing" },
-          { icon: Truck, label: "Vehicle Consignment", path: "/services/consignment" },
-          { icon: ShieldCheck, label: "Vehicle Tracking & Security", path: "/services/tracking" },
+          { icon: carhire, label: "Rentals & Services", path: "/car-hire" },
+          { icon: carsale, label: "Car Sales", path: "/car-sales" },
+          { icon: caraccessories, label: "Accessories & Spare Parts", path: "/services/parts" },
+          { icon: carleasing, label: "Car Washing", path: "/services/washing" },
+          { icon: consignement, label: "Vehicle Consignment", path: "/services/consignment" },
+          { icon: vehicletracking, label: "Vehicle Tracking & Security", path: "/services/tracking" },
         ].map((service, i) => (
           <Link
             key={i}
@@ -49,8 +57,8 @@ const Hero = () => (
             className="flex flex-col items-center gap-3 group cursor-pointer animate-in fade-in zoom-in duration-500"
             style={{ animationDelay: `${i * 100}ms` }}
           >
-            <div className="h-12 w-12 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 group-hover:bg-accent group-hover:scale-110 transition-all duration-300">
-              <service.icon className="w-5 h-5 text-slate-700 group-hover:text-primary" />
+            <div className="h-12 w-12 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 group-hover:bg-accent group-hover:scale-110 transition-all duration-300 overflow-hidden">
+              <img src={service.icon} alt={service.label} className="w-6 h-6 object-contain" />
             </div>
             <span className="text-[10px] font-bold text-slate-600 group-hover:text-slate-900 transition-colors uppercase tracking-widest text-center leading-tight">
               {service.label}
@@ -254,8 +262,8 @@ const BlogSection = () => (
           { tag: "Car Care Tips", title: "Car Paint Fading: 5 Reasons and Solutions" },
         ].map((post, i) => (
           <div key={i} className="space-y-6 group cursor-pointer animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: `${i * 150}ms` }}>
-            <div className="aspect-[16/10] bg-slate-100 rounded-[2rem] overflow-hidden relative">
-              <img src={`https://images.unsplash.com/photo-1590235225167-15c8a2417b65?auto=format&fit=crop&q=80&w=800&u=${i}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Blog" />
+            <div className="aspect-[16/10] bg-slate-100 rounded-[2rem] overflow-hidden relative font-bold text-center">
+              <img src={blogImage} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Blog" />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
             </div>
             <div className="space-y-3">

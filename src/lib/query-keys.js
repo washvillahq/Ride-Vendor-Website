@@ -12,7 +12,7 @@ export const QUERY_KEYS = {
     lists: () => [...QUERY_KEYS.cars.all, 'list'],
     list: (filters) => [...QUERY_KEYS.cars.lists(), { ...filters }],
     details: () => [...QUERY_KEYS.cars.all, 'detail'],
-    detail: (id) => [...QUERY_KEYS.cars.details(), id],
+    detail: (id, ...extra) => [...QUERY_KEYS.cars.details(), id, ...extra],
   },
   services: {
     all: ['services'],

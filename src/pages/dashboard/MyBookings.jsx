@@ -131,33 +131,54 @@ const BookingCard = ({ booking }) => {
 
 const MyBookings = () => {
   const { data, isLoading, isError, refetch } = useMyBookings();
-  const bookings = data?.data?.bookings || [];
+  const [view, setView] = React.useState('active'); // 'active' | 'history'
+
+  const allBookings = data?.data?.bookings || [];
+
+  // Filter bookings: active if endDate is today or in the future
+  const displayedBookings = React.useMemo(() => {
+    const now = dayjs().startOf('day');
+    return allBookings.filter((booking) => {
+      const isPast = dayjs(booking.endDate).isBefore(now);
+      return view === 'active' ? !isPast : isPast;
+    });
+  }, [allBookings, view]);
 
   return (
     <div className="space-y-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-2">
           <h1 className="text-4xl font-black text-slate-900 tracking-tighter">My Bookings</h1>
-          <p className="text-slate-500 font-medium tracking-tight">You have {bookings.length} historical bookings in your account.</p>
+          <p className="text-slate-500 font-medium tracking-tight">You have {allBookings.length} total bookings in your account.</p>
         </div>
         <div className="flex bg-slate-100 p-1 rounded-2xl">
-           <button className="px-6 py-2 bg-white rounded-xl text-xs font-black uppercase tracking-widest shadow-sm">Active</button>
-           <button className="px-6 py-2 text-slate-400 text-xs font-black uppercase tracking-widest">History</button>
+           <button 
+             onClick={() => setView('active')}
+             className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${view === 'active' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-400'}`}
+           >
+             Active
+           </button>
+           <button 
+             onClick={() => setView('history')}
+             className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${view === 'history' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-400'}`}
+           >
+             History
+           </button>
         </div>
       </div>
 
       {isError ? (
         <ErrorState onRetry={refetch} />
-      ) : bookings.length > 0 ? (
+      ) : displayedBookings.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {bookings.map((booking) => (
+          {displayedBookings.map((booking) => (
             <BookingCard key={booking._id} booking={booking} />
           ))}
         </div>
       ) : !isLoading ? (
         <EmptyState 
-          title="No bookings yet" 
-          description="You haven't made any bookings. Explore our catalog to find your next ride!"
+          title={`No ${view} bookings yet`} 
+          description={view === 'active' ? "You don't have any active rentals. Explore our catalog to find your next ride!" : "You don't have any past rentals."}
           action={{
             label: "Explore Cars",
             onClick: () => window.location.href = '/car-hire'

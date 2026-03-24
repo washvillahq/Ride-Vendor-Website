@@ -19,14 +19,14 @@ export const useAdminUsers = () => {
 
 export const useAdminBookings = (params = {}) => {
   return useQuery({
-    queryKey: [...QUERY_KEYS.admin.base, 'bookings', params],
+    queryKey: [...QUERY_KEYS.admin.all, 'bookings', params],
     queryFn: () => adminApi.getAdminBookings(params),
   });
 };
 
 export const useAdminOrders = (params = {}) => {
   return useQuery({
-    queryKey: [...QUERY_KEYS.admin.base, 'orders', params],
+    queryKey: [...QUERY_KEYS.admin.all, 'orders', params],
     queryFn: () => adminApi.getAdminOrders(params),
   });
 };
@@ -59,6 +59,7 @@ export const useUpdateBookingStatus = () => {
     mutationFn: ({ id, status }) => adminApi.updateBookingStatus(id, status),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.bookings.list() });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.admin.all });
       toast.success('Booking status updated');
     },
   });
@@ -70,6 +71,7 @@ export const useUpdateOrderStatus = () => {
     mutationFn: ({ id, status }) => adminApi.updateOrderStatus(id, status),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.orders.list() });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.admin.all });
       toast.success('Order status updated');
     },
   });

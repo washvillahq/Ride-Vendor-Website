@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useServices } from '../../services/hooks';
 import { useCreateBooking } from '../../bookings/hooks';
+import { useCarAvailability } from '../../cars/hooks';
 import {
   ChevronRight,
   ChevronLeft,
@@ -37,11 +38,16 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
   const { data: servicesData, isLoading: isServicesLoading } = useServices(car?.category);
   const services = servicesData?.data || [];
   const { mutate: createBooking, isLoading: isCreating } = useCreateBooking();
+  const { data: availabilityData } = useCarAvailability(car?._id);
+  const bookedDates = useMemo(() => {
+    return (availabilityData?.data?.bookedDates || []).map(d => dayjs(d).startOf('day').toDate());
+  }, [availabilityData]);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
   const [details, setDetails] = useState({ pickupLocation: '', dropoffLocation: '', specialRequests: '' });
+  const [isBooking, setIsBooking] = useState(false);
 
   const totalDays = useMemo(() => {
     return selectedDates.length;
@@ -102,6 +108,7 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
       specialRequests: details.specialRequests
     };
 
+    setIsBooking(true);
     createBooking(bookingData, {
       onSuccess: (response) => {
         toast.success('Booking initiated! Proceeding to payment...');
@@ -110,9 +117,11 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
           window.location.href = response.data.paymentUrl;
         } else {
           navigate(`/dashboard/bookings`);
+          setIsBooking(false);
         }
       },
       onError: (error) => {
+        setIsBooking(false);
         toast.error(error.response?.data?.message || 'Failed to create booking');
       }
     });
@@ -235,7 +244,10 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
                     mode="multiple"
                     selected={selectedDates}
                     onSelect={setSelectedDates}
-                    disabled={{ before: dayjs().startOf('day').toDate() }}
+                    disabled={[
+                      { before: dayjs().startOf('day').toDate() },
+                      ...bookedDates
+                    ]}
                     numberOfMonths={1}
                     className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100"
                     styles={{
@@ -377,7 +389,8 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
         ) : (
           <Button
             onClick={handleBooking}
-            isLoading={isCreating}
+            isLoading={isCreating || isBooking}
+            disabled={isCreating || isBooking}
             className="bg-accent hover:bg-accent/90 text-primary px-8 rounded-xl text-xs font-black uppercase tracking-widest shadow-md"
           >
             Pay ₦{totalPrice?.toLocaleString()}
