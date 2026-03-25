@@ -54,9 +54,22 @@ const CarSales = () => {
     setSearchParams(newParams);
   };
 
+  const handleBulkFilterChange = (newFilters) => {
+    const newParams = new URLSearchParams(searchParams);
+    Object.entries(newFilters).forEach(([key, value]) => {
+      if (value) {
+        newParams.set(key, value);
+      } else {
+        newParams.delete(key);
+      }
+    });
+    newParams.set('page', '1');
+    setSearchParams(newParams);
+  };
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    handleFilterChange('searchTerm', searchTerm);
+    handleBulkFilterChange({ searchTerm });
   };
 
   return (
@@ -66,7 +79,7 @@ const CarSales = () => {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <Breadcrumbs
             items={[
-              { label: 'Services', link: '/services' },
+              // { label: 'Services', link: '/services' },
               { label: 'Car Sales' }
             ]}
           />
@@ -88,8 +101,9 @@ const CarSales = () => {
           <div className="lg:col-span-3">
             <SidebarFilters
               filters={filters}
-              onFilterChange={handleFilterChange}
+              onFilterChange={handleBulkFilterChange}
               onApply={() => refetch()}
+              maxPriceLimit={100000000} // 100 Million for car sales
             />
           </div>
 
@@ -124,12 +138,12 @@ const CarSales = () => {
 
             {/* Results Header */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-6">
-              <h2 className="text-2xl font-semibold text-slate-900">
-                Showing {isLoading ? '...' : data?.data?.total || 0} Results
+              <h2 className="text-lg md:text-2xl font-medium text-slate-900">
+                Showing {isLoading ? '...' : data?.data?.pagination?.total || 0} Results
               </h2>
 
               <div className="flex items-center gap-3">
-                <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Sort By:</span>
+                <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">Sort By:</span>
                 <button className="flex items-center gap-2 bg-white border border-slate-100 px-4 py-2 rounded-xl text-[10px] font-semibold uppercase tracking-widest text-slate-900 group">
                   {filters.sort === '-createdAt' ? 'Newest First' : 'Price: Low to High'}
                   <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors" />

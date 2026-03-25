@@ -56,6 +56,8 @@ const carSchema = z.object({
   suitcases: z.string().optional(),
   pricePerDay: z.string().optional(),
   salePrice: z.string().optional(),
+  plateNumber: z.string().optional(),
+  climateControl: z.boolean().optional(),
 });
 
 const AdminCars = () => {
@@ -110,6 +112,8 @@ const AdminCars = () => {
       suitcases: car.suitcases?.toString(),
       pricePerDay: car.pricePerDay?.toString(),
       salePrice: car.salePrice?.toString(),
+      plateNumber: car.plateNumber || '',
+      climateControl: car.climateControl ?? true,
     });
     setImagePreviews(car.images?.map(img => img.url) || []);
     setIsModalOpen(true);
@@ -394,9 +398,15 @@ const AdminCars = () => {
                     {...register('condition')}
                     error={errors.condition}
                  />
-                 <Input label="Seating Capacity" type="number" placeholder="5" {...register('seatingCapacity')} error={errors.seatingCapacity} />
-                 <Input label="Doors" type="number" placeholder="4" {...register('doors')} error={errors.doors} />
                  <Input label="Suitcases" type="number" placeholder="2" {...register('suitcases')} error={errors.suitcases} />
+                 <Input label="Plate Number" placeholder="ABJ-442-XY" {...register('plateNumber')} error={errors.plateNumber} />
+                 <div className="flex flex-col gap-2 justify-end pb-1 px-1">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Climate Control</label>
+                    <div className="flex items-center gap-2">
+                       <input type="checkbox" className="h-4 w-4 rounded border-slate-300 text-black focus:ring-black" {...register('climateControl')} />
+                       <span className="text-xs font-bold text-slate-700">A/C Included</span>
+                    </div>
+                 </div>
              </div>
           </div>
 

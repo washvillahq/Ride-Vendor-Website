@@ -51,10 +51,10 @@ const RentalCarCard = ({ car, className }) => {
             {title || `${brand} ${model}`}
           </h3>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-medium text-[#8B7355] uppercase tracking-widest leading-none">Price</span>
+            <span className="text-[12px] font-medium text-[#8B7355] uppercase tracking-widest leading-none">Price</span>
             <div className="flex items-baseline gap-1">
               <span className="text-2xl font-medium text-[#8B7355] tracking-tight">₦{formattedPrice}</span>
-              <span className="text-[10px] font-medium text-gray-medium uppercase tracking-widest">/ Day</span>
+              <span className="text-[12px] font-medium text-gray-medium uppercase tracking-widest">/ Day</span>
             </div>
           </div>
         </div>

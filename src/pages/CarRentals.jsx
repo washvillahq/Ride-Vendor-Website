@@ -57,6 +57,7 @@ const CarRentals = () => {
               title={cat.title}
               description={cat.description}
               image={cat.image}
+              link={`/car-hire/all?serviceCategory=${encodeURIComponent(cat.title)}`}
               className="animate-in fade-in slide-in-from-bottom-4 duration-500"
               style={{ animationDelay: `${i * 100}ms` }}
             />
@@ -67,7 +68,7 @@ const CarRentals = () => {
         <div className="space-y-8 pt-8">
           <div className="flex items-end justify-between border-b border-gray-100 pb-6">
             <div className="space-y-2">
-              <h2 className="text-3xl font-black text-primary leading-tight">Available Fleet</h2>
+              <h2 className="text-xl md:text-3xl font-semibold text-primary leading-tight">Available Fleet</h2>
               <p className="text-gray-medium text-sm font-medium">Discover our curated selection of high-performance rentals.</p>
             </div>
             <Link to="/car-hire/all" className="flex items-center gap-2 text-[10px] font-black text-primary uppercase tracking-[0.2em] group hover:text-accent transition-colors">

@@ -2,147 +2,142 @@ import React from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useLogout } from '../features/auth/hooks';
-import Button from '../components/ui/Button';
 import { 
   LayoutDashboard, 
-  CalendarClock, 
+  Car, 
+  List, 
+  Heart, 
   ShoppingBag, 
   User, 
-  LogOut, 
+  HelpCircle, 
+  LogOut,
   Bell,
-  Menu,
-  ShieldCheck,
   Search,
-  HelpCircle,
-  Car,
-  List,
-  Heart,
-  CreditCard,
-  LogOut as LogOutIcon
+  Menu,
+  X
 } from 'lucide-react';
 import logo from '../assets/ridevendor_white.png';
+import { cn } from '../utils/cn';
 
 const DashboardLayout = () => {
   const { user } = useAuthStore();
-  const { mutate: logout, isLoading } = useLogout();
+  const { mutate: logout } = useLogout();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   const navLinks = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { name: 'Book a Ride', path: '/dashboard/book-rental', icon: Search },
     { name: 'My Rentals', path: '/dashboard/bookings', icon: Car },
     { name: 'My Listings', path: '/dashboard/listings', icon: List },
     { name: 'Saved Vehicles', path: '/dashboard/saved', icon: Heart },
-    { name: 'My Purchases', path: '/dashboard/orders', icon: CreditCard },
+    { name: 'My Purchases', path: '/dashboard/orders', icon: ShoppingBag },
     { name: 'Profile', path: '/dashboard/profile', icon: User },
   ];
 
   return (
     <div className="flex min-h-screen bg-[#F8FAFB]">
-      {/* Mobile Sidebar Overlay */}
+      {/* Mobile Menu Toggle */}
+      <button 
+        onClick={() => setIsMobileMenuOpen(true)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-[#002E3E] text-white rounded-lg shadow-lg"
+      >
+        <Menu size={20} />
+      </button>
+
+      {/* Sidebar Overlay */}
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 lg:hidden"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside className={`w-72 bg-[#002E3E] fixed inset-y-0 left-0 z-40 lg:relative lg:flex flex-col text-white shadow-2xl transition-transform duration-300 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
-        <div className="p-8 pb-10 flex items-center justify-between gap-3">
-          {/* Brand Logo */}
+      <aside className={cn(
+        "fixed inset-y-0 left-0 z-50 w-64 bg-[#002E3E] text-white flex flex-col transition-transform duration-300 lg:translate-x-0 lg:static lg:inset-auto",
+        isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+      )}>
+        <div className="p-6 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <img src={logo} alt="Ridevendor" className="h-10 w-auto" />
+            <img src={logo} alt="RideVendor" className="h-6 w-auto" />
           </Link>
-          <button onClick={() => setIsMobileMenuOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
-            <Menu size={24} />
+          <button onClick={() => setIsMobileMenuOpen(false)} className="lg:hidden text-slate-400">
+            <X size={20} />
           </button>
         </div>
 
-        <nav className="flex-1 px-4 space-y-1">
+        <nav className="flex-1 px-4 mt-4 space-y-1">
           {navLinks.map((link) => {
             const Icon = link.icon;
             const isActive = location.pathname === link.path;
-            
             return (
-              <Link 
-                key={link.path} 
-                to={link.path} 
+              <Link
+                key={link.path}
+                to={link.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center gap-4 px-5 py-3 text-sm font-medium rounded-xl transition-all duration-300 ${
+                className={cn(
+                  "flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all",
                   isActive 
-                    ? 'bg-accent text-black shadow-lg shadow-accent/20' 
-                    : 'text-slate-400 hover:text-white hover:bg-white/5'
-                }`}
+                    ? "bg-[#FDB813] text-[#002E3E]" 
+                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                )}
               >
-                <Icon size={20} className={isActive ? 'text-black' : 'text-slate-400'} />
+                <Icon size={18} />
                 {link.name}
               </Link>
             );
           })}
         </nav>
 
-        <div className="px-4 py-6 border-t border-white/5 flex flex-col gap-1">
-            <Link 
-              to="/help" 
-              className="flex items-center gap-4 px-5 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-all"
-            >
-              <HelpCircle size={20} />
-              Help Center
-            </Link>
-            <button 
-              onClick={() => logout()}
-              disabled={isLoading}
-              className="flex items-center gap-4 px-5 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-white/5 rounded-xl transition-all w-full"
-            >
-              <LogOutIcon size={20} />
-              Logout
-            </button>
+        <div className="p-4 space-y-1 border-t border-white/5">
+          <Link 
+            to="/help" 
+            className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-white transition-all"
+          >
+            <HelpCircle size={18} className="text-[#FDB813]" />
+            Help Center
+          </Link>
+          <button 
+            onClick={() => logout()}
+            className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-white transition-all w-full"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
         </div>
-
-
       </aside>
 
-      {/* Main Content Area */}
+      {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-screen">
-        <header className="h-20 bg-white/80 backdrop-blur-md sticky top-0 z-10 flex items-center px-8 justify-between border-b border-slate-100">
-          <button onClick={() => setIsMobileMenuOpen(true)} className="lg:hidden h-10 w-10 bg-accent rounded-xl flex items-center justify-center font-black text-primary shadow-lg">
-            <Menu size={20} />
-          </button>
-          
-          <div className="flex-1 max-w-md mx-8 hidden lg:block">
+        <header className="h-20 bg-white border-b border-slate-100 flex items-center justify-between px-8 sticky top-0 z-30">
+          <div className="flex-1 max-w-md">
             <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-accent transition-colors" size={18} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
               <input 
                 type="text" 
                 placeholder="Search orders..."
-                className="w-full bg-slate-50 border-none rounded-xl py-2.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-accent/20 transition-all outline-none"
+                className="w-full bg-[#F4F7F9] border-none rounded-lg py-2 pl-12 pr-4 text-sm focus:ring-1 focus:ring-accent transition-all outline-none"
               />
             </div>
           </div>
 
           <div className="flex items-center gap-6">
-             <button className="relative h-10 w-10 flex items-center justify-center text-slate-400 hover:text-primary transition-colors">
-                <Bell size={20} />
-                <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full border-2 border-white" />
-             </button>
-             
-             <div className="h-10 w-[1px] bg-slate-100 mx-1" />
-
-             <div className="flex items-center gap-4 pl-2">
-                <div className="text-right hidden sm:block">
-                   <p className="text-sm font-black text-slate-900 leading-tight">{user?.name || 'User'}</p>
-                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">{user?.role || 'customer'}</p>
-                </div>
-                <div className="h-10 w-10 rounded-full bg-[#002E3E] border border-slate-100 flex items-center justify-center font-bold text-white overflow-hidden text-sm">
-                   {user?.name?.split(' ').map(n => n[0]).join('') || 'JD'}
-                </div>
-             </div>
+            <button className="relative text-slate-400 hover:text-primary transition-colors">
+              <Bell size={20} />
+              <span className="absolute -top-0.5 -right-0.5 h-2 w-2 bg-orange-500 rounded-full border-2 border-white" />
+            </button>
+            
+            <div className="flex items-center gap-3 pl-4 border-l border-slate-100">
+              <div className="h-10 w-10 rounded-full bg-[#002E3E] text-white flex items-center justify-center font-bold text-sm">
+                {user?.name?.split(' ').map(n => n[0]).join('') || 'JD'}
+              </div>
+            </div>
           </div>
         </header>
 
-        <main className="flex-1 p-6 md:p-10 lg:p-12 overflow-x-hidden">
-          <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <main className="flex-1 p-6 lg:p-10">
+          <div className="max-w-6xl mx-auto">
             <Outlet />
           </div>
         </main>

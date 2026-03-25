@@ -22,6 +22,7 @@ export const QUERY_KEYS = {
     all: ['bookings'],
     lists: () => [...QUERY_KEYS.bookings.all, 'list'],
     list: (filters) => [...QUERY_KEYS.bookings.lists(), { ...filters }],
+    availability: (carId) => [...QUERY_KEYS.bookings.all, 'availability', carId],
   },
   orders: {
     all: ['orders'],

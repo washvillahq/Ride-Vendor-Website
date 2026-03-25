@@ -46,7 +46,11 @@ api.interceptors.response.use(
     if (normalizedError.code === 401) {
       // Handle unauthorized (session expired)
       useAuthStore.getState().logout();
-      // Potential redirect or state reset logic here
+      
+      // Prevent infinite redirect loops if already on login page
+      if (!window.location.pathname.includes('/login')) {
+        window.location.href = '/login?expired=true';
+      }
     }
 
     // Optional: Log errors in dev mode

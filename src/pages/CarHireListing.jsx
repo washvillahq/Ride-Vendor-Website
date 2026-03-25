@@ -79,40 +79,69 @@ const CarHireListing = () => {
   };
   return (
     <div className="bg-white min-h-screen pb-20">
-      <div className="container px-4 py-8 space-y-12">
-        {/* Breadcrumbs & Search Section */}
-        <div className="space-y-8">
-          <Breadcrumbs
-            items={[
-              { label: 'Services', link: '/services' },
-              { label: 'Car Hire', link: '/car-hire' },
-              { label: 'All Vehicles' }
-            ]}
-          />
-          <RentalSearchBar onSearch={handleSearchSubmit} />
+      <div className="container px-4 py-10 space-y-16">
+        {/* Breadcrumbs & Modern Search Section */}
+        <div className="space-y-12">
+          <div className="flex items-center justify-between">
+            <Breadcrumbs
+              items={[
+                // { label: 'Services', link: '/services' },
+                { label: 'Car Hire', link: '/car-hire' },
+                { label: 'All Vehicles' }
+              ]}
+            />
+            <div className="hidden md:flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-[#1A2B3D]">Live Fleet Status</span>
+            </div>
+          </div>
+
+          <div className="relative group">
+            <div className="absolute -inset-4 bg-slate-100/50 rounded-[4rem] blur-2xl group-hover:bg-slate-200/50 transition-all duration-700" />
+            <div className="relative">
+              <RentalSearchBar onSearch={handleSearchSubmit} />
+            </div>
+          </div>
         </div>
 
         {/* Results Header */}
-        <div className="space-y-2">
-          <h1 className="text-4xl font-medium text-slate-900 tracking-tight">
-            Showing {isLoading ? '...' : data?.data?.pagination?.total || 0} available rides in Ilorin
-          </h1>
-          <p className="text-slate-500 font-medium"> Premium curated vehicles for your next journey.</p>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-100 pb-12">
+          <div className="space-y-3">
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FDB813]">Ilorin Region</p>
+            <h1 className="text-xl md:text-5xl font-medium text-[#1A2B3D] tracking-tighter">
+              {isLoading ? 'Scanning Assets...' : `Showing ${data?.data?.pagination?.total || 0} available rides in ilorin`}
+            </h1>
+            <p className="text-slate-500 font-medium text-sm md:text-lg">Curated premium vehicles ready for immediate deployment.</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="text-right hidden sm:block">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sort By</p>
+              <select
+                onChange={(e) => handleFilterChange('sort', e.target.value)}
+                className="text-sm font-black text-[#1A2B3D] bg-transparent border-none focus:ring-0 cursor-pointer"
+              >
+                <option value="-createdAt">Newest First</option>
+                <option value="price">Price: Low to High</option>
+                <option value="-price">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Sidebar */}
           <div className="lg:col-span-3">
-            <SidebarFilters
-              filters={filters}
-              onFilterChange={handleBulkFilterChange}
-              onApply={() => refetch()}
-            />
+            <div className="sticky top-24">
+              <SidebarFilters
+                filters={filters}
+                onFilterChange={handleBulkFilterChange}
+                onApply={() => refetch()}
+              />
+            </div>
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-9 space-y-10">
-            {/* Car Grid */}
+          <div className="lg:col-span-9 space-y-12">
             {isError ? (
               <ErrorState onRetry={refetch} />
             ) : isLoading ? (
@@ -121,29 +150,56 @@ const CarHireListing = () => {
               </div>
             ) : cars.length > 0 ? (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                   {cars.map(car => (
                     <RentalCarCard key={car._id} car={car} />
                   ))}
                 </div>
-                <div className="mt-16 flex justify-center">
-                  <Pagination
-                    currentPage={filters.page}
-                    totalPages={pagination.totalPages}
-                    onPageChange={(page) => handleFilterChange('page', page)}
-                  />
-                </div>
+                {pagination.totalPages > 1 && (
+                  <div className="mt-20 pt-12 border-t border-slate-50 flex justify-center">
+                    <Pagination
+                      currentPage={filters.page}
+                      totalPages={pagination.totalPages}
+                      onPageChange={(page) => handleFilterChange('page', page)}
+                    />
+                  </div>
+                )}
               </>
             ) : (
-              <EmptyState
-                title="No rental vehicles found"
-                description="Try adjusting your filters or search term to find the perfect rental car."
-                action={
-                  <Button variant="outline" onClick={() => setSearchParams({ type: 'rental' })}>
-                    Reset All Filters
-                  </Button>
-                }
-              />
+              <div className="pt-20">
+                <EmptyState
+                  title="No matching rides found"
+                  description="We couldn't find any vehicles matching your current filters. Try relaxing your criteria or search for a different car type."
+                  action={
+                    <button
+                      onClick={() => setSearchParams({ type: 'rental' })}
+                      className="px-10 py-4 bg-[#1A2B3D] text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all"
+                    >
+                      Reset Discovery
+                    </button>
+                  }
+                />
+              </div>
+            )}
+
+            {/* Trust Section */}
+            {!isLoading && cars.length > 0 && (
+              <div className="bg-slate-50 rounded-[2.5rem] p-10 mt-20 flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-100">
+                <div className="space-y-2">
+                  <h4 className="text-xl font-black text-[#1A2B3D]">Secure Booking Guarantee</h4>
+                  <p className="text-slate-500 font-medium text-sm">All vehicles are inspected and verified by RideVendor agents.</p>
+                </div>
+                <div className="flex -space-x-4">
+                  {[1, 2, 3, 4].map(i => (
+                    <div key={i} className="h-12 w-12 rounded-full border-4 border-white bg-slate-200 overflow-hidden">
+                      <img src={`https://i.pravatar.cc/150?u=${i}`} alt="" />
+                    </div>
+                  ))}
+                  <div className="h-12 w-12 rounded-full border-4 border-white bg-[#FDB813] flex items-center justify-center text-[10px] font-black text-[#1A2B3D]">
+                    +2k
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>

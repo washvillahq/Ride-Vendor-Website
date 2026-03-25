@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCar, useCars } from '../features/cars/hooks';
+import { useAuthStore } from '../store/authStore';
+import { toast } from 'react-hot-toast';
 import CarGallery from '../features/cars/components/CarGallery';
 import HireSpecsGrid from '../features/cars/components/HireSpecsGrid';
 import HireDetailSidebar from '../features/cars/components/HireDetailSidebar';
@@ -29,6 +31,9 @@ const RentalDetailsSkeleton = () => (
 const CarRentalDetails = () => {
   const { carId } = useParams();
   const { data, isLoading, isError, refetch } = useCar(carId);
+  const { isAuthenticated } = useAuthStore();
+  const navigate = useNavigate();
+
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [bookingData, setBookingData] = useState(null);
 
@@ -43,6 +48,11 @@ const CarRentalDetails = () => {
   const similarCars = similarData?.data?.cars?.filter(c => c._id !== carId) || [];
 
   const handleBookNow = (data) => {
+    if (!isAuthenticated) {
+      toast.error('Please login to continue with your booking');
+      navigate('/login', { state: { from: window.location.pathname } });
+      return;
+    }
     setBookingData(data);
     setIsCheckoutOpen(true);
   };
@@ -64,8 +74,8 @@ const CarRentalDetails = () => {
         {/* Breadcrumbs */}
         <Breadcrumbs
           items={[
-            { label: 'Home', link: '/' },
-            { label: 'Services', link: '/services' },
+            // { label: 'Home', link: '/' },
+            // { label: 'Services', link: '/services' },
             { label: 'Car Hire & Rentals', link: '/car-hire' },
             { label: `${brand} ${model}` }
           ]}

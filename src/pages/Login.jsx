@@ -6,10 +6,13 @@ import { loginSchema } from '../features/auth/schema';
 import { useLogin } from '../features/auth/hooks';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
-import { Mail, Lock } from 'lucide-react';
+import { Mail, Lock, AlertCircle } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 
 const LoginPage = () => {
   const { mutate: login, isPending: isLoading } = useLogin();
+  const [searchParams] = useSearchParams();
+  const isExpired = searchParams.get('expired') === 'true';
 
   const {
     register,
@@ -26,6 +29,14 @@ const LoginPage = () => {
   return (
     <div className="space-y-10">
       <div className="space-y-2">
+        {isExpired && (
+          <div className="bg-[#1A2B3D] border border-white/10 rounded-2xl p-4 flex items-center gap-3 mb-6 animate-in slide-in-from-top-2 duration-500">
+            <AlertCircle className="text-accent shrink-0" size={18} />
+            <p className="text-[11px] font-bold text-white uppercase tracking-widest">
+              Session Expired. Please sign in again.
+            </p>
+          </div>
+        )}
         <h2 className="text-4xl font-medium text-slate-900 tracking-tight">Welcome back</h2>
         <p className="text-slate-500 font-medium">Access your curated showroom dashboard.</p>
       </div>

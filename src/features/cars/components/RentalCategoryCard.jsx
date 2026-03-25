@@ -1,9 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from '../../../utils/cn';
 
-const RentalCategoryCard = ({ title, description, image, className }) => {
+const RentalCategoryCard = ({ title, description, image, className, link }) => {
   return (
-    <div className={cn("relative group h-[280px] rounded-[2rem] overflow-hidden cursor-pointer", className)}>
+    <Link 
+      to={link || '#'}
+      className={cn("relative group h-[280px] rounded-[2rem] overflow-hidden cursor-pointer block", className)}
+    >
       <img 
         src={image} 
         alt={title} 
@@ -19,7 +23,7 @@ const RentalCategoryCard = ({ title, description, image, className }) => {
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

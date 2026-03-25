@@ -30,10 +30,10 @@ import {
 } from 'lucide-react';
 
 const Hero = () => (
-  <section className="pt-20 md:pt-10 pb-10 bg-white">
-    <div className="container px-4 text-center max-w-6xl mx-auto space-y-6">
+  <section className="pt-5 md:pt-10 pb-10 bg-white">
+    <div className="container px-2 md:px-4 text-center max-w-6xl mx-auto space-y-6">
       <div className="space-y-6 ">
-        <h1 className="text-4xl md:text-5xl font-semibold text-primary leading-[1.15] tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-700">
+        <h1 className="text-3xl md:text-5xl font-semibold text-primary leading-[1.15] tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-700">
           Car Hire, Car Sales & Auto Services in <span className="bg-accent px-2 rounded-lg">Ilorin</span>
         </h1>
         <p className="text-gray-medium text-sm md:text-lg max-w-3xl mx-auto font-medium leading-relaxed">
@@ -42,7 +42,7 @@ const Hero = () => (
       </div>
 
       {/* Service Icons */}
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-8 md:w-[70%] mx-auto pt-4">
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-4 sm:gap-8 md:w-[70%] mx-auto pt-2 sm:pt-4">
         {[
           { icon: carhire, lines: ["car hire", "& Rentals"], path: "/car-hire" },
           { icon: carsale, lines: ["car", "sale"], path: "/car-sales" },
@@ -110,11 +110,11 @@ const FeatureSection = ({ type = 'rental', title }) => {
     <section className="py-24 bg-white">
       <div className="container px-4">
         <div className="flex items-center justify-between mb-12">
-          <h2 className="text-3xl font-black text-primary border-b-4 border-accent pb-2">
+          <h2 className="text-lg sm:text-3xl font-medium text-primary border-b-4 border-accent pb-2">
             {title}
           </h2>
           <Link to={type === 'rental' ? '/car-hire' : '/car-sales'}>
-            <Button variant="outline" className="rounded-full px-6 font-bold text-gray-medium border-gray-200 hover:bg-gray-50">
+            <Button variant="outline" className="rounded-full px-4 sm:px-6 text-gray-medium border-gray-200 hover:bg-gray-50">
               More Vehicles
             </Button>
           </Link>
@@ -179,7 +179,7 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section className="py-6 md:py-24 bg-white overflow-hidden">
       <div className="container px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-20 items-center">
           <div className="space-y-8">

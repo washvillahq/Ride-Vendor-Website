@@ -1,173 +1,192 @@
 import React from 'react';
-import { useAuth } from '../../features/auth/hooks';
-import { useMyBookings } from '../../features/bookings/hooks';
-import { useMyOrders } from '../../features/orders/hooks';
-import { Card, CardContent } from '../../components/ui/Card';
-import Button from '../../components/ui/Button';
-import Skeleton from '../../components/ui/Skeleton';
-import { Link } from 'react-router-dom';
-import dayjs from 'dayjs';
+import { useAuthStore } from '../../store/authStore';
+import { useNavigate, Link } from 'react-router-dom';
 import {
+  Plus,
   Calendar,
+  CheckCircle2,
+  MessageSquare,
+  Car,
   ShoppingBag,
-  Wallet,
-  ArrowUpRight,
-  TrendingUp,
-  ShieldCheck,
+  Package,
   ChevronRight,
-  Car
+  Sparkles
 } from 'lucide-react';
-
-const SummaryCard = ({ title, value, isLoading, icon, colorClass, gradientClass }) => (
-  <div className={`relative overflow-hidden p-8 rounded-[2.5rem] border border-white/10 shadow-xl group transition-all duration-500 hover:scale-[1.02] ${gradientClass}`}>
-    <div className="relative z-10 flex flex-col justify-between h-full space-y-4">
-      <div className="flex items-center justify-between">
-        <div className={`h-12 w-12 rounded-2xl flex items-center justify-center border border-white/10 ${colorClass}`}>
-          {icon}
-        </div>
-        <div className="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-          <ArrowUpRight size={16} className="text-white" />
-        </div>
-      </div>
-      <div>
-        <p className="text-[10px] font-black leading-none uppercase tracking-[0.2em] text-white/50 mb-2">{title}</p>
-        {isLoading ? (
-          <Skeleton className="h-10 w-24 bg-white/5" />
-        ) : (
-          <p className="text-4xl font-black tracking-tighter text-white">{value}</p>
-        )}
-      </div>
-    </div>
-    {/* Decorative blur element */}
-    <div className={`absolute top-[-20px] right-[-20px] h-32 w-32 rounded-full blur-[60px] opacity-20 pointer-events-none group-hover:scale-150 transition-transform duration-700 ${colorClass}`} />
-  </div>
-);
+import { cn } from '../../utils/cn';
 
 const DashboardHome = () => {
-  const { user } = useAuth();
-  const { data: bookingsData, isLoading: loadingBookings } = useMyBookings();
-  const { data: ordersData, isLoading: loadingOrders } = useMyOrders();
+  const { user } = useAuthStore();
 
-  const bookings = bookingsData?.data?.bookings || [];
-  const orders = ordersData?.data?.orders || [];
+  const serviceCards = [
+    {
+      title: 'Book a Car',
+      description: 'Fast bookings. Reliable services',
+      icon: Car,
+      buttonText: 'Book Now',
+      isAccent: true,
+      link: '/car-hire'
+    },
+    {
+      title: 'Car Purchase',
+      description: 'Quality Tokunbo and Nigerian-used Cars',
+      icon: ShoppingBag,
+      buttonText: 'Browse Vehicles',
+      isAccent: false,
+      link: '/car-sales'
+    },
+    {
+      title: 'Car Accessories',
+      description: 'Get Genuine Parts & Accessories',
+      icon: Package,
+      buttonText: 'Explore (Coming Soon)',
+      isAccent: false,
+      link: null
+    }
+  ];
 
-  const activeBookings = bookings.filter(b => b.status === 'confirmed' || b.status === 'active').length;
+  const vehicleListings = [];
+  const activities = [];
+
+  const navigate = useNavigate();
 
   return (
-    <div className="space-y-12">
-      {/* Welcome Section */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="px-3 py-1 bg-accent/10 border border-accent/20 rounded-full">
-              <span className="text-[9px] font-black uppercase tracking-widest text-[#002E3E]">Active Account</span>
+    <div className="space-y-10 pb-12">
+      {/* Welcome Header */}
+      <div>
+        <h1 className="text-3xl font-medium text-[#1A2B3D] tracking-tight">Welcome back, {user?.name?.split(' ')[0] || 'Paul'}!</h1>
+        <p className="text-slate-500 font-medium mt-1">Manage your vehicles, rentals, and services in Ilorin.</p>
+      </div>
+
+      {/* Service Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {serviceCards.map((card, i) => (
+          <div key={i} className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm flex flex-col items-start gap-4 h-full">
+            <div className="h-12 w-12 bg-slate-50 rounded-2xl flex items-center justify-center">
+              <card.icon className="text-[#1A2B3D]" size={24} />
             </div>
-            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]">Updated 2m ago</span>
+            <div>
+              <h3 className="text-xl font-medium text-[#1A2B3D] tracking-tight">{card.title}</h3>
+              <p className="text-sm text-slate-500 font-medium mt-1">{card.description}</p>
+            </div>
+            <button 
+              onClick={() => card.link && navigate(card.link)}
+              disabled={!card.link}
+              className={cn(
+              "mt-auto px-8 py-3 rounded-xl font-medium text-xs transition-all active:scale-95",
+              card.isAccent
+                ? "bg-[#FDB813] text-[#1A2B3D] hover:bg-[#EAA810]"
+                : "bg-[#002E3E] text-white hover:bg-[#001D24]"
+            )}>
+              {card.buttonText}
+            </button>
           </div>
-          <h1 className="text-5xl font-black text-slate-900 tracking-tighter leading-none">
-            Welcome back, <br />
-            <span className="text-accent underline decoration-accent/20 underline-offset-8">{user?.name?.split(' ')[0]}!</span>
-          </h1>
-          <p className="text-slate-500 font-medium max-w-lg pt-2 leading-relaxed">
-            Everything looks great. You have {activeBookings} active rentals scheduled for this week.
-          </p>
+        ))}
+      </div>
+
+      {/* Promo Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <div className="lg:col-span-3 bg-[#FDB813] rounded-[2rem] p-8 flex items-center justify-between relative overflow-hidden group">
+          <div className="relative z-10">
+            <h2 className="text-2xl font-medium text-[#1A2B3D]">List a Vehicle</h2>
+            <p className="text-[#1A2B3D]/70 font-bold mt-1">Ready to sell? Get the best market value today.</p>
+          </div>
+          <button className="relative z-10 h-14 w-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-white hover:bg-white/30 transition-all shadow-xl">
+            <Plus size={32} strokeWidth={3} />
+          </button>
         </div>
 
-        <div className="flex items-center gap-3">
-          <Button
-            variant="outline"
-            className="px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.1em] border-slate-100"
-            onClick={() => window.location.href = '/dashboard/profile'}
-          >
-            Manage Profile
-          </Button>
-          <Button
-            variant="accent"
-            className="px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-accent/20"
-            onClick={() => window.location.href = '/car-hire'}
-          >
-            <Car size={14} className="mr-2" />
-            Book Car
-          </Button>
+        <div className="lg:col-span-2 bg-white rounded-[2rem] border border-slate-100 shadow-sm p-8 flex items-center justify-between group overflow-hidden relative">
+          <div className="relative z-10">
+            <h2 className="text-2xl font-medium text-[#1A2B3D]">Need a wash?</h2>
+            <p className="text-slate-500 font-bold mt-1">Get 10% off at Wash Villa on your next wash</p>
+          </div>
+          <div className="relative z-10 h-14 w-14 border border-slate-100 rounded-2xl flex items-center justify-center bg-white shadow-sm cursor-pointer hover:bg-slate-50 transition-colors" onClick={() => window.open('https://www.washvilla.com', '_blank')}>
+            <Calendar className="text-slate-300" size={24} />
+          </div>
+          {/* Subtle decor */}
+          <div className="absolute right-0 bottom-0 opacity-10 scale-150 rotate-[-15deg]">
+            <Car size={180} />
+          </div>
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div onClick={() => window.location.href = '/dashboard/bookings'} className="cursor-pointer">
-          <SummaryCard
-            title="Active Rentals"
-            value={activeBookings}
-            isLoading={loadingBookings}
-            icon={<Calendar className="w-6 h-6 text-emerald-400" />}
-            colorClass="bg-emerald-500/20"
-            gradientClass="bg-[#002E3E]"
-          />
-        </div>
-        <div onClick={() => window.location.href = '/dashboard/orders'} className="cursor-pointer">
-          <SummaryCard
-            title="Total Orders"
-            value={orders.length}
-            isLoading={loadingOrders}
-            icon={<ShoppingBag className="w-6 h-6 text-blue-400" />}
-            colorClass="bg-blue-500/20"
-            gradientClass="bg-slate-900"
-          />
-        </div>
-      </div>
-
-      <div className="space-y-6">
-        <div className="flex items-center justify-between px-2">
-          <h3 className="text-xl font-black text-slate-900 tracking-tight">Recent Activity</h3>
-          <Link to="/dashboard/bookings" className="text-[10px] font-black uppercase tracking-widest text-[#002E3E] hover:text-accent transition-colors flex items-center gap-1 group">
-            Full Report <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
+      {/* My Listings */}
+      <section>
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-2xl font-medium text-[#1A2B3D] tracking-tight">My Vehicle Listings</h2>
+            <p className="text-sm text-slate-400 font-medium">Real-time status of your active inventory.</p>
+          </div>
+          <button className="flex items-center gap-2 bg-[#FDB813] text-[#1A2B3D] px-6 py-3 rounded-2xl text-xs font-medium shadow-lg shadow-yellow-500/10 active:scale-95 transition-all">
+            <Plus size={16} strokeWidth={3} />
+            Add New Vehicle
+          </button>
         </div>
 
-        <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
-          {loadingBookings ? (
-            <div className="p-8 space-y-6">
-              {Array(3).fill(0).map((_, i) => <Skeleton key={i} className="h-20 w-full rounded-2xl" />)}
-            </div>
-          ) : bookings.length > 0 ? (
-            <div className="divide-y divide-slate-50">
-              {bookings.slice(0, 6).map(booking => (
-                <div key={booking._id} className="group p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:bg-slate-50 transition-all duration-300">
-                  <div className="flex items-center gap-5">
-                    <div className="h-14 w-14 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center font-black text-slate-900 relative overflow-hidden group-hover:scale-110 transition-transform">
-                      {booking.car?.images?.[0]?.url ? <img src={booking.car.images[0].url} alt="" className="object-cover w-full h-full" /> : <Car size={24} className="text-slate-300" />}
-                    </div>
-                    <div className="space-y-1">
-                      <p className="font-black text-slate-900 leading-none">{booking.car?.title || 'Luxury Hire'}</p>
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                        {dayjs(booking.startDate).format('MMM D')} • {booking.totalDays} Days • ID: #{booking._id.slice(-6).toUpperCase()}
-                      </p>
-                    </div>
+        {vehicleListings.length > 0 ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {vehicleListings.map(car => (
+              <div key={car.id} className="bg-white p-4 rounded-[2.5rem] border border-slate-50 shadow-sm flex items-center gap-6 hover:shadow-md transition-all group">
+                <div className="w-40 h-28 rounded-[2rem] overflow-hidden flex-shrink-0">
+                  <img src={car.image} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                </div>
+                <div className="flex-1 py-1 pr-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-medium text-[#1A2B3D] tracking-tight">{car.name}</h3>
+                    <span className={cn("text-[8px] font-medium px-2.5 py-1 rounded-lg uppercase tracking-widest", car.statusColor)}>
+                      {car.status}
+                    </span>
                   </div>
-                  <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
-                    <div className={`px-4 py-1.5 rounded-full border text-[9px] font-black uppercase tracking-widest ${booking.status === 'confirmed' ? 'bg-emerald-50 border-emerald-100 text-emerald-600' :
-                        booking.status === 'pending' ? 'bg-amber-50 border-amber-100 text-amber-600' :
-                          'bg-slate-50 border-slate-200 text-slate-500'
-                      }`}>
-                      {booking.status}
+                  <p className="text-[10px] text-slate-400 font-bold mt-1">{car.specs}</p>
+                  <div className="mt-4 flex items-end justify-between">
+                    <div>
+                      <span className="text-lg font-medium text-[#1A2B3D] tracking-tight">{car.price}</span>
                     </div>
-                    <button className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white hover:shadow-md transition-all">
-                      <ArrowUpRight size={18} className="text-slate-400 hover:text-primary" />
-                    </button>
+                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{car.time}</span>
                   </div>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="p-16 text-center space-y-4">
-              <div className="h-20 w-20 mx-auto bg-slate-50 rounded-full flex items-center justify-center text-slate-200">
-                <Calendar size={40} strokeWidth={1} />
               </div>
-              <p className="text-slate-400 font-black uppercase tracking-widest text-[10px]">No recent hires found</p>
-            </div>
-          )}
+            ))}
+          </div>
+        ) : (
+          <div className="bg-white rounded-[2.5rem] border border-slate-50 p-16 text-center">
+            <p className="text-slate-400 font-medium">No vehicle listings found.</p>
+          </div>
+        )}
+      </section>
+
+      {/* Activity */}
+      <section>
+        <div className="flex items-center justify-between mb-6 px-2">
+          <h2 className="text-2xl font-medium text-[#1A2B3D] tracking-tight">Recent Activity</h2>
+          <button className="text-[10px] font-medium uppercase tracking-widest text-slate-400 hover:text-[#1A2B3D] transition-colors">
+            View all history
+          </button>
         </div>
-      </div>
+        
+        {activities.length > 0 ? (
+          <div className="bg-white rounded-[2.5rem] border border-slate-50 shadow-sm divide-y divide-slate-50 overflow-hidden">
+            {activities.map(activity => (
+              <div key={activity.id} className="p-8 flex items-start gap-5 hover:bg-slate-50/50 transition-colors group">
+                <div className={cn("h-14 w-14 rounded-3xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110", activity.iconBg)}>
+                  <activity.icon size={24} />
+                </div>
+                <div className="flex-1 pt-1">
+                  <div className="flex items-center gap-2">
+                    <p className="font-bold text-[#1A2B3D] tracking-tight">{activity.text}</p>
+                    {activity.hasDot && <div className="h-1.5 w-1.5 rounded-full bg-orange-500" />}
+                  </div>
+                  <p className="text-xs text-slate-400 font-medium mt-1">{activity.time}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="bg-white rounded-[2.5rem] border border-slate-50 p-16 text-center">
+             <p className="text-slate-400 font-medium">No recent activity detected.</p>
+          </div>
+        )}
+      </section>
     </div>
   );
 };

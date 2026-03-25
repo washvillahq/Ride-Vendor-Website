@@ -13,7 +13,7 @@ const RentalSearchBar = ({ onSearch }) => {
 
   const [pickup, setPickup] = useState('Ilorin Hub (Main)');
   const [category, setCategory] = useState('Select Category');
-  const [dateRange, setDateRange] = useState({ from: undefined, to: undefined });
+  const [selectedDates, setSelectedDates] = useState([]);
 
   const pickupRef = useRef(null);
   const categoryRef = useRef(null);
@@ -34,13 +34,30 @@ const RentalSearchBar = ({ onSearch }) => {
   const categoryOptions = ['Executive & VIP', 'Wedding Specials', 'Corporate', 'Economy'];
 
   const formatDateRange = () => {
-    if (!dateRange.from) return 'Start - End Date';
-    if (!dateRange.to) return dayjs(dateRange.from).format('MMM D, YYYY');
-    return `${dayjs(dateRange.from).format('MMM D')} - ${dayjs(dateRange.to).format('MMM D, YYYY')}`;
+    if (selectedDates.length === 0) return 'Select Dates';
+    if (selectedDates.length === 1) return dayjs(selectedDates[0]).format('MMM D, YYYY');
+    if (selectedDates.length <= 2) {
+      return selectedDates.map(d => dayjs(d).format('MMM D')).join(', ');
+    }
+    return `${selectedDates.length} Days Selected`;
   };
 
   return (
     <div className="bg-[#1A2B3D] p-6 md:p-8 rounded-[2.5rem] shadow-2xl shadow-primary/20 relative z-50">
+      <style>{`
+        .rdp-day_selected { 
+          background-color: #1A2B3D !important; 
+          color: white !important; 
+          border-radius: 100% !important;
+        }
+        .rdp-day_selected:hover { 
+          background-color: #000 !important; 
+        }
+        .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+          background-color: #f8fafc !important;
+          border-radius: 100% !important;
+        }
+      `}</style>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
 
         {/* Pickup Point */}
@@ -81,7 +98,7 @@ const RentalSearchBar = ({ onSearch }) => {
           >
             <CalendarIcon className="w-5 h-5 text-[#FDB813]" />
             <div className="flex-1">
-              <span className={cn("text-sm font-semibold block", dateRange.from ? "text-white" : "text-white/20")}>
+              <span className={cn("text-sm font-semibold block", selectedDates.length > 0 ? "text-white" : "text-white/20")}>
                 {formatDateRange()}
               </span>
             </div>
@@ -91,13 +108,12 @@ const RentalSearchBar = ({ onSearch }) => {
           {dateOpen && (
             <div className="absolute top-full left-0 mt-2 bg-white rounded-3xl shadow-2xl border border-slate-100 p-4 z-[100] animate-in fade-in zoom-in-95 duration-200">
               <DayPicker
-                mode="range"
-                selected={dateRange}
-                onSelect={setDateRange}
+                mode="multiple"
+                selected={selectedDates}
+                onSelect={setSelectedDates}
                 className="rounded-2xl border-none shadow-none m-0"
                 modifiersStyles={{
-                  selected: { backgroundColor: '#FDB813', color: '#1A2B3D', fontWeight: 'bold' },
-                  today: { color: '#FDB813', borderBottom: '2px solid' }
+                  today: { color: '#FDB813', fontWeight: 'bold' }
                 }}
                 disabled={{ before: new Date() }}
               />
@@ -145,7 +161,7 @@ const RentalSearchBar = ({ onSearch }) => {
         {/* Search Button */}
         <div className="h-[60px]">
           <Button
-            onClick={() => onSearch?.({ pickup, category, dateRange })}
+            onClick={() => onSearch?.({ pickup, category, dates: selectedDates })}
             className="w-full h-full bg-[#FDB813] hover:bg-[#EAA810] text-[#1A2B3D] rounded-2xl font-bold text-sm flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg shadow-yellow-500/10"
           >
             Search Available Rides

@@ -51,7 +51,7 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full  items-center justify-center flex bg-white/80 backdrop-blur-xl border-b border-slate-100/50">
+    <header className="sticky top-0 z-50 w-full z-[1000] items-center justify-center flex bg-white/80 backdrop-blur-xl border-b border-slate-100/50">
       <div className="container flex h-20 items-center justify-between px-4">
         <div className="flex items-center gap-8">
           <Logo />
@@ -212,8 +212,9 @@ const Navbar = () => {
   );
 };
 
-import visaIcon from '../assets/logos_visa.png';
-import mastercardIcon from '../assets/logos_mastercard.png';
+import visaIcon from '../assets/logos_visa.svg';
+import mastercardIcon from '../assets/logos_mastercard.svg';
+import paystackIcon from '../assets/paystack.svg';
 
 const Footer = () => (
   <footer className="bg-primary px-4 md:px-0 text-gray-200 pt-20 pb-10">
@@ -228,18 +229,10 @@ const Footer = () => (
             OFFA GARAGE RAILWAY LINE,
             off Asa-Dam Road, Ilorin 240101, Kwara
           </p>
-      <div className="flex items-center gap-8 pt-4">
+          <div className="flex items-center gap-8 pt-4">
             <img src={visaIcon} alt="Visa" className="h-4 opacity-70 hover:opacity-100 transition-all cursor-pointer" />
-            <div className="flex items-center gap-2 opacity-70 hover:opacity-100 transition-all cursor-pointer">
-              <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="24" height="3" rx="1.5" fill="#00A9E0" />
-                <rect y="4.5" width="18" height="3" rx="1.5" fill="#00A0E0" />
-                <rect y="9" width="12" height="3" rx="1.5" fill="#0090E0" />
-                <rect y="13.5" width="6" height="3" rx="1.5" fill="#0080E0" />
-              </svg>
-              <span className="font-black text-lg tracking-tighter text-white leading-none">paystack</span>
-            </div>
-            <img src={mastercardIcon} alt="Mastercard" className="h-7 opacity-70 hover:opacity-100 transition-all cursor-pointer" />
+            <img src={paystackIcon} alt="Paystack" className="h-5 opacity-70 hover:opacity-100 transition-all cursor-pointer" />
+            <img src={mastercardIcon} alt="Mastercard" className="h-6 opacity-70 hover:opacity-100 transition-all cursor-pointer" />
           </div>
         </div>
 
@@ -306,7 +299,7 @@ const MainLayout = () => {
     <div className="flex flex-col min-h-screen">
       <ScrollRestoration />
       <Navbar />
-      <main className="px-8 flex items-center justify-center flex-1">
+      <main className="px-2 md:px-8 flex items-center justify-center flex-1">
         <Outlet />
       </main>
       <Footer />

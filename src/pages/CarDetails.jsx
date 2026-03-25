@@ -59,21 +59,21 @@ const CarDetails = () => {
           <Breadcrumbs
             items={[
               { label: 'Home', link: '/' },
-              { label: 'Services', link: '/services' },
+              // { label: 'Services', link: '/services' },
               { label: 'Car Sales', link: '/car-sales' },
               { label: `${year} ${brand} ${model}` }
             ]}
           />
 
           <div className="relative w-full max-w-xl group">
-             <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-yellow-500 transition-colors" />
-             <input
-               type="text"
-               placeholder="Search by brand, model, or year..."
-               className="w-full bg-slate-50 border border-slate-100 rounded-full pl-14 pr-6 py-4 text-sm font-medium outline-none focus:ring-2 focus:ring-yellow-500/20 transition-all font-bold"
-               value={searchTerm}
-               onChange={(e) => setSearchTerm(e.target.value)}
-             />
+            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-yellow-500 transition-colors" />
+            <input
+              type="text"
+              placeholder="Search by brand, model, or year..."
+              className="w-full bg-slate-50 border border-slate-100 rounded-full pl-14 pr-6 py-4 text-sm font-medium outline-none focus:ring-2 focus:ring-yellow-500/20 transition-all font-bold"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
         </div>
 
@@ -86,34 +86,34 @@ const CarDetails = () => {
 
             {/* 360 Inspection Report */}
             <div className="space-y-6 bg-slate-50/50 p-10 rounded-[2.5rem] border border-slate-100">
-               <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-black text-[#1A2B3D] tracking-tight">360° Inspection Report</h2>
-                  <div className="flex items-baseline gap-1">
-                     <span className="text-3xl font-black text-green-500">9.2</span>
-                     <span className="text-xs font-bold text-slate-400 capitalize">/10</span>
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-black text-[#1A2B3D] tracking-tight">360° Inspection Report</h2>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-black text-green-500">9.2</span>
+                  <span className="text-xs font-bold text-slate-400 capitalize">/10</span>
+                </div>
+              </div>
+
+              {/* Score Bar */}
+              <div className="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
+                <div className="h-full bg-green-500 w-[92%] rounded-full shadow-sm" />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                {[
+                  'Engine & Transmission', 'Electrical Systems',
+                  'Accident History', 'Suspension & Braking'
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3 bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                    <span className="text-xs font-bold text-[#1A2B3D]">{item}</span>
                   </div>
-               </div>
+                ))}
+              </div>
 
-               {/* Score Bar */}
-               <div className="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
-                  <div className="h-full bg-green-500 w-[92%] rounded-full shadow-sm" />
-               </div>
-
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                  {[
-                    'Engine & Transmission', 'Electrical Systems', 
-                    'Accident History', 'Suspension & Braking'
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
-                       <CheckCircle2 className="w-5 h-5 text-green-500" />
-                       <span className="text-xs font-bold text-[#1A2B3D]">{item}</span>
-                    </div>
-                  ))}
-               </div>
-
-               <button className="flex items-center gap-2 text-[#B8860B] font-bold text-[10px] uppercase tracking-widest pt-4 hover:gap-3 transition-all">
-                  <span className="w-4 h-0.5 bg-[#B8860B]" /> Download Full PDF Inspection Report
-               </button>
+              <button className="flex items-center gap-2 text-[#B8860B] font-bold text-[10px] uppercase tracking-widest pt-4 hover:gap-3 transition-all">
+                <span className="w-4 h-0.5 bg-[#B8860B]" /> Download Full PDF Inspection Report
+              </button>
             </div>
 
             <div className="space-y-6">
@@ -141,7 +141,7 @@ const CarDetails = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {similarCars.length > 0 ? (
                 similarCars.map(car => (
-                   <SimpleCarCard key={car._id} car={car} />
+                  <SimpleCarCard key={car._id} car={car} />
                 ))
               ) : (
                 <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">No similar vehicles found at the moment.</p>
