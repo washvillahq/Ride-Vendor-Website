@@ -342,159 +342,325 @@ const AdminCars = () => {
       <Modal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)}
-        title={editingCar ? 'Edit Vehicle' : 'Add New Vehicle'}
-        size="lg"
+        title={editingCar ? 'Update Fleet Record' : 'Provision New Vehicle'}
+        maxWidth="6xl"
       >
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 pt-4 px-1">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-             <Input label="Vehicle Name" placeholder="e.g. Tesla Model S Plaid" {...register('title')} error={errors.title} />
-             <div className="grid grid-cols-2 gap-4">
-                <Input label="Brand" placeholder="e.g. Tesla" {...register('brand')} error={errors.brand} />
-                <Input label="Model" placeholder="e.g. Model S" {...register('model')} error={errors.model} />
-             </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-12 pb-12">
+          {/* Section 1: Core Identity */}
+          <div className="space-y-8">
+            <div className="flex items-center gap-4">
+               <div className="h-12 w-12 rounded-2xl bg-slate-100 flex items-center justify-center border border-slate-200 shadow-sm">
+                  <Car className="w-5 h-5 text-slate-500" />
+               </div>
+               <div>
+                  <h3 className="text-lg font-black text-slate-900 tracking-tight">Core Vehicle Identity</h3>
+                  <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5">Primary registration details</p>
+               </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+               <div className="md:col-span-8">
+                  <Input 
+                    label="Master Vehicle Title" 
+                    placeholder="e.g. 2024 Mercedes-Benz G63 AMG" 
+                    {...register('title')} 
+                    error={errors.title} 
+                    className="py-4"
+                  />
+               </div>
+               <div className="md:col-span-4">
+                  <Input 
+                    label="Year of Registry" 
+                    placeholder="2024" 
+                    {...register('year')} 
+                    error={errors.year} 
+                    className="py-4 text-center font-black"
+                  />
+               </div>
+               <div className="md:col-span-4">
+                  <Input 
+                    label="Brand Name" 
+                    placeholder="e.g. Mercedes-Benz" 
+                    {...register('brand')} 
+                    error={errors.brand} 
+                    className="py-4"
+                  />
+               </div>
+               <div className="md:col-span-4">
+                  <Input 
+                    label="Model Designation" 
+                    placeholder="e.g. G63 AMG" 
+                    {...register('model')} 
+                    error={errors.model} 
+                    className="py-4"
+                  />
+               </div>
+               <div className="md:col-span-4">
+                  <Input 
+                    label="Plate Registry Number" 
+                    placeholder="ABJ-001-HQ" 
+                    {...register('plateNumber')} 
+                    error={errors.plateNumber} 
+                    className="py-4 font-mono font-bold"
+                  />
+               </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-             <Input label="Year" placeholder="2024" {...register('year')} error={errors.year} />
-             <Select 
-                label="Category"
-                options={CAR_TYPES.map(t => ({ value: t, label: t }))}
-                {...register('category')}
-                error={errors.category}
-             />
-             <Select 
-                label="Service Category (Optional)"
-                options={[
-                  { value: '', label: 'None' },
-                  ...SERVICE_CATEGORIES.map(t => ({ value: t, label: t }))
-                ]}
-                {...register('serviceCategory')}
-                error={errors.serviceCategory}
-             />
-             <Input label="Location" placeholder="Lagos, Nigeria" {...register('location')} error={errors.location} />
+          {/* Section 2: Regional & Service Operational Details */}
+          <div className="space-y-8 bg-slate-50/50 p-8 rounded-[2.5rem] border border-slate-100">
+            <div className="flex items-center gap-4">
+               <div className="h-12 w-12 rounded-2xl bg-blue-50 flex items-center justify-center border border-blue-100 shadow-sm">
+                  <MapPin className="w-5 h-5 text-blue-500" />
+               </div>
+               <div>
+                  <h3 className="text-lg font-black text-slate-900 tracking-tight">Regional Operations</h3>
+                  <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5">Location and service categorization</p>
+               </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Select 
+                    label="Current Deployment Hub"
+                    options={[
+                        { value: 'Lagos', label: 'Lagos Island' },
+                        { value: 'Abuja', label: 'Abuja Central' },
+                        { value: 'Port Harcourt', label: 'PH Garden City' },
+                        { value: 'Ilorin', label: 'Ilorin Hub' },
+                    ]}
+                    {...register('location')}
+                    error={errors.location}
+                    className="py-4"
+                />
+                <Select 
+                    label="Vehicle Classification"
+                    options={CAR_TYPES.map(t => ({ value: t, label: t }))}
+                    {...register('category')}
+                    error={errors.category}
+                    className="py-4"
+                />
+                <Select 
+                    label="Elite Service Alignment"
+                    options={[
+                    { value: '', label: 'No Specific Alignment' },
+                    ...SERVICE_CATEGORIES.map(t => ({ value: t, label: t }))
+                    ]}
+                    {...register('serviceCategory')}
+                    error={errors.serviceCategory}
+                    className="py-4"
+                />
+            </div>
           </div>
 
-          <div className="space-y-4 pt-4 border-t border-slate-100">
-             <h3 className="text-sm font-black text-slate-900">Vehicle Specifications</h3>
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                 <Input label="Mileage (km)" type="number" placeholder="42000" {...register('mileage')} error={errors.mileage} />
-                 <Input label="Engine" placeholder="e.g. 3.5L V6" {...register('engine')} error={errors.engine} />
-                 <Select 
-                    label="Transmission"
+          {/* Section 3: Technical DNA */}
+          <div className="space-y-8">
+            <div className="flex items-center gap-4">
+               <div className="h-12 w-12 rounded-2xl bg-emerald-50 flex items-center justify-center border border-emerald-100 shadow-sm">
+                  <Settings className="w-5 h-5 text-emerald-500" />
+               </div>
+               <div>
+                  <h3 className="text-lg font-black text-slate-900 tracking-tight">Technical DNA</h3>
+                  <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5">Engineering and mechanical data</p>
+               </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <Input label="Total Odometer (KM)" type="number" placeholder="42000" {...register('mileage')} error={errors.mileage} className="py-4" />
+                <Input label="Engine Config" placeholder="e.g. 4.0L Bi-Turbo V8" {...register('engine')} error={errors.engine} className="py-4" />
+                <Select 
+                    label="Drive System"
                     options={CAR_TRANSMISSIONS.map(t => ({ value: t, label: t }))}
                     {...register('transmission')}
                     error={errors.transmission}
-                 />
-                 <Select 
-                    label="Fuel Type"
+                    className="py-4"
+                />
+                <Select 
+                    label="Primary Fuel Source"
                     options={CAR_FUEL_TYPES.map(t => ({ value: t, label: t }))}
                     {...register('fuelType')}
                     error={errors.fuelType}
-                 />
-                 <Input label="Color" placeholder="Graphite Gray" {...register('color')} error={errors.color} />
-                 <Select 
-                    label="Condition"
+                    className="py-4"
+                />
+                <Input label="Exterior Color" placeholder="Diamond White" {...register('color')} error={errors.color} className="py-4" />
+                <Select 
+                    label="Market Condition"
                     options={CAR_CONDITIONS.map(c => ({ value: c, label: c }))}
                     {...register('condition')}
                     error={errors.condition}
-                 />
-                 <Input label="Suitcases" type="number" placeholder="2" {...register('suitcases')} error={errors.suitcases} />
-                 <Input label="Plate Number" placeholder="ABJ-442-XY" {...register('plateNumber')} error={errors.plateNumber} />
-                 <div className="flex flex-col gap-2 justify-end pb-1 px-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Climate Control</label>
-                    <div className="flex items-center gap-2">
-                       <input type="checkbox" className="h-4 w-4 rounded border-slate-300 text-black focus:ring-black" {...register('climateControl')} />
-                       <span className="text-xs font-bold text-slate-700">A/C Included</span>
+                    className="py-4"
+                />
+                <Input label="Cargo Units" type="number" placeholder="4" {...register('suitcases')} error={errors.suitcases} className="py-4" />
+                
+                <div className="flex flex-col gap-2 justify-end pb-1 px-1">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Environment Control</label>
+                    <div className="flex items-center gap-4 h-[60px] bg-slate-50 border border-slate-100 rounded-2xl px-6">
+                        <input 
+                            type="checkbox" 
+                            className="h-5 w-5 rounded-lg border-slate-300 text-black focus:ring-black transition-all cursor-pointer" 
+                            {...register('climateControl')} 
+                            id="climate"
+                        />
+                        <label htmlFor="climate" className="text-sm font-black text-slate-700 cursor-pointer">Climate Control Active</label>
                     </div>
-                 </div>
-             </div>
+                </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-slate-50 rounded-2xl border">
-             <Select 
-                label="Listing Type"
-                options={[
-                  { value: 'rental', label: 'For Rent' },
-                  { value: 'sale', label: 'For Sale' },
-                ]}
-                {...register('type')}
-                error={errors.type}
-             />
-              {carType === 'rental' ? (
-                <Input label="Rental Price (per day)" icon={<span className="text-slate-400">₦</span>} type="number" {...register('pricePerDay')} error={errors.pricePerDay} />
-              ) : (
-                <Input label="Sale Price (Total)" icon={<span className="text-slate-400">₦</span>} type="number" {...register('salePrice')} error={errors.salePrice} />
-              )}
-          </div>
+          {/* Section 4: Commercial Configuration */}
+          <div className="space-y-8 bg-[#1A2B3D] p-10 rounded-[3rem] border border-black shadow-2xl shadow-blue-900/10 text-white">
+            <div className="flex items-center gap-4">
+               <div className="h-12 w-12 rounded-2xl bg-white/10 flex items-center justify-center border border-white/10">
+                  <Tag className="w-5 h-5 text-accent" />
+               </div>
+               <div>
+                  <h3 className="text-xl font-black text-white tracking-tight">Commercial Configuration</h3>
+                  <p className="text-[10px] text-white/50 font-bold uppercase tracking-[0.2em] mt-0.5">Listing type and pricing architecture</p>
+               </div>
+            </div>
 
-          <div className="space-y-4">
-             <label className="text-sm font-bold text-slate-700">Vehicle Images</label>
-             
-             {/* Preview Grid */}
-             {imagePreviews.length > 0 && (
-                <div className="grid grid-cols-3 md:grid-cols-5 gap-3 p-4 bg-slate-50 border rounded-2xl">
-                   {imagePreviews.map((url, index) => {
-                      const isExisting = index < (editingCar?.images?.length || 0);
-                      const imageId = isExisting ? editingCar.images[index]._id : null;
-                      
-                      return (
-                        <div key={index} className="relative aspect-square rounded-xl overflow-hidden group border bg-white">
-                           <img src={url} className="h-full w-full object-cover" alt={`Preview ${index}`} />
-                           <button 
-                              type="button"
-                              onClick={() => isExisting ? handleRemoveExistingImage(imageId) : removeImage(index)}
-                              className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="space-y-4">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-white/50">Market Strategy</label>
+                    <div className="grid grid-cols-2 gap-4">
+                        {['rental', 'sale'].map((type) => (
+                           <label 
+                            key={type}
+                            className={cn(
+                                "flex items-center justify-center py-5 px-6 rounded-2xl border-2 transition-all cursor-pointer font-black text-xs uppercase tracking-widest",
+                                carType === type 
+                                ? "bg-accent border-accent text-[#1A2B3D] shadow-[0_0_20px_rgba(253,184,19,0.2)]" 
+                                : "bg-white/5 border-white/10 text-white/50 hover:border-white/20"
+                            )}
                            >
-                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                           </button>
-                           {isExisting && (
-                             <div className="absolute top-1 right-1 h-2 w-2 bg-emerald-500 rounded-full border border-white" title="Saved" />
-                           )}
+                              <input type="radio" value={type} {...register('type')} className="hidden" />
+                              {type === 'rental' ? 'Fleet Hire' : 'Unit Sale'}
+                           </label>
+                        ))}
+                    </div>
+                </div>
+                
+                <div className="space-y-4">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-white/50">Valuation Agreement (₦)</label>
+                    {carType === 'rental' ? (
+                        <div className="relative">
+                           <span className="absolute left-6 top-1/2 -translate-y-1/2 text-accent font-black text-lg">₦</span>
+                           <input 
+                            type="number"
+                            {...register('pricePerDay')}
+                            placeholder="Daily Hire Rate"
+                            className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-5 text-xl font-black focus:ring-2 focus:ring-accent outline-none transition-all"
+                           />
+                           <span className="absolute right-6 top-1/2 -translate-y-1/2 text-[10px] font-black text-white/30 uppercase tracking-widest">/ Day</span>
                         </div>
-                      );
-                   })}
+                    ) : (
+                        <div className="relative">
+                            <span className="absolute left-6 top-1/2 -translate-y-1/2 text-accent font-black text-lg">₦</span>
+                            <input 
+                             type="number"
+                             {...register('salePrice')}
+                             placeholder="Asset Base Price"
+                             className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-5 text-xl font-black focus:ring-2 focus:ring-accent outline-none transition-all"
+                            />
+                            <span className="absolute right-6 top-1/2 -translate-y-1/2 text-[10px] font-black text-white/30 uppercase tracking-widest">Final</span>
+                        </div>
+                    )}
                 </div>
-             )}
+            </div>
+          </div>
 
-             <div className="flex items-center gap-6 p-6 bg-slate-50 border-2 border-dashed rounded-[2rem] hover:border-accent transition-colors">
-                <div className="h-16 w-20 rounded-2xl bg-white border flex items-center justify-center text-slate-300">
-                   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+          {/* Section 5: Intelligence & Media */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+             <div className="md:col-span-12 space-y-8">
+                <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-2xl bg-purple-50 flex items-center justify-center border border-purple-100 shadow-sm">
+                        <FileText className="w-5 h-5 text-purple-500" />
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-black text-slate-900 tracking-tight">Intelligence & Narrative</h3>
+                        <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5">Asset description and condition reporting</p>
+                    </div>
                 </div>
-                <div className="flex-1 space-y-1">
-                   <p className="text-xs font-black uppercase tracking-widest text-slate-900">Add more photos</p>
-                   <p className="text-[10px] text-slate-400 font-medium">Select one or more vehicle photos</p>
-                   <input 
-                      type="file" 
-                      accept="image/*" 
-                      multiple
-                      onChange={handleImageChange}
-                      className="hidden" 
-                      id="car-image-upload" 
-                   />
-                   <label 
-                      htmlFor="car-image-upload"
-                      className="inline-block mt-2 px-4 py-2 bg-white border text-[9px] font-black uppercase tracking-widest rounded-xl cursor-pointer hover:bg-black hover:text-white transition-all shadow-sm"
-                   >
-                      Browse Files
-                   </label>
+                
+                <textarea 
+                    className="w-full min-h-[160px] p-8 bg-slate-50 border border-slate-100 rounded-[2.5rem] focus:ring-2 focus:ring-black outline-none text-base font-medium leading-relaxed"
+                    placeholder="Provide a comprehensive narrative about this vehicle, including history, detailed specs, and premium features..."
+                    {...register('description')}
+                />
+                {errors.description && <p className="text-xs text-red-500 font-bold px-4">{errors.description.message}</p>}
+             </div>
+
+             <div className="md:col-span-12 space-y-8">
+                <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-2xl bg-orange-50 flex items-center justify-center border border-orange-100 shadow-sm">
+                        <CheckCircle2 className="w-5 h-5 text-orange-500" />
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-black text-slate-900 tracking-tight">Visual Documentation</h3>
+                        <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5">High-fidelity asset photography</p>
+                    </div>
+                </div>
+
+                {imagePreviews.length > 0 && (
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6">
+                    {imagePreviews.map((url, index) => {
+                        const isExisting = index < (editingCar?.images?.length || 0);
+                        const imageId = isExisting ? editingCar.images[index]._id : null;
+                        
+                        return (
+                            <div key={index} className="relative aspect-[4/3] rounded-3xl overflow-hidden group border border-slate-100 bg-white shadow-sm ring-4 ring-white">
+                                <img src={url} className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700" alt={`Preview ${index}`} />
+                                <button 
+                                    type="button"
+                                    onClick={() => isExisting ? handleRemoveExistingImage(imageId) : removeImage(index)}
+                                    className="absolute inset-0 bg-red-600/60 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >
+                                    <Trash2 className="w-8 h-8 text-white scale-75 group-hover:scale-100 transition-transform" />
+                                </button>
+                                {isExisting && (
+                                    <div className="absolute top-3 right-3 h-3 w-3 bg-emerald-500 rounded-full border-2 border-white shadow-lg shadow-emerald-500/50" />
+                                )}
+                            </div>
+                        );
+                    })}
+                    </div>
+                )}
+
+                <div className="group relative flex flex-col items-center justify-center p-12 bg-white border-4 border-dashed border-slate-100 rounded-[3rem] hover:border-accent hover:bg-slate-50/50 transition-all duration-500 text-center">
+                    <div className="h-20 w-24 rounded-3xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-300 mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                        <Plus className="w-10 h-10" />
+                    </div>
+                    <div className="space-y-1">
+                        <h4 className="text-lg font-black text-slate-900">Deploy Assets</h4>
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Tap to select or drag vehicles photos</p>
+                    </div>
+                    
+                    <input 
+                        type="file" 
+                        accept="image/*" 
+                        multiple
+                        onChange={handleImageChange}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
+                    />
                 </div>
              </div>
           </div>
-          
-          <div className="space-y-1">
-             <label className="text-sm font-bold text-slate-700">Description</label>
-             <textarea 
-               className="w-full min-h-[120px] p-4 bg-slate-50 border rounded-2xl focus:ring-2 focus:ring-black outline-none text-sm"
-               placeholder="Detailed vehicle specifications, history, and features..."
-               {...register('description')}
-             />
-             {errors.description && <p className="text-xs text-red-500 font-bold">{errors.description.message}</p>}
-          </div>
 
-          <div className="flex justify-end gap-3 pt-4">
-             <Button variant="ghost" type="button" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-             <Button type="submit" isLoading={isSubmitting} className="px-8">
-                {editingCar ? 'Update Vehicle' : 'Create Vehicle'}
+          {/* Action Footer */}
+          <div className="flex flex-col sm:flex-row items-center justify-end gap-6 pt-12 border-t border-slate-100">
+             <button 
+                type="button" 
+                onClick={() => setIsModalOpen(false)}
+                className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-black transition-colors"
+                disabled={isSubmitting}
+             >
+                Cancel Provision
+             </button>
+             <Button 
+                type="submit" 
+                isLoading={isSubmitting} 
+                className="w-full sm:w-auto px-16 py-8 rounded-[2rem] shadow-2xl shadow-primary/20 text-sm font-black uppercase tracking-[0.2em]"
+             >
+                {editingCar ? 'Commit Changes' : 'Execute Provision'}
              </Button>
           </div>
         </form>

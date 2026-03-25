@@ -72,7 +72,7 @@ const CarHireListing = () => {
 
     const updates = {
       serviceCategory: searchData.category === 'Select Category' ? '' : searchData.category,
-      // Add more mappings if needed, e.g. pickup point if the API supports it
+      location: searchData.pickup === 'Select Pickup Point' ? '' : searchData.pickup,
     };
 
     handleBulkFilterChange(updates);
@@ -135,7 +135,9 @@ const CarHireListing = () => {
               <SidebarFilters
                 filters={filters}
                 onFilterChange={handleBulkFilterChange}
-                onApply={() => refetch()}
+                onApply={() => {}}
+                minPriceLimit={20000}
+                maxPriceLimit={1000000}
               />
             </div>
           </div>

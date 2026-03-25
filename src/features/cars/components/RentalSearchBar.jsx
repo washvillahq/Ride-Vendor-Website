@@ -31,7 +31,7 @@ const RentalSearchBar = ({ onSearch }) => {
   }, []);
 
   const pickupOptions = ['Ilorin Hub (Main)', 'Airport Pickup', 'Unity Road', 'Challenge Area'];
-  const categoryOptions = ['Executive & VIP', 'Wedding Specials', 'Corporate', 'Economy'];
+  const categoryOptions = ['Executive & VIP', 'Wedding Specials', 'Corporate & Staff', 'Daily & Airport', 'Economy'];
 
   const formatDateRange = () => {
     if (selectedDates.length === 0) return 'Select Dates';

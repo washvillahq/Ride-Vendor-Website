@@ -102,7 +102,7 @@ const CarSales = () => {
             <SidebarFilters
               filters={filters}
               onFilterChange={handleBulkFilterChange}
-              onApply={() => refetch()}
+              onApply={() => {}}
               maxPriceLimit={100000000} // 100 Million for car sales
             />
           </div>
@@ -144,10 +144,15 @@ const CarSales = () => {
 
               <div className="flex items-center gap-3">
                 <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">Sort By:</span>
-                <button className="flex items-center gap-2 bg-white border border-slate-100 px-4 py-2 rounded-xl text-[10px] font-semibold uppercase tracking-widest text-slate-900 group">
-                  {filters.sort === '-createdAt' ? 'Newest First' : 'Price: Low to High'}
-                  <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors" />
-                </button>
+                <select
+                  value={filters.sort}
+                  onChange={(e) => handleFilterChange('sort', e.target.value)}
+                  className="bg-white border border-slate-100 px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest text-slate-900 focus:ring-0 cursor-pointer outline-none"
+                >
+                  <option value="-createdAt">Newest First</option>
+                  <option value="price">Price: Low to High</option>
+                  <option value="-price">Price: High to Low</option>
+                </select>
               </div>
             </div>
 
