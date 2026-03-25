@@ -4,7 +4,7 @@ import { useCar, useCars } from '../features/cars/hooks';
 import CarGallery from '../features/cars/components/CarGallery';
 import SpecsGrid from '../features/cars/components/SpecsGrid';
 import RentalDetailSidebar from '../features/cars/components/RentalDetailSidebar';
-import RentalCarCard from '../features/cars/components/RentalCarCard';
+import SimpleCarCard from '../features/cars/components/SimpleCarCard';
 import CarCardSkeleton from '../features/cars/components/CarCardSkeleton';
 import HireCheckoutModal from '../features/cars/components/HireCheckoutModal';
 import Breadcrumbs from '../components/shared/Breadcrumbs';
@@ -80,7 +80,7 @@ const CarRentalDetails = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Column */}
-          <div className="lg:col-span-8 space-y-12">
+          <div className="lg:col-span-8 space-y-8">
             <CarGallery images={images} />
 
             <SpecsGrid specs={car} />
@@ -92,7 +92,7 @@ const CarRentalDetails = () => {
                   <div className="h-10 w-10 rounded-full bg-accent flex items-center justify-center">
                     <ShieldCheck className="w-6 h-6 text-primary" />
                   </div>
-                  <h2 className="text-2xl font-black text-slate-900 tracking-tight">Condition Certificate</h2>
+                  <h2 className="text-2xl font-medium text-[#002E3E] tracking-tight">Condition Certificate</h2>
                 </div>
                 <p className="text-slate-500 text-sm font-medium leading-relaxed max-w-2xl">
                   This vehicle has passed our 150-point safety and condition inspection. We ensure every hire vehicle meets our premium standards for reliability and cleanliness.
@@ -101,7 +101,7 @@ const CarRentalDetails = () => {
                   {['Brakes Verified', 'AC Functional', 'Tires Inspected', 'Clean Interior'].map((item, i) => (
                     <div key={i} className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
                       <CheckCircle2 className="w-4 h-4 text-accent" />
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-700">{item}</span>
+                      <span className="text-[10px] font-medium uppercase tracking-widest text-slate-700">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -111,8 +111,8 @@ const CarRentalDetails = () => {
               </div>
             </div>
 
-            <div className="space-y-6">
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight">Hire Description</h2>
+            <div className="space-y-2">
+              <h2 className="text-2xl font-medium text-[#002E3E] tracking-tight">Vehicle Description</h2>
               <p className="text-slate-500 text-sm font-medium leading-relaxed">
                 {description || "No description provided for this hire vehicle. Contact vendor for specific details."}
               </p>
@@ -127,7 +127,7 @@ const CarRentalDetails = () => {
 
         {/* Similar Hire Cars Section */}
         <div className="space-y-8 pt-12 border-t border-slate-100">
-          <h2 className="text-3xl font-black text-slate-900 tracking-tight">Explore More Hire Vehicles</h2>
+          <h2 className="text-3xl font-medium text-[#002E3E] tracking-tight">You might also like</h2>
 
           {isSimilarLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -137,7 +137,7 @@ const CarRentalDetails = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {similarCars.length > 0 ? (
                 similarCars.map(car => (
-                  <RentalCarCard key={car._id} car={car} />
+                  <SimpleCarCard key={car._id} car={car} />
                 ))
               ) : (
                 <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">No similar hire vehicles found at the moment.</p>

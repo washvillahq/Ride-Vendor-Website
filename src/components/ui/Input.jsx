@@ -1,18 +1,18 @@
 import React from 'react';
 import { cn } from '../../utils/cn';
 
-const Input = React.forwardRef(({ 
-  label, 
-  error, 
+const Input = React.forwardRef(({
+  label,
+  error,
   icon,
-  className, 
-  type = 'text', 
-  ...props 
+  className,
+  type = 'text',
+  ...props
 }, ref) => {
   return (
     <div className="w-full space-y-2">
       {label && (
-        <label className="text-[11px] font-black uppercase tracking-widest text-slate-500 ml-1">
+        <label className="text-[11px] font-medium uppercase tracking-widest text-slate-500 ml-1">
           {label}
         </label>
       )}
@@ -35,7 +35,7 @@ const Input = React.forwardRef(({
         />
       </div>
       {error && (
-        <p className="text-[10px] font-black uppercase tracking-wider text-red-500 mt-1.5 ml-1">
+        <p className="text-[10px] font-medium uppercase tracking-wider text-red-500 mt-1.5 ml-1">
           {error.message || error}
         </p>
       )}

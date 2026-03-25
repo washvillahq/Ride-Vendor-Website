@@ -4,7 +4,7 @@ import { ChevronRight } from 'lucide-react';
 
 const Breadcrumbs = ({ items }) => {
   return (
-    <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+    <nav className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-widest text-slate-400">
       <Link to="/" className="hover:text-accent transition-colors">Home</Link>
       {items.map((item, i) => (
         <React.Fragment key={i}>

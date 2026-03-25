@@ -10,7 +10,7 @@ import { User, Mail, Phone, Lock } from 'lucide-react';
 
 const RegisterPage = () => {
   const { mutate: registerUser, isPending: isLoading } = useRegister();
-  
+
   const {
     register,
     handleSubmit,
@@ -26,7 +26,7 @@ const RegisterPage = () => {
   return (
     <div className="space-y-10">
       <div className="space-y-2">
-        <h2 className="text-4xl font-black text-slate-900 tracking-tight">Create your account</h2>
+        <h2 className="text-4xl font-medium text-slate-900 tracking-tight">Create your account</h2>
         <p className="text-slate-500 font-medium tracking-tight">Create an account to start your acquisition journey.</p>
       </div>
 
@@ -65,13 +65,13 @@ const RegisterPage = () => {
           {...register('password')}
           error={errors.password}
         />
-        
+
         <div className="pt-4">
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             variant="accent"
             size="xl"
-            className="w-full rounded-2xl transition-all hover:scale-[1.02] active:scale-95" 
+            className="w-full rounded-2xl transition-all hover:scale-[1.02] active:scale-95"
             isLoading={isLoading}
             disabled={isLoading}
           >

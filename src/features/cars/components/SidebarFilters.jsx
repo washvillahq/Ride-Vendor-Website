@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { 
-  Car, 
-  Search, 
-  MapPin, 
-  DollarSign, 
-  Settings2, 
+import {
+  Car,
+  Search,
+  MapPin,
+  DollarSign,
+  Settings2,
   Palette,
   Truck,
   Box,
@@ -40,12 +40,12 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
       {/* Mobile Toggle Header */}
       <div className="flex items-center justify-between lg:block space-y-1">
         <div>
-          <h3 className="font-black text-xl text-slate-900">Inventory Filters</h3>
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Curated Selection</p>
+          <h3 className="font-medium text-xl text-slate-900">Inventory Filters</h3>
+          <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">Curated Selection</p>
         </div>
-        <button 
+        <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
-          className="lg:hidden h-10 w-10 flex items-center justify-center bg-slate-50 rounded-xl border border-slate-100 text-primary active:scale-90 transition-all font-black"
+          className="lg:hidden h-10 w-10 flex items-center justify-center bg-slate-50 rounded-xl border border-slate-100 text-primary active:scale-90 transition-all font-medium"
         >
           {isMobileOpen ? <X className="w-5 h-5" /> : <Filter className="w-5 h-5" />}
         </button>
@@ -58,16 +58,16 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
       )}>
         {/* Condition */}
         <div className="space-y-4">
-          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Condition</label>
+          <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">Condition</label>
           <div className="flex flex-wrap gap-2">
             {CAR_CONDITIONS.map((c) => (
               <button
                 key={c}
                 onClick={() => onFilterChange('condition', filters.condition === c ? '' : c)}
                 className={cn(
-                  "px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border",
-                  filters.condition === c 
-                    ? "bg-accent border-accent text-primary" 
+                  "px-4 py-3 rounded-xl text-[10px] font-medium uppercase tracking-widest transition-all border",
+                  filters.condition === c
+                    ? "bg-accent border-accent text-primary"
                     : "bg-slate-50 border-slate-50 text-slate-500 hover:border-slate-200"
                 )}
               >
@@ -79,12 +79,12 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
 
         {/* Brand */}
         <div className="space-y-4">
-          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Vehicle Brand</label>
+          <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">Vehicle Brand</label>
           <div className="relative">
-            <select 
+            <select
               value={filters.brand || ''}
               onChange={(e) => onFilterChange('brand', e.target.value)}
-              className="w-full bg-slate-50 border-slate-50 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none appearance-none cursor-pointer"
+              className="w-full bg-slate-50 border-slate-50 rounded-xl px-4 py-3.5 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-accent outline-none appearance-none cursor-pointer"
             >
               <option value="">All Brands</option>
               <option value="Toyota">Toyota</option>
@@ -102,19 +102,19 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
 
         {/* Price Range */}
         <div className="space-y-4">
-          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Price Range (₦)</label>
+          <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">Price Range (₦)</label>
           <div className="grid grid-cols-2 gap-3 items-center">
-            <input 
-              type="number" 
-              placeholder="Min" 
-              className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
+            <input
+              type="number"
+              placeholder="Min"
+              className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
               value={filters.minPrice || ''}
               onChange={(e) => onFilterChange('minPrice', e.target.value)}
             />
-            <input 
-              type="number" 
-              placeholder="Max" 
-              className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
+            <input
+              type="number"
+              placeholder="Max"
+              className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
               value={filters.maxPrice || ''}
               onChange={(e) => onFilterChange('maxPrice', e.target.value)}
             />
@@ -123,7 +123,7 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
 
         {/* Body Type */}
         <div className="space-y-4">
-          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Body Type</label>
+          <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">Body Type</label>
           <div className="grid grid-cols-2 gap-3">
             {bodyTypes.map((type) => (
               <button
@@ -131,13 +131,13 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
                 onClick={() => onFilterChange('bodyType', filters.bodyType === type.value ? '' : type.value)}
                 className={cn(
                   "flex items-center gap-3 p-4 rounded-xl border transition-all",
-                  filters.bodyType === type.value 
-                    ? "bg-accent border-accent text-primary" 
+                  filters.bodyType === type.value
+                    ? "bg-accent border-accent text-primary"
                     : "bg-white border-slate-100 text-slate-400 hover:border-slate-200"
                 )}
               >
                 <type.icon className={cn("w-4 h-4", filters.bodyType === type.value ? "text-primary" : "text-slate-300")} />
-                <span className="text-[10px] font-black uppercase tracking-widest">{type.label}</span>
+                <span className="text-[10px] font-medium uppercase tracking-widest">{type.label}</span>
               </button>
             ))}
           </div>
@@ -145,12 +145,12 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
 
         {/* Service Category */}
         <div className="space-y-4">
-          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Service Category</label>
+          <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">Service Category</label>
           <div className="relative">
-            <select 
+            <select
               value={filters.serviceCategory || ''}
               onChange={(e) => onFilterChange('serviceCategory', e.target.value)}
-              className="w-full bg-slate-50 border-slate-50 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none appearance-none cursor-pointer"
+              className="w-full bg-slate-50 border-slate-50 rounded-xl px-4 py-3.5 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-accent outline-none appearance-none cursor-pointer"
             >
               <option value="">Select Category</option>
               {SERVICE_CATEGORIES.map((cat) => (
@@ -163,16 +163,16 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
 
         {/* Transmission */}
         <div className="space-y-4">
-          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Transmission</label>
+          <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">Transmission</label>
           <div className="flex gap-2">
             {['Auto', 'Manual'].map((t) => (
               <button
                 key={t}
                 onClick={() => onFilterChange('transmission', filters.transmission === t ? '' : t)}
                 className={cn(
-                  "flex-1 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border",
-                  filters.transmission === t 
-                    ? "bg-accent border-accent text-primary" 
+                  "flex-1 py-3.5 rounded-xl text-[10px] font-medium uppercase tracking-widest transition-all border",
+                  filters.transmission === t
+                    ? "bg-accent border-accent text-primary"
                     : "bg-white border-slate-100 text-slate-500 hover:border-slate-200"
                 )}
               >
@@ -184,16 +184,16 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
 
         {/* Fuel Type */}
         <div className="space-y-4">
-          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Fuel Type</label>
+          <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">Fuel Type</label>
           <div className="flex flex-wrap gap-2">
             {['Petrol', 'Diesel', 'Hybrid', 'Electric'].map((f) => (
               <button
                 key={f}
                 onClick={() => onFilterChange('fuelType', filters.fuelType === f ? '' : f)}
                 className={cn(
-                  "px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border",
-                  filters.fuelType === f 
-                    ? "bg-accent border-accent text-primary" 
+                  "px-4 py-3 rounded-xl text-[10px] font-medium uppercase tracking-widest transition-all border",
+                  filters.fuelType === f
+                    ? "bg-accent border-accent text-primary"
                     : "bg-slate-50 border-slate-50 text-slate-500 hover:border-slate-200"
                 )}
               >
@@ -205,19 +205,19 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
 
         {/* Year Range */}
         <div className="space-y-4">
-          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Year Range</label>
+          <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">Year Range</label>
           <div className="grid grid-cols-2 gap-3 items-center">
-            <input 
-              type="number" 
-              placeholder="Min Year" 
-              className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
+            <input
+              type="number"
+              placeholder="Min Year"
+              className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
               value={filters.minYear || ''}
               onChange={(e) => onFilterChange('minYear', e.target.value)}
             />
-            <input 
-              type="number" 
-              placeholder="Max Year" 
-              className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
+            <input
+              type="number"
+              placeholder="Max Year"
+              className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
               value={filters.maxYear || ''}
               onChange={(e) => onFilterChange('maxYear', e.target.value)}
             />
@@ -227,19 +227,19 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
         {/* Mileage (for sales) */}
         {onFilterChange && (
           <div className="space-y-4">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Mileage Range (km)</label>
+            <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">Mileage Range (km)</label>
             <div className="grid grid-cols-2 gap-3 items-center">
-              <input 
-                type="number" 
-                placeholder="Min" 
-                className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
+              <input
+                type="number"
+                placeholder="Min"
+                className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
                 value={filters.minMileage || ''}
                 onChange={(e) => onFilterChange('minMileage', e.target.value)}
               />
-              <input 
-                type="number" 
-                placeholder="Max" 
-                className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-black text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
+              <input
+                type="number"
+                placeholder="Max"
+                className="w-full bg-slate-50 border-slate-100 rounded-xl px-4 py-3.5 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-accent outline-none placeholder:text-slate-300"
                 value={filters.maxMileage || ''}
                 onChange={(e) => onFilterChange('maxMileage', e.target.value)}
               />
@@ -249,16 +249,16 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
 
         {/* Seating Capacity */}
         <div className="space-y-4">
-          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Min Seats</label>
+          <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">Min Seats</label>
           <div className="flex gap-2">
             {[2, 4, 5, 7, 8].map((s) => (
               <button
                 key={s}
                 onClick={() => onFilterChange('minSeats', filters.minSeats === s ? '' : s)}
                 className={cn(
-                  "flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border",
-                  filters.minSeats === s 
-                    ? "bg-accent border-accent text-primary" 
+                  "flex-1 py-3 rounded-xl text-[10px] font-medium uppercase tracking-widest transition-all border",
+                  filters.minSeats === s
+                    ? "bg-accent border-accent text-primary"
                     : "bg-white border-slate-100 text-slate-500 hover:border-slate-200"
                 )}
               >
@@ -270,7 +270,7 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
 
         {/* Color Palette */}
         <div className="space-y-4">
-          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Color Palette</label>
+          <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">Color Palette</label>
           <div className="flex flex-wrap gap-4 pt-1">
             {colors.map((color) => (
               <button
@@ -279,8 +279,8 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
                 className={cn(
                   "h-8 w-8 rounded-full border-2 transition-all shadow-sm ring-offset-2",
                   color.hex,
-                  filters.color === color.name 
-                    ? "ring-2 ring-accent border-white scale-110" 
+                  filters.color === color.name
+                    ? "ring-2 ring-accent border-white scale-110"
                     : "border-slate-100 opacity-60 hover:opacity-100"
                 )}
                 title={color.name}
@@ -290,12 +290,12 @@ const SidebarFilters = ({ filters, onFilterChange, onApply }) => {
         </div>
 
         <div className="pt-4">
-          <Button 
+          <Button
             onClick={() => {
               onApply();
               setIsMobileOpen(false);
             }}
-            className="w-full bg-primary hover:bg-slate-900 text-white rounded-2xl py-7 font-black uppercase tracking-[0.2em] text-[11px] shadow-lg shadow-primary/20 active:scale-95 transition-all"
+            className="w-full bg-primary hover:bg-slate-900 text-white rounded-2xl py-7 font-medium uppercase tracking-[0.2em] text-[11px] shadow-lg shadow-primary/20 active:scale-95 transition-all"
           >
             Apply Filters
           </Button>

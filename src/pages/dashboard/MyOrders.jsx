@@ -44,8 +44,8 @@ const MyOrders = () => {
     <div className="space-y-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-2">
-          <h1 className="text-4xl font-black text-slate-900 tracking-tighter">Purchase History</h1>
-          <p className="text-slate-500 font-medium tracking-tight">You have successfully initiated {orders.length} vehicle acquisitions.</p>
+          <h1 className="text-4xl font-black text-primary tracking-tighter">Purchase History</h1>
+          <p className="text-gray-medium font-medium tracking-tight">You have successfully initiated {orders.length} vehicle acquisitions.</p>
         </div>
         <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-2xl">
            <ShieldCheck size={16} className="text-emerald-500" />
@@ -56,23 +56,23 @@ const MyOrders = () => {
       {isError ? (
         <ErrorState onRetry={refetch} />
       ) : orders.length > 0 ? (
-        <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
-          <div className="divide-y divide-slate-50">
+        <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
+          <div className="divide-y divide-gray-50">
             {orders.map((order) => (
-              <div key={order._id} className="group p-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 hover:bg-slate-50 transition-all duration-300">
+              <div key={order._id} className="group p-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 hover:bg-gray-50 transition-all duration-300">
                 <div className="flex items-center gap-6">
                   {order.car?.images?.[0]?.url ? (
                     <div className="h-20 w-20 rounded-3xl overflow-hidden shadow-xl group-hover:rotate-3 transition-transform">
                       <img src={order.car.images[0].url} alt={order.car.title} className="w-full h-full object-cover" />
                     </div>
                   ) : (
-                    <div className="h-20 w-20 rounded-3xl bg-slate-900 flex items-center justify-center text-accent shadow-xl group-hover:rotate-6 transition-transform">
+                    <div className="h-20 w-20 rounded-3xl bg-primary flex items-center justify-center text-accent shadow-xl group-hover:rotate-6 transition-transform">
                       <Car size={32} strokeWidth={1.5} />
                     </div>
                   )}
                   <div className="space-y-2">
                     <div className="flex items-center gap-3">
-                      <p className="text-2xl font-black text-slate-900 tracking-tight">{order.car?.name || order.car?.title || 'Luxury Vehicle'}</p>
+                      <p className="text-2xl font-black text-primary tracking-tight">{order.car?.name || order.car?.title || 'Luxury Vehicle'}</p>
                       <div className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${
                         order.paymentStatus === 'success' ? 'bg-emerald-500 text-white' : 'bg-amber-500 text-white'
                       }`}>
@@ -81,13 +81,13 @@ const MyOrders = () => {
                     </div>
                     <div className="flex items-center gap-6">
                        <div className="flex items-center gap-2">
-                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Order ID</p>
-                          <p className="text-xs font-bold text-slate-900">#{order._id.slice(-10).toUpperCase()}</p>
+                          <p className="text-[10px] font-black text-gray-medium uppercase tracking-widest leading-none">Order ID</p>
+                          <p className="text-xs font-bold text-primary">#{order._id.slice(-10).toUpperCase()}</p>
                        </div>
-                       <div className="h-4 w-[1px] bg-slate-200" />
+                       <div className="h-4 w-[1px] bg-gray-200" />
                        <div className="flex items-center gap-2">
-                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Date</p>
-                          <p className="text-xs font-bold text-slate-900">{dayjs(order.createdAt).format('MMMM D, YYYY')}</p>
+                          <p className="text-[10px] font-black text-gray-medium uppercase tracking-widest leading-none">Date</p>
+                          <p className="text-xs font-bold text-primary">{dayjs(order.createdAt).format('MMMM D, YYYY')}</p>
                        </div>
                     </div>
                   </div>
@@ -95,8 +95,8 @@ const MyOrders = () => {
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8 w-full lg:w-auto">
                   <div className="text-left lg:text-right flex-1 lg:flex-none">
-                    <p className="text-3xl font-black text-[#002E3E]">₦{order.price?.toLocaleString() || order.totalPrice?.toLocaleString()}</p>
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Acquisition Price</p>
+                    <p className="text-3xl font-black text-primary">₦{order.price?.toLocaleString() || order.totalPrice?.toLocaleString()}</p>
+                    <p className="text-[10px] font-black text-gray-medium uppercase tracking-widest mt-1">Acquisition Price</p>
                   </div>
 
                   <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -104,18 +104,18 @@ const MyOrders = () => {
                       <button 
                         onClick={() => handlePayment(order._id)}
                         disabled={isInitializing}
-                        className="flex-1 sm:flex-none h-14 px-8 rounded-2xl bg-accent text-primary text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-black hover:text-white transition-all shadow-lg shadow-accent/20"
+                        className="flex-1 sm:flex-none h-14 px-8 rounded-2xl bg-accent text-primary text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-primary/90 hover:text-white transition-all shadow-lg shadow-accent/20"
                       >
                          {isInitializing ? <Loader2 size={16} className="animate-spin" /> : <CreditCard size={16} />}
                          Complete Payment
                       </button>
                     ) : (
-                      <button className="flex-1 sm:flex-none h-14 px-8 rounded-2xl bg-white border border-slate-200 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all">
+                      <button className="flex-1 sm:flex-none h-14 px-8 rounded-2xl bg-white border border-gray-200 text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-primary hover:text-white hover:border-primary transition-all">
                          <Download size={16} />
                          Receipt
                       </button>
                     )}
-                    <button className="h-14 w-14 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-accent hover:text-primary transition-all group/link">
+                    <button className="h-14 w-14 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-medium hover:bg-accent hover:text-primary transition-all group/link">
                        <ExternalLink size={18} className="group-hover/link:scale-110 transition-transform" />
                     </button>
                   </div>
@@ -136,7 +136,7 @@ const MyOrders = () => {
       ) : (
         <div className="space-y-6">
            {Array(3).fill(0).map((_, i) => (
-             <div key={i} className="h-32 bg-slate-100 rounded-[2.5rem] animate-pulse" />
+             <div key={i} className="h-32 bg-gray-100 rounded-[2.5rem] animate-pulse" />
            ))}
         </div>
       )}

@@ -45,20 +45,20 @@ const BookingCard = ({ booking }) => {
         {booking.car?.images?.[0]?.url ? (
           <img src={booking.car.images[0].url} alt={booking.car.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
         ) : (
-          <div className="w-full h-full bg-slate-100 flex items-center justify-center">
-            <Car size={48} className="text-slate-300" />
+          <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+            <Car size={48} className="text-gray-medium" />
           </div>
         )}
         <div className="absolute top-4 left-4 flex gap-2">
           <div className={`px-4 py-1.5 rounded-full backdrop-blur-md border text-[9px] font-black uppercase tracking-widest ${
             booking.status === 'confirmed' ? 'bg-emerald-500/80 border-emerald-400/30 text-white' :
             booking.status === 'active' ? 'bg-blue-500/80 border-blue-400/30 text-white' :
-            'bg-slate-900/80 border-white/20 text-white'
+            'bg-primary/80 border-white/20 text-white'
           }`}>
             {booking.status}
           </div>
           {booking.paymentStatus === 'pending' && (
-            <div className="px-4 py-1.5 rounded-full backdrop-blur-md border bg-amber-500/80 border-amber-400/30 text-white text-[9px] font-black uppercase tracking-widest">
+            <div className="px-4 py-1.5 rounded-full backdrop-blur-md border bg-accent/80 border-accent/30 text-primary text-[9px] font-black uppercase tracking-widest">
               Unpaid
             </div>
           )}
@@ -71,38 +71,38 @@ const BookingCard = ({ booking }) => {
       <div className="p-8 space-y-6">
         <div className="flex justify-between items-start">
           <div>
-            <h3 className="text-xl font-black text-slate-900 tracking-tight">{booking.car?.title || 'Luxury Vehicle'}</h3>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">{booking.car?.brand || 'Premium Hire'}</p>
+            <h3 className="text-xl font-black text-primary tracking-tight">{booking.car?.title || 'Luxury Vehicle'}</h3>
+            <p className="text-[10px] font-bold text-gray-medium uppercase tracking-[0.2em] mt-1">{booking.car?.brand || 'Premium Hire'}</p>
           </div>
           <div className="text-right">
-            <p className="text-2xl font-black text-[#002E3E]">₦{booking.totalPrice?.toLocaleString()}</p>
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Total Price</p>
+            <p className="text-2xl font-black text-primary">₦{booking.totalPrice?.toLocaleString()}</p>
+            <p className="text-[9px] font-black text-gray-medium uppercase tracking-widest">Total Price</p>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4 pt-2">
-          <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100">
-             <div className="text-slate-400"><Calendar size={16} /></div>
+          <div className="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100">
+             <div className="text-gray-medium"><Calendar size={16} /></div>
              <div>
-                <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Pick-up</p>
-                <p className="text-[11px] font-bold text-slate-900">{dayjs(booking.startDate).format('MMM D, YYYY')}</p>
+                <p className="text-[8px] font-black uppercase tracking-widest text-gray-medium">Pick-up</p>
+                <p className="text-[11px] font-bold text-primary">{dayjs(booking.startDate).format('MMM D, YYYY')}</p>
              </div>
           </div>
-          <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100">
-             <div className="text-slate-400"><Clock size={16} /></div>
+          <div className="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100">
+             <div className="text-gray-medium"><Clock size={16} /></div>
              <div>
-                <p className="text-[8px] font-black uppercase tracking-widest text-slate-400">Duration</p>
-                <p className="text-[11px] font-bold text-slate-900">{booking.totalDays} Rental Days</p>
+                <p className="text-[8px] font-black uppercase tracking-widest text-gray-medium">Duration</p>
+                <p className="text-[11px] font-bold text-primary">{booking.totalDays} Rental Days</p>
              </div>
           </div>
         </div>
 
         <div className="pt-4 flex flex-col gap-3">
            <div className="flex items-center gap-3">
-              <button className="flex-1 h-12 rounded-xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-accent hover:text-primary transition-all group/btn">
+              <button className="flex-1 h-12 rounded-xl bg-primary text-white text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-accent hover:text-primary transition-all group/btn">
                  View Details <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
               </button>
-              <button className="h-12 w-12 rounded-xl border border-slate-200 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary transition-all">
+              <button className="h-12 w-12 rounded-xl border border-gray-200 flex items-center justify-center text-gray-medium hover:text-primary hover:border-primary transition-all">
                  <FileText size={18} />
               </button>
            </div>
@@ -148,19 +148,19 @@ const MyBookings = () => {
     <div className="space-y-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-2">
-          <h1 className="text-4xl font-black text-slate-900 tracking-tighter">My Bookings</h1>
-          <p className="text-slate-500 font-medium tracking-tight">You have {allBookings.length} total bookings in your account.</p>
+          <h1 className="text-4xl font-black text-primary tracking-tighter">My Bookings</h1>
+          <p className="text-gray-medium font-medium tracking-tight">You have {allBookings.length} total bookings in your account.</p>
         </div>
-        <div className="flex bg-slate-100 p-1 rounded-2xl">
+        <div className="flex bg-gray-100 p-1 rounded-2xl">
            <button 
              onClick={() => setView('active')}
-             className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${view === 'active' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-400'}`}
+             className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${view === 'active' ? 'bg-white shadow-sm text-primary' : 'text-gray-medium'}`}
            >
              Active
            </button>
            <button 
              onClick={() => setView('history')}
-             className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${view === 'history' ? 'bg-white shadow-sm text-slate-900' : 'text-slate-400'}`}
+             className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${view === 'history' ? 'bg-white shadow-sm text-primary' : 'text-gray-medium'}`}
            >
              History
            </button>
@@ -187,7 +187,7 @@ const MyBookings = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
            {Array(4).fill(0).map((_, i) => (
-             <div key={i} className="h-[450px] bg-slate-100 rounded-[2rem] animate-pulse" />
+             <div key={i} className="h-[450px] bg-gray-100 rounded-[2rem] animate-pulse" />
            ))}
         </div>
       )}

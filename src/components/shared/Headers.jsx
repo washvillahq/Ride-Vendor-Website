@@ -5,9 +5,9 @@ const PageHeader = ({ title, description, actions, className }) => {
   return (
     <div className={cn("flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8", className)}>
       <div className="space-y-1">
-        <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-primary">{title}</h1>
         {description && (
-          <p className="text-muted-foreground">
+          <p className="text-gray-medium">
             {description}
           </p>
         )}
@@ -24,9 +24,9 @@ const PageHeader = ({ title, description, actions, className }) => {
 const SectionHeader = ({ title, description, className }) => {
   return (
     <div className={cn("space-y-1 mb-4", className)}>
-      <h2 className="text-xl font-bold tracking-tight">{title}</h2>
+      <h2 className="text-xl font-bold tracking-tight text-primary">{title}</h2>
       {description && (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-gray-medium">
           {description}
         </p>
       )}

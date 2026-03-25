@@ -16,7 +16,7 @@ import {
   Search,
   ChevronDown
 } from 'lucide-react';
-import logo from '../assets/ridevendor_white.png';
+const LOGO_WHITE = '/ride_vendor_logo_white.svg';
 
 const AdminLayout = () => {
   const { user } = useAuthStore();
@@ -38,7 +38,7 @@ const AdminLayout = () => {
       <aside className="w-72 bg-[#00212E] hidden lg:flex flex-col text-white shadow-[10px_0_40px_rgba(0,0,0,0.04)] border-r border-white/5">
         <div className="p-8 pb-12">
           <Link to="/admin" className="flex items-center gap-3 group">
-            <img src={logo} alt="Ridevendor" className="h-10 w-auto transition-transform group-hover:scale-105 duration-300" />
+            <img src={LOGO_WHITE} alt="Ridevendor" className="h-10 w-auto transition-transform group-hover:scale-105 duration-300" />
           </Link>
         </div>
 

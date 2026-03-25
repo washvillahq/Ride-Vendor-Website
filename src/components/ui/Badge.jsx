@@ -8,11 +8,11 @@ const Badge = ({
   ...props 
 }) => {
   const variants = {
-    default: "border-transparent bg-slate-900 text-slate-50 hover:bg-slate-900/80",
-    secondary: "border-transparent bg-slate-100 text-slate-900 hover:bg-slate-100/80",
-    destructive: "border-transparent bg-red-500 text-slate-50 hover:bg-red-500/80",
+    default: "border-transparent bg-primary text-white hover:bg-primary/80",
+    secondary: "border-transparent bg-gray-100 text-primary hover:bg-gray-100/80",
+    destructive: "border-transparent bg-red-500 text-white hover:bg-red-500/80",
     success: "border-transparent bg-green-500 text-white hover:bg-green-500/80",
-    outline: "text-slate-950 border border-slate-200",
+    outline: "text-primary border border-gray-200",
   };
 
   return (

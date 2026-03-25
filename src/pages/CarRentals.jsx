@@ -65,12 +65,12 @@ const CarRentals = () => {
 
         {/* Available Fleet Section */}
         <div className="space-y-8 pt-8">
-          <div className="flex items-end justify-between border-b border-slate-100 pb-6">
+          <div className="flex items-end justify-between border-b border-gray-100 pb-6">
             <div className="space-y-2">
-              <h2 className="text-3xl font-black text-slate-900 leading-tight">Available Fleet</h2>
-              <p className="text-slate-500 text-sm font-medium">Discover our curated selection of high-performance rentals.</p>
+              <h2 className="text-3xl font-black text-primary leading-tight">Available Fleet</h2>
+              <p className="text-gray-medium text-sm font-medium">Discover our curated selection of high-performance rentals.</p>
             </div>
-            <Link to="/car-hire/all" className="flex items-center gap-2 text-[10px] font-black text-slate-900 uppercase tracking-[0.2em] group hover:text-accent transition-colors">
+            <Link to="/car-hire/all" className="flex items-center gap-2 text-[10px] font-black text-primary uppercase tracking-[0.2em] group hover:text-accent transition-colors">
               View All <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>

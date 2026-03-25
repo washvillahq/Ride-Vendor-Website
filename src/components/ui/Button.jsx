@@ -1,6 +1,5 @@
 import React from 'react';
 import { cn } from '../../utils/cn';
-
 const Button = React.forwardRef(({ 
   className, 
   variant = 'primary', 
@@ -9,10 +8,11 @@ const Button = React.forwardRef(({
   disabled = false, 
   leftIcon, 
   rightIcon, 
+  isPill = false,
   children, 
   ...props 
 }, ref) => {
-  const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50';
+  const baseStyles = 'inline-flex items-center justify-center font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 active:scale-95';
   
   const variants = {
     primary: 'bg-black text-white hover:bg-black/90 shadow-sm',
@@ -20,8 +20,10 @@ const Button = React.forwardRef(({
     outline: 'border border-slate-200 bg-white hover:bg-slate-50 text-slate-900',
     ghost: 'hover:bg-slate-100 text-slate-700',
     danger: 'bg-red-600 text-white hover:bg-red-700 shadow-sm',
-    accent: 'bg-accent text-primary hover:bg-accent/90 shadow-lg shadow-accent/20',
+    accent: 'bg-accent text-primary hover:bg-accent/90 shadow-lg shadow-accent/10',
     link: 'text-primary underline-offset-4 hover:underline !p-0 !h-auto',
+    'nav-outline': 'border-2 border-accent bg-transparent text-primary hover:bg-accent/5',
+    'nav-solid': 'bg-primary text-white hover:bg-slate-900 shadow-lg shadow-primary/20',
   };
 
   const sizes = {
@@ -36,7 +38,13 @@ const Button = React.forwardRef(({
     <button
       ref={ref}
       disabled={isLoading || disabled}
-      className={cn(baseStyles, variants[variant], sizes[size], className)}
+      className={cn(
+        baseStyles, 
+        variants[variant], 
+        sizes[size], 
+        isPill ? 'rounded-full' : 'rounded-xl',
+        className
+      )}
       {...props}
     >
       {isLoading && (

@@ -153,13 +153,13 @@ const BookingWidget = ({ car }) => {
   };
 
   return (
-    <Card className="sticky top-24 border-slate-200 shadow-xl overflow-hidden rounded-[2rem]">
+    <Card className="sticky top-24 border-gray-200 shadow-xl overflow-hidden rounded-[2rem]">
       <CardContent className="p-8">
         <div className="mb-6">
-          <p className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-1">Rental Rate</p>
+          <p className="text-sm font-bold text-gray-medium uppercase tracking-widest mb-1">Rental Rate</p>
           <div className="flex items-baseline gap-1 focus-within:">
-            <span className="text-4xl font-black tracking-tighter">₦{car.pricePerDay}</span>
-            <span className="text-slate-500 font-bold">/ day</span>
+            <span className="text-4xl font-black tracking-tighter text-primary">₦{car.pricePerDay}</span>
+            <span className="text-gray-medium font-bold">/ day</span>
           </div>
         </div>
 
@@ -192,7 +192,7 @@ const BookingWidget = ({ car }) => {
           {services.length > 0 && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-black uppercase text-slate-500 tracking-wider">Enhance Your Ride</label>
+                <label className="text-xs font-black uppercase text-gray-medium tracking-wider">Enhance Your Ride</label>
                 <Badge variant="outline" className="text-[10px] font-bold">{services.length} AVAILABLE</Badge>
               </div>
               <div className="space-y-3 max-h-56 overflow-y-auto pr-2 custom-scrollbar">
@@ -200,8 +200,8 @@ const BookingWidget = ({ car }) => {
                   <label
                     key={service._id}
                     className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all cursor-pointer ${selectedServices.includes(service._id)
-                        ? 'border-black bg-slate-50 shadow-sm'
-                        : 'border-slate-100 bg-white hover:border-slate-200'
+                        ? 'border-primary bg-gray-50 shadow-sm'
+                        : 'border-gray-100 bg-white hover:border-gray-200'
                       }`}
                   >
                     <div className="flex items-center gap-3">
@@ -211,11 +211,11 @@ const BookingWidget = ({ car }) => {
                         className="h-5 w-5 rounded-lg"
                       />
                       <div>
-                        <p className="text-sm font-black text-slate-900 leading-none">{service.name}</p>
-                        <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-tighter">One-time fee</p>
+                        <p className="text-sm font-black text-primary leading-none">{service.name}</p>
+                        <p className="text-[10px] font-bold text-gray-medium mt-1 uppercase tracking-tighter">One-time fee</p>
                       </div>
                     </div>
-                    <span className="text-sm font-black text-black bg-white px-2 py-1 rounded-lg border shadow-sm">₦{service.price}</span>
+                    <span className="text-sm font-black text-primary bg-white px-2 py-1 rounded-lg border shadow-sm">₦{service.price}</span>
                   </label>
                 ))}
               </div>
@@ -223,29 +223,29 @@ const BookingWidget = ({ car }) => {
           )}
 
           {priceSummary && (
-            <div className="p-6 bg-slate-900 text-white rounded-[2rem] space-y-4 shadow-xl border border-white/5 relative overflow-hidden group">
+            <div className="p-6 bg-primary text-white rounded-[2rem] space-y-4 shadow-xl border border-white/5 relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                 <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               </div>
-
+ 
               <div className="space-y-2">
-                <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-slate-500">
+                <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-slate-500/50">
                   <span>Standard Rental</span>
                   <span>{priceSummary.days} days</span>
                 </div>
                 <div className="flex justify-between items-baseline">
-                  <span className="text-sm text-slate-400 font-medium">₦{car.pricePerDay} / day</span>
+                  <span className="text-sm text-white/70 font-medium">₦{car.pricePerDay} / day</span>
                   <span className="font-black text-lg">₦{priceSummary.basePrice.toLocaleString()}</span>
                 </div>
               </div>
 
               {priceSummary.servicesPrice > 0 && (
                 <div className="pt-3 border-t border-white/10 space-y-1">
-                  <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-slate-500">
+                  <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-slate-500/50">
                     <span>Add-ons</span>
                   </div>
                   <div className="flex justify-between items-baseline">
-                    <span className="text-sm text-slate-400 font-medium">Selected Services</span>
+                    <span className="text-sm text-white/70 font-medium">Selected Services</span>
                     <span className="font-black text-lg">₦{priceSummary.servicesPrice.toLocaleString()}</span>
                   </div>
                 </div>
@@ -256,7 +256,7 @@ const BookingWidget = ({ car }) => {
                   <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Grand Total</span>
                   <span className="text-3xl font-black text-white tracking-tighter">₦{priceSummary.total.toLocaleString()}</span>
                 </div>
-                <span className="text-[10px] text-slate-500 font-bold uppercase mb-1">Tax Incl.</span>
+                <span className="text-[10px] text-white/50 font-bold uppercase mb-1">Tax Incl.</span>
               </div>
             </div>
           )}
@@ -287,7 +287,7 @@ const BookingWidget = ({ car }) => {
             {isAvailable === true ? (
               <Button
                 type="submit"
-                className="w-full h-16 text-xl font-black rounded-3xl bg-black hover:bg-black/90 shadow-2xl transition-all hover:scale-[1.02] active:scale-95"
+                className="w-full h-16 text-xl font-black rounded-3xl bg-primary hover:bg-primary/90 shadow-2xl transition-all hover:scale-[1.02] active:scale-95"
                 isLoading={isBooking || isPaying}
               >
                 Book & Pay Now
@@ -308,10 +308,10 @@ const BookingWidget = ({ car }) => {
             <div className="flex justify-center items-center gap-4 py-2">
               <div className="flex -space-x-2">
                 {[1, 2, 3].map(i => (
-                  <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-slate-200" />
+                  <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-gray-100" />
                 ))}
               </div>
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+              <p className="text-[10px] text-gray-medium font-bold uppercase tracking-widest">
                 12 others booked this car recently
               </p>
             </div>

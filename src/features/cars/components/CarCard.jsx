@@ -33,8 +33,8 @@ const CarCard = ({ car, className }) => {
   const formattedPrice = price?.toLocaleString();
 
   return (
-    <div className={cn("group bg-white rounded-3xl overflow-hidden border border-slate-100 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2", className)}>
-      <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+    <div className={cn("group bg-white rounded-3xl overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2", className)}>
+      <div className="relative aspect-[4/3] overflow-hidden bg-gray-50">
         <SafeImage
           src={primaryImage}
           alt={`${brand} ${model}`}
@@ -44,15 +44,15 @@ const CarCard = ({ car, className }) => {
         
         {/* Verified Badge */}
         <div className="absolute top-4 right-4 animate-in fade-in zoom-in duration-500">
-          <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm border border-slate-200/50">
-            <span className="text-[10px] font-black uppercase tracking-widest text-slate-900">Verified</span>
+          <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm border border-gray-200/50">
+            <span className="text-[10px] font-black uppercase tracking-widest text-primary">Verified</span>
             <CheckCircle2 className="w-3.5 h-3.5 text-accent fill-accent/20" />
           </div>
         </div>
 
         {status && status !== 'available' && (
-          <div className="absolute inset-0 bg-black/60 flex items-center justify-center backdrop-blur-[2px]">
-            <span className="bg-white text-slate-900 px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.2em]">
+          <div className="absolute inset-0 bg-primary/60 flex items-center justify-center backdrop-blur-[2px]">
+            <span className="bg-white text-primary px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.2em]">
               {status}
             </span>
           </div>
@@ -62,38 +62,38 @@ const CarCard = ({ car, className }) => {
       <div className="p-6 space-y-4">
         <div className="space-y-1">
           <div className="flex justify-between items-center">
-             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+             <span className="text-[10px] font-bold text-gray-medium uppercase tracking-widest">
                {category || (isRental ? 'Rental' : 'Sale')}
              </span>
-             <div className="flex items-center gap-1 text-slate-400 group-hover:text-accent-dark transition-colors">
+             <div className="flex items-center gap-1 text-gray-medium group-hover:text-accent-dark transition-colors">
                 <MapPin className="w-3 h-3" />
                 <span className="text-[10px] font-bold">{location || 'Ilorin'}</span>
              </div>
           </div>
-          <h3 className="font-black text-xl text-slate-900 leading-tight group-hover:text-primary transition-colors line-clamp-1">
+          <h3 className="font-black text-xl text-primary leading-tight group-hover:text-primary transition-colors line-clamp-1">
              {name || `${brand} ${model} V6`}
           </h3>
         </div>
 
         <div className="flex flex-col">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">
+          <span className="text-[10px] font-bold text-gray-medium uppercase tracking-widest leading-none mb-1">
             {isRental ? 'From' : 'Price'}
           </span>
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-black text-slate-900 tracking-tighter">
+            <span className="text-2xl font-black text-primary tracking-tighter">
               ₦{formattedPrice}
             </span>
-            {isRental && <span className="text-sm font-bold text-slate-500 tracking-tight">/ Day</span>}
+            {isRental && <span className="text-sm font-bold text-gray-medium tracking-tight">/ Day</span>}
           </div>
         </div>
 
         <div className="pt-2 flex items-center gap-3">
           <Link to={isRental ? `/car-hire/${_id}` : `/cars/${_id}`} className="flex-1">
-            <Button className="w-full bg-primary hover:bg-slate-900 text-white rounded-xl py-6 font-bold flex items-center justify-center gap-2 transition-all active:scale-95">
+            <Button className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl py-6 font-bold flex items-center justify-center gap-2 transition-all active:scale-95">
               Book Now
             </Button>
           </Link>
-          <button className="h-12 w-12 rounded-xl border border-slate-100 flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-accent-dark transition-all active:scale-90">
+          <button className="h-12 w-12 rounded-xl border border-gray-100 flex items-center justify-center text-gray-medium hover:bg-gray-50 hover:text-accent-dark transition-all active:scale-90">
              <Heart className="w-5 h-5 focus:fill-accent-dark" />
           </button>
         </div>

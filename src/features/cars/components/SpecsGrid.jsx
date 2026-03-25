@@ -14,15 +14,15 @@ const SpecsGrid = ({ specs = {} }) => {
   ];
 
   return (
-    <div className="space-y-8">
-      <h2 className="text-2xl font-black text-slate-900">Vehicle Specifications</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-y-10 border-t border-slate-100 pt-8">
+    <div className="space-y-2">
+      <h2 className="text-2xl font-medium text-slate-900">Vehicle Specifications</h2>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 border-t border-slate-100 pt-2">
         {specItems.map((spec, i) => (
           <div key={i} className="space-y-1.5">
-            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+            <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">
               {spec.label}
             </label>
-            <p className="text-sm font-black text-slate-900 leading-tight">
+            <p className="text-sm font-medium text-slate-900 leading-tight">
               {spec.value}
             </p>
           </div>

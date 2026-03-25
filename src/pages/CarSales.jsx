@@ -99,8 +99,8 @@ const CarSales = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="relative overflow-hidden bg-primary text-white p-10 rounded-[2.5rem] group cursor-pointer hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 min-h-[160px] flex flex-col justify-center">
                 <div className="relative z-10 space-y-2">
-                  <h3 className="text-2xl font-black">Looking to sell?</h3>
-                  <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest leading-relaxed max-w-[220px]">
+                  <h3 className="text-2xl font-semibold">Looking to sell?</h3>
+                  <p className="text-slate-400 text-[10px] font-semibold uppercase tracking-widest leading-relaxed max-w-[220px]">
                     List Your Car For a professional listing and secure transaction.
                   </p>
                 </div>
@@ -111,8 +111,8 @@ const CarSales = () => {
 
               <div className="relative overflow-hidden bg-accent text-primary p-10 rounded-[2.5rem] group cursor-pointer hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 min-h-[160px] flex flex-col justify-center">
                 <div className="relative z-10 space-y-2">
-                  <h3 className="text-2xl font-black">Free Inspection Included</h3>
-                  <p className="text-primary/70 text-[10px] font-black uppercase tracking-widest leading-relaxed max-w-[220px]">
+                  <h3 className="text-2xl font-semibold">Free Inspection Included</h3>
+                  <p className="text-primary/70 text-[10px] font-semibold uppercase tracking-widest leading-relaxed max-w-[220px]">
                     Pre-purchase inspection included with every "Verified" listing.
                   </p>
                 </div>
@@ -124,13 +124,13 @@ const CarSales = () => {
 
             {/* Results Header */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-6">
-              <h2 className="text-2xl font-black text-slate-900">
+              <h2 className="text-2xl font-semibold text-slate-900">
                 Showing {isLoading ? '...' : data?.data?.total || 0} Results
               </h2>
 
               <div className="flex items-center gap-3">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sort By:</span>
-                <button className="flex items-center gap-2 bg-white border border-slate-100 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-900 group">
+                <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Sort By:</span>
+                <button className="flex items-center gap-2 bg-white border border-slate-100 px-4 py-2 rounded-xl text-[10px] font-semibold uppercase tracking-widest text-slate-900 group">
                   {filters.sort === '-createdAt' ? 'Newest First' : 'Price: Low to High'}
                   <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors" />
                 </button>

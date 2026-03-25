@@ -20,11 +20,13 @@ import {
   User
 } from 'lucide-react';
 
-import logo from '../assets/ridevendor_logo.png';
+// import logo from '../assets/ridevendor_logo.png';
+const LOGO_BLACK = '/ride_vendor_logo_black.svg';
+const LOGO_WHITE = '/ride_vendor_logo_white.svg';
 
 const Logo = () => (
   <Link to="/" className="flex items-center gap-2 group">
-    <img src={logo} alt="Ridevendor Logo" className="h-8 w-auto group-hover:scale-105 transition-transform duration-300" />
+    <img src={LOGO_BLACK} alt="Ridevendor Logo" className="h-8 w-auto group-hover:scale-105 transition-transform duration-300" />
   </Link>
 );
 
@@ -49,13 +51,13 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full items-center justify-center flex bg-white/80 backdrop-blur-xl border-b border-slate-100/50">
+    <header className="sticky top-0 z-50 w-full  items-center justify-center flex bg-white/80 backdrop-blur-xl border-b border-slate-100/50">
       <div className="container flex h-20 items-center justify-between px-4">
         <div className="flex items-center gap-8">
           <Logo />
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center space-x-10 text-xs font-black uppercase tracking-widest text-slate-500">
+          {/* <nav className="hidden lg:flex items-center space-x-10 text-xs font-black uppercase tracking-widest text-slate-500">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -65,7 +67,7 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-          </nav>
+          </nav> */}
         </div>
 
         <div className="flex items-center gap-4">
@@ -92,12 +94,23 @@ const Navbar = () => {
             ) : (
               <div className="flex items-center gap-1.5">
                 <Link to="/login">
-                  <Button variant="ghost" size="sm" className="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-primary">
+                  <Button
+                    variant="nav-outline"
+                    size="sm"
+                    isPill={true}
+                    leftIcon={<User size={14} />}
+                    className="text-[10px] font-black uppercase tracking-widest px-6 h-11"
+                  >
                     Login
                   </Button>
                 </Link>
                 <Link to="/register">
-                  <Button size="sm" className="bg-primary hover:bg-slate-900 text-white rounded-xl px-6 py-5 font-black uppercase tracking-widest text-[10px] shadow-lg shadow-primary/20 transition-all active:scale-95">
+                  <Button
+                    variant="nav-solid"
+                    size="sm"
+                    isPill={true}
+                    className="text-[10px] font-black uppercase tracking-widest px-8 h-11"
+                  >
                     Sign Up
                   </Button>
                 </Link>
@@ -171,12 +184,21 @@ const Navbar = () => {
               ) : (
                 <div className="grid grid-cols-2 gap-4">
                   <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                    <Button variant="outline" className="w-full py-7 rounded-2xl border-slate-200 text-primary font-black uppercase tracking-widest text-[11px]">
+                    <Button
+                      variant="nav-outline"
+                      isPill={true}
+                      leftIcon={<User size={16} />}
+                      className="w-full py-7 font-black uppercase tracking-widest text-[11px]"
+                    >
                       Login
                     </Button>
                   </Link>
                   <Link to="/register" onClick={() => setIsMenuOpen(false)}>
-                    <Button className="w-full bg-accent hover:bg-accent-light text-primary py-7 rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-lg shadow-accent/10">
+                    <Button
+                      variant="nav-solid"
+                      isPill={true}
+                      className="w-full py-7 font-black uppercase tracking-widest text-[11px]"
+                    >
                       Sign Up
                     </Button>
                   </Link>
@@ -194,24 +216,35 @@ import visaIcon from '../assets/logos_visa.png';
 import mastercardIcon from '../assets/logos_mastercard.png';
 
 const Footer = () => (
-  <footer className="bg-[#0F172A] text-slate-300 pt-20 pb-10">
+  <footer className="bg-primary px-4 md:px-0 text-gray-200 pt-20 pb-10">
     <div className="container mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         <div className="space-y-6">
           <Link to="/" className="flex items-center gap-2">
-            <img src={logo} alt="Ridevendor" className="h-6 w-auto" />
+            <img src={LOGO_WHITE} alt="Ridevendor" className="h-6 w-auto" />
           </Link>
           <p className="text-sm leading-relaxed max-w-xs opacity-80">
-            Shayongi Complex, No 84A, Tite Bridge Road, Ilorin 24001, Kwara
+            Oniyangi Complex, Ita-Elepa,
+            OFFA GARAGE RAILWAY LINE,
+            off Asa-Dam Road, Ilorin 240101, Kwara
           </p>
-          <div className="flex gap-4 pt-4">
-            <img src={visaIcon} alt="Visa" className="h-4 opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition-all cursor-pointer" />
-            <img src={mastercardIcon} alt="Mastercard" className="h-5 opacity-70 hover:opacity-100 grayscale hover:grayscale-0 transition-all cursor-pointer" />
+      <div className="flex items-center gap-8 pt-4">
+            <img src={visaIcon} alt="Visa" className="h-4 opacity-70 hover:opacity-100 transition-all cursor-pointer" />
+            <div className="flex items-center gap-2 opacity-70 hover:opacity-100 transition-all cursor-pointer">
+              <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="24" height="3" rx="1.5" fill="#00A9E0" />
+                <rect y="4.5" width="18" height="3" rx="1.5" fill="#00A0E0" />
+                <rect y="9" width="12" height="3" rx="1.5" fill="#0090E0" />
+                <rect y="13.5" width="6" height="3" rx="1.5" fill="#0080E0" />
+              </svg>
+              <span className="font-black text-lg tracking-tighter text-white leading-none">paystack</span>
+            </div>
+            <img src={mastercardIcon} alt="Mastercard" className="h-7 opacity-70 hover:opacity-100 transition-all cursor-pointer" />
           </div>
         </div>
 
         <div>
-          <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Links</h4>
+          <h4 className="text-gray-200 font-medium mb-6 text-sm uppercase tracking-widest">Links</h4>
           <ul className="space-y-4 text-sm font-medium">
             <li><Link to="/" className="hover:text-accent transition-colors">Home</Link></li>
             <li><Link to="/about" className="hover:text-accent transition-colors">About</Link></li>
@@ -222,7 +255,7 @@ const Footer = () => (
         </div>
 
         <div>
-          <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Services</h4>
+          <h4 className="text-gray-200 font-medium mb-6 text-sm uppercase tracking-widest">Services</h4>
           <ul className="space-y-4 text-sm font-medium">
             <li><Link to="/car-sales" className="hover:text-accent transition-colors">Car Sales</Link></li>
             <li><Link to="/car-hire" className="hover:text-accent transition-colors">Car Hire & Rentals</Link></li>
@@ -233,24 +266,24 @@ const Footer = () => (
         </div>
 
         <div className="space-y-6">
-          <h4 className="text-white font-bold text-sm uppercase tracking-widest">Stay up to date</h4>
+          <h4 className="text-gray-200 font-medium text-sm uppercase tracking-widest">Stay up to date</h4>
           <div className="flex gap-2">
             <input
               type="email"
               placeholder="Enter your email"
-              className="bg-slate-800 border-none rounded-lg px-4 py-2 text-sm w-full focus:ring-2 focus:ring-yellow-400 outline-none"
+              className="bg-gray-700 border-none rounded-lg px-4 py-2 text-sm w-full focus:ring-2 focus:ring-yellow-400 outline-none"
             />
-            <button className="bg-white text-primary font-bold px-4 py-2 rounded-lg text-sm hover:bg-accent transition-colors">
+            <button className="bg-white text-primary font-medium px-4 py-2 rounded-lg text-sm hover:bg-accent transition-colors">
               Subscribe
             </button>
           </div>
           <div className="space-y-4">
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Follow Us on:</p>
+            <p className="text-xs font-medium text-slate-500 uppercase tracking-widest">Follow Us on:</p>
             <div className="flex gap-4">
-              <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-accent hover:text-primary transition-all"><Twitter className="w-4 h-4" /></a>
-              <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-accent hover:text-primary transition-all"><Facebook className="w-4 h-4" /></a>
-              <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-accent hover:text-primary transition-all"><Instagram className="w-4 h-4" /></a>
-              <a href="#" className="bg-slate-800 p-2 rounded-full hover:bg-accent hover:text-primary transition-all"><Youtube className="w-4 h-4" /></a>
+              <a href="#" className=" p-2 rounded-full hover:bg-accent hover:text-primary transition-all"><Twitter className="w-4 h-4" /></a>
+              <a href="#" className=" p-2 rounded-full hover:bg-accent hover:text-primary transition-all"><Facebook className="w-4 h-4" /></a>
+              <a href="#" className=" p-2 rounded-full hover:bg-accent hover:text-primary transition-all"><Instagram className="w-4 h-4" /></a>
+              <a href="#" className=" p-2 rounded-full hover:bg-accent hover:text-primary transition-all"><Youtube className="w-4 h-4" /></a>
             </div>
           </div>
         </div>
@@ -273,7 +306,7 @@ const MainLayout = () => {
     <div className="flex flex-col min-h-screen">
       <ScrollRestoration />
       <Navbar />
-      <main className="flex items-center justify-center flex-1">
+      <main className="px-8 flex items-center justify-center flex-1">
         <Outlet />
       </main>
       <Footer />
