@@ -1,83 +1,70 @@
 import React from 'react';
-import { MapPin, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
+import { MapPin, Calendar, MessageSquare, ChevronDown } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 
 const DetailSidebar = ({ car }) => {
   if (!car) return null;
 
   const {
-    name,
-    brand,
-    model,
-    year,
-    location,
     pricePerDay,
-    salePrice,
-    type
+    location,
   } = car;
 
-  const isRental = type === 'rental';
-  const price = isRental ? pricePerDay : salePrice;
-  const formattedPrice = price?.toLocaleString();
+  const formattedPrice = pricePerDay?.toLocaleString() || '120,000';
 
   return (
     <div className="space-y-8 sticky top-24">
-      <div className="space-y-6 bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm">
-        <div className="space-y-2">
-          <h1 className="text-3xl font-black text-slate-900 leading-tight">
-            {year} {name || `${brand} ${model}`}
-          </h1>
-          <div className="flex items-center gap-2 text-slate-400">
-            <MapPin className="w-4 h-4" />
-            <span className="text-[10px] font-black uppercase tracking-widest">{location || 'Ilorin, Kwara State'}</span>
+      <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-2xl shadow-slate-200/50 space-y-8">
+        {/* Price Section */}
+        <div className="flex items-start justify-between">
+          <div className="space-y-1">
+             <div className="flex items-baseline gap-1">
+               <span className="text-3xl font-black text-[#1A2B3D]">₦{formattedPrice}</span>
+             </div>
+             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">per day</p>
+          </div>
+          <div className="bg-[#FDB813]/10 px-3 py-1.5 rounded-full border border-[#FDB813]/20">
+             <span className="text-[9px] font-black text-[#B8860B] uppercase tracking-widest">Available Now</span>
           </div>
         </div>
 
-        <div className="space-y-1">
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] leading-none">Price</span>
-          <div className="flex items-baseline gap-1">
-            <span className="text-4xl font-black text-slate-900 tracking-tighter">₦{formattedPrice || '18,500,000'}</span>
+        <div className="space-y-6">
+          {/* Rental Period */}
+          <div className="space-y-3">
+             <label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] px-1">Rental Period</label>
+             <div className="flex items-center gap-3 bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 cursor-pointer hover:border-slate-300 transition-colors group">
+                <Calendar className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
+                <span className="text-slate-400 text-xs font-bold">Select Dates</span>
+             </div>
+          </div>
+
+          {/* Pickup Location */}
+          <div className="space-y-3">
+             <label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] px-1">Pickup Location</label>
+             <div className="flex items-center gap-3 bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 cursor-pointer hover:border-slate-300 transition-colors group">
+                <MapPin className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
+                <span className="text-slate-900 text-xs font-bold">{location || 'Ilorin Central'}</span>
+                <ChevronDown className="w-4 h-4 text-slate-300 ml-auto" />
+             </div>
           </div>
         </div>
 
-        <div className="space-y-3 pt-4">
-          <Button className="w-full bg-accent hover:bg-accent-light text-primary py-7 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg shadow-accent/20">
-            <MessageCircle className="w-5 h-5 fill-primary" />
-            Chat with Vendor
+        {/* Buttons */}
+        <div className="space-y-6 pt-2">
+          <Button className="w-full h-16 bg-[#FDB813] hover:bg-[#EAA810] text-[#1A2B3D] rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-yellow-500/20 active:scale-95 transition-all">
+            Book This Ride
           </Button>
-          <Button variant="outline" className="w-full border-slate-200 hover:bg-slate-50 text-slate-900 py-7 rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all active:scale-95">
-            <Phone className="w-5 h-5" />
-            Call to Inquire
-          </Button>
+
+          <button className="w-full flex items-center justify-center gap-2 text-primary hover:text-primary/70 transition-colors group">
+             <MessageSquare className="w-5 h-5 text-primary" />
+             <span className="text-[11px] font-bold">Chat with a rental specialist</span>
+          </button>
         </div>
 
-        <div className="pt-8 border-t border-slate-50 flex items-center gap-4">
-          <div className="h-12 w-12 rounded-xl bg-primary text-white flex items-center justify-center font-black text-sm">
-            RV
-          </div>
-          <div className="space-y-0.5">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Listed by:</p>
-            <p className="text-sm font-black text-slate-900 leading-tight flex items-center gap-1.5">
-              Ride Vendor Certified
-              <ShieldCheck className="w-3.5 h-3.5 text-accent" />
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-primary p-8 rounded-[2rem] text-white space-y-4 shadow-xl shadow-primary/20 relative overflow-hidden group">
-         <div className="relative z-10 space-y-3">
-           <div className="flex items-center gap-2 text-accent">
-              <ShieldCheck className="w-5 h-5" />
-              <h4 className="font-black text-sm uppercase tracking-widest">Buyer Protection Program</h4>
-           </div>
-           <p className="text-[10px] font-medium text-slate-400 leading-relaxed uppercase tracking-wider">
-             Secure your purchase through our escrow service. Money is only released to the vendor once you've confirmed the vehicle's state in person.
-           </p>
-         </div>
-         <div className="absolute right-[-20px] bottom-[-20px] opacity-10 group-hover:opacity-20 transition-opacity rotate-[-15deg] group-hover:rotate-0 duration-500 scale-150 pointer-events-none">
-            <ShieldCheck size={120} strokeWidth={1} />
-         </div>
+        {/* Footer Text */}
+        <p className="text-center text-[10px] text-slate-400 md:max-w-[240px] mx-auto font-medium leading-relaxed">
+          Free cancellation up to 48 hours before pickup.
+        </p>
       </div>
     </div>
   );

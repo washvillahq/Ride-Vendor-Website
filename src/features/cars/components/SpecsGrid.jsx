@@ -1,33 +1,26 @@
-import React from 'react';
+import { Users, Settings2, Fuel, Wind } from 'lucide-react';
 
 const SpecsGrid = ({ specs = {} }) => {
   const specItems = [
-    { label: 'Mileage', value: specs.mileage ? `${specs.mileage.toLocaleString()} km` : 'Not specified' },
-    { label: 'Engine', value: specs.engine || 'Not specified' },
-    { label: 'Transmission', value: specs.transmission || 'Not specified' },
-    { label: 'Fuel Type', value: specs.fuelType || 'Not specified' },
-    { label: 'Color', value: specs.color || 'Not specified' },
-    { label: 'Condition', value: specs.condition || 'Not specified' },
-    { label: 'Seating', value: specs.seatingCapacity ? `${specs.seatingCapacity} Seats` : 'Not specified' },
-    { label: 'Doors', value: specs.doors ? `${specs.doors} Doors` : 'Not specified' },
-    { label: 'Suitcases', value: specs.suitcases ? `${specs.suitcases} Bags` : '0' },
+    { label: 'Seater', value: specs.seatingCapacity ? `${specs.seatingCapacity}-Seater` : '7-Seater', icon: Users },
+    { label: 'Transmission', value: specs.transmission || 'Automatic', icon: Settings2 },
+    { label: 'Fuel', value: specs.fuelType || 'Petrol', icon: Fuel },
+    { label: 'Climate Control', value: 'Full AC', icon: Wind },
   ];
 
   return (
-    <div className="space-y-2">
-      <h2 className="text-2xl font-medium text-slate-900">Vehicle Specifications</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 border-t border-slate-100 pt-2">
-        {specItems.map((spec, i) => (
-          <div key={i} className="space-y-1.5">
-            <label className="text-[10px] font-medium text-slate-400 uppercase tracking-widest leading-none">
-              {spec.label}
-            </label>
-            <p className="text-sm font-medium text-slate-900 leading-tight">
-              {spec.value}
-            </p>
-          </div>
-        ))}
-      </div>
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {specItems.map((spec, i) => (
+        <div key={i} className="bg-slate-50/80 p-6 rounded-2xl flex flex-col items-center justify-center gap-3 text-center group hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 border border-transparent hover:border-slate-100">
+           <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+              <spec.icon className="w-5 h-5 text-slate-400" />
+           </div>
+           <div className="space-y-1">
+              <p className="text-[#1A2B3D] text-[13px] font-bold">{spec.value}</p>
+              <p className="text-slate-400 text-[9px] font-bold uppercase tracking-widest">{spec.label}</p>
+           </div>
+        </div>
+      ))}
     </div>
   );
 };

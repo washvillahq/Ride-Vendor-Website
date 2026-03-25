@@ -33,7 +33,7 @@ const STEPS = [
   { id: 4, title: 'Review', icon: CreditCard },
 ];
 
-const HireCheckoutModal = ({ isOpen, onClose, car }) => {
+const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
   const navigate = useNavigate();
   const { data: servicesData, isLoading: isServicesLoading } = useServices(car?.category);
   const services = servicesData?.data || [];
@@ -48,6 +48,18 @@ const HireCheckoutModal = ({ isOpen, onClose, car }) => {
   const [selectedDates, setSelectedDates] = useState([]);
   const [details, setDetails] = useState({ pickupLocation: '', dropoffLocation: '', specialRequests: '' });
   const [isBooking, setIsBooking] = useState(false);
+
+  // Auto-fill from initialData
+  React.useEffect(() => {
+    if (initialData && isOpen) {
+      if (initialData.selectedDates) {
+        setSelectedDates(initialData.selectedDates);
+      }
+      if (initialData.pickupLocation) {
+        setDetails(prev => ({ ...prev, pickupLocation: initialData.pickupLocation }));
+      }
+    }
+  }, [initialData, isOpen]);
 
   const totalDays = useMemo(() => {
     return selectedDates.length;
