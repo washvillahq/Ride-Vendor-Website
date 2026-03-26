@@ -15,15 +15,13 @@ import Badge from '../../components/ui/Badge';
 import Checkbox from '../../components/ui/Checkbox';
 import { cn } from '../../utils/cn';
 import { 
-  Plus, 
-  Settings2, 
-  Trash2, 
-  Edit3, 
-  Layers, 
-  Search,
-  CheckCircle2,
-  DollarSign
+  DollarSign,
+  Plus,
+  Edit3,
+  Trash2,
+  Search
 } from 'lucide-react';
+import Skeleton from '../../components/ui/Skeleton';
 
 const serviceSchema = z.object({
   name: z.string().min(2, 'Name is required'),

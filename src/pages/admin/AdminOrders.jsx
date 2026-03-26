@@ -5,23 +5,24 @@ import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '.
 import StatusBadge from '../../components/ui/StatusBadge';
 import Select from '../../components/ui/Select';
 import { cn } from '../../utils/cn';
-import { 
-  ShoppingBag, 
-  User, 
-  Car, 
-  Calendar, 
-  CreditCard, 
+import {
+  ShoppingBag,
+  User,
+  Car,
+  Calendar,
+  CreditCard,
   Search,
   Filter,
   CheckCircle2,
   TrendingUp
 } from 'lucide-react';
 import dayjs from 'dayjs';
+import Skeleton from '../../components/ui/Skeleton';
 
 const AdminOrders = () => {
   const { data, isLoading, refetch } = useAdminOrders();
   const { mutateAsync: updateStatus, isLoading: isUpdating } = useUpdateOrderStatus();
-  
+
   const orders = data?.data?.data || data?.data?.orders || [];
 
   const handleStatusChange = async (id, status) => {
@@ -44,21 +45,21 @@ const AdminOrders = () => {
     <div className="space-y-10 pb-20">
       <section className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-           <h1 className="text-4xl font-black text-primary tracking-tight">Sales Oversight</h1>
-           <p className="text-gray-medium mt-1 font-medium">Monitor vehicle purchase requests and title transfer procedures.</p>
+          <h1 className="text-4xl font-black text-primary tracking-tight">Sales Oversight</h1>
+          <p className="text-gray-medium mt-1 font-medium">Monitor vehicle purchase requests and title transfer procedures.</p>
         </div>
         <div className="flex items-center gap-4">
-           <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-medium group-focus-within:text-primary transition-colors" />
-              <input 
-                type="text" 
-                placeholder="Search transactions..." 
-                className="pl-11 pr-6 py-3 bg-white border border-gray-200 rounded-2xl text-sm focus:ring-2 focus:ring-primary outline-none transition-all w-64 shadow-sm"
-              />
-           </div>
-           <button className="p-3 bg-white border border-gray-200 rounded-2xl hover:bg-gray-50 transition-colors shadow-sm text-gray-medium">
-              <Filter size={18} />
-           </button>
+          <div className="relative group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-medium group-focus-within:text-primary transition-colors" />
+            <input
+              type="text"
+              placeholder="Search transactions..."
+              className="pl-11 pr-6 py-3 bg-white border border-gray-200 rounded-2xl text-sm focus:ring-2 focus:ring-primary outline-none transition-all w-64 shadow-sm"
+            />
+          </div>
+          <button className="p-3 bg-white border border-gray-200 rounded-2xl hover:bg-gray-50 transition-colors shadow-sm text-gray-medium">
+            <Filter size={18} />
+          </button>
         </div>
       </section>
 
@@ -91,46 +92,46 @@ const AdminOrders = () => {
             ) : orders.length > 0 ? orders.map((order) => (
               <TableRow key={order._id} className="group hover:bg-gray-50/50 transition-colors">
                 <TableCell className="py-6 px-8">
-                   <div className="flex items-center gap-4">
-                      <div className="h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center font-black text-[10px]">
-                         {order.user?.name?.charAt(0) || 'C'}
+                  <div className="flex items-center gap-4">
+                    <div className="h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center font-black text-[10px]">
+                      {order.user?.name?.charAt(0) || 'C'}
+                    </div>
+                    <div>
+                      <p className="font-black text-primary leading-none">{order.user?.name || 'Customer'}</p>
+                      <div className="flex items-center gap-1.5 mt-1.5 font-bold text-[9px] text-gray-medium uppercase tracking-widest">
+                        <Car size={10} className="text-accent" />
+                        {order.car?.title || 'Unknown Vehicle'}
                       </div>
-                      <div>
-                         <p className="font-black text-primary leading-none">{order.user?.name || 'Customer'}</p>
-                         <div className="flex items-center gap-1.5 mt-1.5 font-bold text-[9px] text-gray-medium uppercase tracking-widest">
-                            <Car size={10} className="text-accent" />
-                            {order.car?.title || 'Unknown Vehicle'}
-                         </div>
-                      </div>
-                   </div>
+                    </div>
+                  </div>
                 </TableCell>
                 <TableCell className="py-6 font-black text-gray-medium text-xs">
-                   <div className="flex flex-col">
-                      <span className="flex items-center gap-1.5">
-                         <Calendar size={12} className="text-gray-300" />
-                         {dayjs(order.createdAt).format('MMM D, YYYY')}
-                      </span>
-                      <span className="text-[9px] font-bold text-gray-medium uppercase tracking-widest mt-1 ml-4.5">
-                         at {dayjs(order.createdAt).format('hh:mm A')}
-                      </span>
-                   </div>
+                  <div className="flex flex-col">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar size={12} className="text-gray-300" />
+                      {dayjs(order.createdAt).format('MMM D, YYYY')}
+                    </span>
+                    <span className="text-[9px] font-bold text-gray-medium uppercase tracking-widest mt-1 ml-4.5">
+                      at {dayjs(order.createdAt).format('hh:mm A')}
+                    </span>
+                  </div>
                 </TableCell>
                 <TableCell className="py-6 font-black text-primary text-lg">
-                   ₦{order.totalPrice?.toLocaleString()}
+                  ₦{order.totalPrice?.toLocaleString()}
                 </TableCell>
                 <TableCell className="py-6">
-                   <StatusBadge status={order.paymentStatus} className="text-[9px] font-black uppercase px-3 rounded-lg" />
+                  <StatusBadge status={order.paymentStatus} className="text-[9px] font-black uppercase px-3 rounded-lg" />
                 </TableCell>
                 <TableCell className="py-6 px-8 text-right">
-                   <div className="flex justify-end">
-                      <Select 
-                        value={order.status}
-                        onChange={(e) => handleStatusChange(order._id, e.target.value)}
-                        options={statuses}
-                        className="max-w-[140px] h-10 text-[10px] font-black uppercase tracking-widest bg-gray-100 border-none rounded-xl hover:bg-gray-200 transition-colors cursor-pointer"
-                        disabled={isUpdating}
-                      />
-                   </div>
+                  <div className="flex justify-end">
+                    <Select
+                      value={order.status}
+                      onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                      options={statuses}
+                      className="max-w-[140px] h-10 text-[10px] font-black uppercase tracking-widest bg-gray-100 border-none rounded-xl hover:bg-gray-200 transition-colors cursor-pointer"
+                      disabled={isUpdating}
+                    />
+                  </div>
                 </TableCell>
               </TableRow>
             )) : (
