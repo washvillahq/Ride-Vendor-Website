@@ -2,14 +2,14 @@ import React from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useLogout } from '../features/auth/hooks';
-import { 
-  LayoutDashboard, 
-  Car, 
-  List, 
-  Heart, 
-  ShoppingBag, 
-  User, 
-  HelpCircle, 
+import {
+  LayoutDashboard,
+  Car,
+  List,
+  Heart,
+  ShoppingBag,
+  User,
+  HelpCircle,
   LogOut,
   Bell,
   Search,
@@ -37,17 +37,11 @@ const DashboardLayout = () => {
 
   return (
     <div className="flex min-h-screen bg-[#F8FAFB]">
-      {/* Mobile Menu Toggle */}
-      <button 
-        onClick={() => setIsMobileMenuOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-[#002E3E] text-white rounded-lg shadow-lg"
-      >
-        <Menu size={20} />
-      </button>
+
 
       {/* Sidebar Overlay */}
       {isMobileMenuOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
@@ -78,8 +72,8 @@ const DashboardLayout = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={cn(
                   "flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all",
-                  isActive 
-                    ? "bg-[#FDB813] text-[#002E3E]" 
+                  isActive
+                    ? "bg-[#FDB813] text-[#002E3E]"
                     : "text-slate-400 hover:text-white hover:bg-white/5"
                 )}
               >
@@ -91,14 +85,14 @@ const DashboardLayout = () => {
         </nav>
 
         <div className="p-4 space-y-1 border-t border-white/5">
-          <Link 
-            to="/help" 
+          <Link
+            to="/help"
             className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-white transition-all"
           >
             <HelpCircle size={18} className="text-[#FDB813]" />
             Help Center
           </Link>
-          <button 
+          <button
             onClick={() => logout()}
             className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-white transition-all w-full"
           >
@@ -110,24 +104,34 @@ const DashboardLayout = () => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-screen">
-        <header className="h-20 bg-white border-b border-slate-100 flex items-center justify-between px-8 sticky top-0 z-30">
-          <div className="flex-1 max-w-md">
-            <div className="relative group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
-              <input 
-                type="text" 
-                placeholder="Search orders..."
-                className="w-full bg-[#F4F7F9] border-none rounded-lg py-2 pl-12 pr-4 text-sm focus:ring-1 focus:ring-accent transition-all outline-none"
-              />
+        <header className="h-20 bg-white border-b border-slate-100 flex items-center justify-between px-2 sticky top-0 z-30">
+          <div className='flex gap-2 items-center'>
+
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="lg:hidden z-50 p-2 bg-[#002E3E] text-white rounded-lg shadow-lg"
+            >
+              <Menu size={20} />
+            </button>
+            <div className="flex-1 max-w-md">
+              <div className="relative group">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                <input
+                  type="text"
+                  placeholder="Search orders..."
+                  className="w-full bg-[#F4F7F9] border-none rounded-lg py-2 pl-12 pr-4 text-sm focus:ring-1 focus:ring-accent transition-all outline-none"
+                />
+              </div>
             </div>
           </div>
 
           <div className="flex items-center gap-6">
-            <button className="relative text-slate-400 hover:text-primary transition-colors">
+            {/* <button className="relative text-slate-400 hover:text-primary transition-colors">
               <Bell size={20} />
               <span className="absolute -top-0.5 -right-0.5 h-2 w-2 bg-orange-500 rounded-full border-2 border-white" />
-            </button>
-            
+            </button> */}
+
             <div className="flex items-center gap-3 pl-4 border-l border-slate-100">
               <div className="h-10 w-10 rounded-full bg-[#002E3E] text-white flex items-center justify-center font-bold text-sm">
                 {user?.name?.split(' ').map(n => n[0]).join('') || 'JD'}
