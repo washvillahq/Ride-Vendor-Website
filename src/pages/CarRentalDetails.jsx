@@ -87,7 +87,7 @@ const CarRentalDetails = () => {
             <CarGallery images={images} />
 
             <div className="space-y-6">
-              <h1 className="text-5xl font-black text-[#1A2B3D] tracking-tight">
+              <h1 className="text-5xl font-medium text-[#1A2B3D] tracking-tight">
                 {brand} {model}
               </h1>
               <p className="text-slate-500 text-lg font-medium leading-relaxed max-w-2xl">
@@ -99,7 +99,7 @@ const CarRentalDetails = () => {
 
             {/* Key Features */}
             <div className="space-y-8 p-10 bg-slate-50/50 rounded-[2.5rem] border border-slate-100">
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight">Key Features</h2>
+              <h2 className="text-2xl font-medium text-slate-900 tracking-tight">Key Features</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
                 {[
                   { title: 'Advanced Safety', desc: 'Active Brake Assist and Blind Spot Monitoring.' },
@@ -124,7 +124,7 @@ const CarRentalDetails = () => {
 
             {/* Rental Terms */}
             <div className="space-y-8">
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight">Rental Terms</h2>
+              <h2 className="text-2xl font-medium text-slate-900 tracking-tight">Rental Terms</h2>
               <div className="bg-[#F4F3F5] border border-slate-100 rounded-[2rem] overflow-hidden">
                 {[
                   { label: 'Daily Mileage', value: '200km included' },
@@ -149,7 +149,7 @@ const CarRentalDetails = () => {
         {/* Similar Hire Cars Section */}
         <div className="space-y-8 pt-12  border-t border-slate-100">
           <div className="flex items-center justify-between">
-            <h2 className="text-3xl font-black text-[#1A2B3D] tracking-tight">Similar Vehicles in Ilorin</h2>
+            <h2 className="text-3xl font-medium text-[#1A2B3D] tracking-tight">Similar Vehicles in Ilorin</h2>
             <Link to="/car-hire/all" className="text-primary font-bold text-xs flex items-center gap-2 hover:gap-3 transition-all uppercase tracking-widest">
               View Entire Showroom <span className="text-xl">→</span>
             </Link>

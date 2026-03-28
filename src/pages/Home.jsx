@@ -76,7 +76,7 @@ const Hero = () => (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto pt-8">
         <Link to="/car-hire" className="relative overflow-hidden bg-primary text-white p-8 rounded-[2rem] text-left group cursor-pointer hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500">
           <div className="relative z-10 space-y-4">
-            <h3 className="text-2xl font-black">Book a Car Now</h3>
+            <h3 className="text-2xl font-medium">Book a Car Now</h3>
             <p className="text-white/70 text-xs font-medium max-w-[200px]">Clean vehicles. Fast bookings. Reliable service.</p>
           </div>
           <div className="absolute right-[-20px] bottom-[-20px] opacity-10 group-hover:opacity-20 transition-opacity rotate-[-15deg] group-hover:rotate-0 duration-500">
@@ -86,7 +86,7 @@ const Hero = () => (
 
         <Link to="/car-sales" className="relative overflow-hidden bg-accent text-slate-900 p-8 rounded-[2rem] text-left group cursor-pointer hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500">
           <div className="relative z-10 space-y-4">
-            <h3 className="text-2xl font-black">List Your Car For Sale</h3>
+            <h3 className="text-2xl font-medium">List Your Car For Sale</h3>
             <p className="text-primary text-xs font-medium max-w-[200px]">Reach verified buyers and sell faster in Ilorin.</p>
           </div>
           <div className="absolute right-[-20px] bottom-[-20px] opacity-10 group-hover:opacity-20 transition-opacity rotate-[-15deg] group-hover:rotate-0 duration-500">
@@ -199,7 +199,7 @@ const TestimonialsSection = () => {
                 <span className="font-medium text-primary text-2xl tracking-tight">Excellent</span>
               </div>
               <div className="bg-[#FDF2F2] border border-[#FBEAEA] rounded-lg px-4 py-2 inline-block shadow-sm overflow-hidden">
-                <p className="text-[10px] font-black text-[#8A6D3B] uppercase tracking-widest whitespace-nowrap">
+                <p className="text-[10px] font-medium text-[#8A6D3B] uppercase tracking-widest whitespace-nowrap">
                   Based on 37 reviews
                 </p>
               </div>
@@ -217,7 +217,7 @@ const TestimonialsSection = () => {
                     key={i}
                     className={`flex-shrink-0 w-[300px] ${t.color} p-8 md:p-10 rounded-[2.5rem] space-y-8 snap-center hover:scale-[1.02] transition-transform duration-500`}
                   >
-                    <p className="text-lg font-black text-primary leading-relaxed italic">
+                    <p className="text-lg font-medium text-primary leading-relaxed italic">
                       "{t.content}"
                     </p>
                     <div className="flex gap-1">
@@ -228,7 +228,7 @@ const TestimonialsSection = () => {
                         <img src={`https://i.pravatar.cc/100?u=${i + 20}`} alt="Avatar" className="w-full h-full object-cover" />
                       </div>
                       <div>
-                        <p className="font-black text-primary text-sm">{t.name}</p>
+                        <p className="font-medium text-primary text-sm">{t.name}</p>
                         <p className="text-[10px] font-bold text-gray-medium uppercase tracking-widest opacity-60">{t.role}</p>
                       </div>
                     </div>
@@ -240,13 +240,13 @@ const TestimonialsSection = () => {
             <div className="flex gap-3 mt-8">
               <button
                 onClick={handlePrev}
-                className="h-12 w-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-accent hover:text-primary transition-all font-black active:scale-90"
+                className="h-12 w-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-accent hover:text-primary transition-all font-medium active:scale-90"
               >
                 <ChevronLeft className="w-6 h-6" />
               </button>
               <button
                 onClick={handleNext}
-                className="h-12 w-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-accent hover:text-primary transition-all font-black active:scale-90"
+                className="h-12 w-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-accent hover:text-primary transition-all font-medium active:scale-90"
               >
                 <ChevronRight className="w-6 h-6" />
               </button>
@@ -261,7 +261,7 @@ const TestimonialsSection = () => {
 const BlogSection = () => (
   <section className="py-24 bg-white">
     <div className="container px-4">
-      <h2 className="text-3xl font-black text-primary mb-12">There's so much more to explore</h2>
+      <h2 className="text-3xl font-medium text-primary mb-12">There's so much more to explore</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {[
           { tag: "Car Hire Tips", title: "Top 13 Must-Have Car Accessories for Car Owners in Nigeria" },
@@ -275,10 +275,10 @@ const BlogSection = () => (
             </div>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-[10px] font-black text-accent-dark uppercase tracking-widest">{post.tag}</span>
+                <span className="text-[10px] font-medium text-accent-dark uppercase tracking-widest">{post.tag}</span>
                 <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-primary group-hover:translate-x-1 transition-all" />
               </div>
-              <h3 className="font-black text-xl text-primary leading-tight group-hover:text-accent transition-colors">
+              <h3 className="font-medium text-xl text-primary leading-tight group-hover:text-accent transition-colors">
                 {post.title}
               </h3>
               <p className="text-gray-medium text-sm line-clamp-2">
@@ -301,7 +301,7 @@ const HomePage = () => {
         title="Premium car hire services"
       />
       <TestimonialsSection />
-      <BlogSection />
+      {/* <BlogSection /> */}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,10 +6,11 @@ import { registerSchema } from '../features/auth/schema';
 import { useRegister } from '../features/auth/hooks';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
-import { User, Mail, Phone, Lock } from 'lucide-react';
+import { User, Mail, Phone, Lock, Eye, EyeOff } from 'lucide-react';
 
 const RegisterPage = () => {
   const { mutate: registerUser, isPending: isLoading } = useRegister();
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -58,9 +59,19 @@ const RegisterPage = () => {
         />
         <Input
           label="Password"
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           placeholder="••••••••"
           icon={<Lock size={18} className="text-slate-400" />}
+          suffix={
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="hover:text-accent focus:outline-none transition-colors"
+              tabIndex="-1"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          }
           className="bg-slate-50 border-transparent focus:bg-white h-14"
           {...register('password')}
           error={errors.password}

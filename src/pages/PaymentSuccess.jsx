@@ -86,7 +86,7 @@ const PaymentSuccess = () => {
               </div>
             </div>
             <div className="space-y-2">
-              <h1 className="text-3xl font-black text-slate-900 tracking-tight">Verifying Payment</h1>
+              <h1 className="text-3xl font-medium text-slate-900 tracking-tight">Verifying Payment</h1>
               <p className="text-slate-500 font-medium">
                 Please wait while we confirm your transaction with Paystack...
               </p>
@@ -101,7 +101,7 @@ const PaymentSuccess = () => {
               <CheckCircle2 className="w-12 h-12 text-emerald-500" />
             </div>
             <div className="space-y-2">
-              <h1 className="text-3xl font-black text-slate-900 tracking-tight">Payment Successful!</h1>
+              <h1 className="text-3xl font-medium text-slate-900 tracking-tight">Payment Successful!</h1>
               <p className="text-slate-500 font-medium leading-relaxed">
                 Your booking has been confirmed. You can now view it in your dashboard.
               </p>
@@ -109,13 +109,13 @@ const PaymentSuccess = () => {
             <div className="pt-8 flex flex-col gap-4">
               <Button
                 onClick={() => navigate('/dashboard/bookings')}
-                className="w-full h-14 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-black transition-all shadow-lg"
+                className="w-full h-14 bg-slate-900 text-white rounded-2xl font-medium uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-black transition-all shadow-lg"
               >
                 Go to Dashboard <ArrowRight size={18} />
               </Button>
               <Link
                 to="/"
-                className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors flex items-center justify-center gap-2"
+                className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors flex items-center justify-center gap-2"
               >
                 <Home size={14} /> Back to Home
               </Link>
@@ -130,7 +130,7 @@ const PaymentSuccess = () => {
               <XCircle className="w-12 h-12 text-rose-500" />
             </div>
             <div className="space-y-2">
-              <h1 className="text-3xl font-black text-slate-900 tracking-tight">
+              <h1 className="text-3xl font-medium text-slate-900 tracking-tight">
                 Payment Verification Failed
               </h1>
               <p className="text-slate-500 font-medium leading-relaxed">
@@ -141,7 +141,7 @@ const PaymentSuccess = () => {
               <Button
                 onClick={() => navigate('/dashboard/bookings')}
                 variant="outline"
-                className="w-full h-14 border-2 border-slate-200 text-slate-900 rounded-2xl font-black uppercase tracking-widest transition-all"
+                className="w-full h-14 border-2 border-slate-200 text-slate-900 rounded-2xl font-medium uppercase tracking-widest transition-all"
               >
                 Return to Bookings
               </Button>

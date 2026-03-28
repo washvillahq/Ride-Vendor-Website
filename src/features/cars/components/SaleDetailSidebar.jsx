@@ -19,7 +19,7 @@ const SaleDetailSidebar = ({ car }) => {
     <div className="space-y-8 sticky top-24">
       <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-2xl shadow-slate-200/50 space-y-8">
         <div className="space-y-2">
-          <h1 className="text-3xl font-black text-[#1A2B3D] leading-tight">
+          <h1 className="text-3xl font-medium text-[#1A2B3D] leading-tight">
             {year} {brand} {model}
           </h1>
           <div className="flex items-center gap-2 text-slate-400">
@@ -30,28 +30,28 @@ const SaleDetailSidebar = ({ car }) => {
 
         <div className="space-y-1">
           <div className="flex items-baseline gap-1">
-            <span className="text-4xl font-black text-[#1A2B3D] tracking-tighter">₦{formattedPrice}</span>
+            <span className="text-4xl font-medium text-[#1A2B3D] tracking-tighter">₦{formattedPrice}</span>
           </div>
         </div>
 
         <div className="space-y-4 pt-4">
-          <Button className="w-full h-16 bg-[#FDB813] hover:bg-[#EAA810] text-[#1A2B3D] rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-yellow-500/20 flex items-center justify-center gap-3 transition-all active:scale-95">
+          <Button className="w-full h-16 bg-[#FDB813] hover:bg-[#EAA810] text-[#1A2B3D] rounded-2xl font-medium text-xs uppercase tracking-widest shadow-lg shadow-yellow-500/20 flex items-center justify-center gap-3 transition-all active:scale-95">
             <MessageCircle className="w-5 h-5 fill-primary" />
             Chat with Vendor
           </Button>
-          <Button variant="outline" className="w-full h-16 border-slate-200 hover:bg-slate-50 text-[#1A2B3D] rounded-2xl font-black text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all active:scale-95">
+          <Button variant="outline" className="w-full h-16 border-slate-200 hover:bg-slate-50 text-[#1A2B3D] rounded-2xl font-medium text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all active:scale-95">
             <Phone className="w-5 h-5" />
             Call to Inquire
           </Button>
         </div>
 
         <div className="pt-8 border-t border-slate-50 flex items-center gap-4">
-          <div className="h-12 w-12 rounded-xl bg-[#1A2B3D] text-white flex items-center justify-center font-black text-sm">
+          <div className="h-12 w-12 rounded-xl bg-[#1A2B3D] text-white flex items-center justify-center font-medium text-sm">
             RV
           </div>
           <div className="space-y-0.5">
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Listed by:</p>
-            <p className="text-sm font-black text-[#1A2B3D] leading-tight flex items-center gap-1.5">
+            <p className="text-sm font-medium text-[#1A2B3D] leading-tight flex items-center gap-1.5">
               Ride Vendor Certified
               <ShieldCheck className="w-4 h-4 text-[#FDB813]" />
             </p>
@@ -63,7 +63,7 @@ const SaleDetailSidebar = ({ car }) => {
         <div className="relative z-10 space-y-3">
           <div className="flex items-center gap-2 text-[#FDB813]">
             <ShieldCheck className="w-5 h-5" />
-            <h4 className="font-black text-xs uppercase tracking-widest">Buyer Protection Program</h4>
+            <h4 className="font-medium text-xs uppercase tracking-widest">Buyer Protection Program</h4>
           </div>
           <p className="text-[10px] font-bold text-slate-400 leading-relaxed uppercase tracking-widest opacity-70">
             Secure your purchase through our escrow service. Money is only released to the vendor once you've confirmed the vehicle's state in person.

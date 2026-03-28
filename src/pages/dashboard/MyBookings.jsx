@@ -35,7 +35,7 @@ const ReturnInstructionsModal = ({ isOpen, onClose, booking }) => {
 
         <div className="space-y-6">
           <div className="space-y-1">
-            <h2 className="text-xl font-black text-[#1A2B3D] tracking-tight">Return Instructions</h2>
+            <h2 className="text-xl font-medium text-[#1A2B3D] tracking-tight">Return Instructions</h2>
             <p className="text-xs text-slate-500 font-medium">Please follow these steps for a smooth drop-off.</p>
           </div>
 
@@ -60,24 +60,24 @@ const ReturnInstructionsModal = ({ isOpen, onClose, booking }) => {
                 <MapPin size={16} />
               </div>
               <div>
-                <h4 className="font-black text-[12px] text-[#1A2B3D]">Ilorin Hub (Main)</h4>
+                <h4 className="font-medium text-[12px] text-[#1A2B3D]">Ilorin Hub (Main)</h4>
                 <p className="text-[9px] font-bold text-slate-400 uppercase">Behind Royal Rock Hotel</p>
               </div>
             </div>
-            <button className="text-[9px] font-black underline uppercase tracking-widest text-[#1A2B3D]">
+            <button className="text-[9px] font-medium underline uppercase tracking-widest text-[#1A2B3D]">
               Open Maps
             </button>
           </div>
 
           <div className="p-6 rounded-[2rem] border-2 border-dashed border-slate-200 bg-white text-center space-y-1">
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Hub Access Code</p>
-            <h3 className="text-3xl font-black text-[#1A2B3D] tracking-tighter">{booking?.hubAccessCode || 'RV-XXXX'}</h3>
+            <p className="text-[9px] font-medium text-slate-400 uppercase tracking-[0.2em]">Hub Access Code</p>
+            <h3 className="text-3xl font-medium text-[#1A2B3D] tracking-tighter">{booking?.hubAccessCode || 'RV-XXXX'}</h3>
             <p className="text-[9px] font-bold text-slate-500 max-w-[180px] mx-auto leading-relaxed">Show this to the Hub agent.</p>
           </div>
 
           <button
             onClick={onClose}
-            className="w-full bg-[#002E3E] hover:bg-[#001D24] text-white font-black text-xs py-4 rounded-xl transition-all active:scale-95"
+            className="w-full bg-[#002E3E] hover:bg-[#001D24] text-white font-medium text-xs py-4 rounded-xl transition-all active:scale-95"
           >
             I'm at the Hub
           </button>
@@ -152,12 +152,12 @@ const ExtendRentalModal = ({ isOpen, onClose, booking, onConfirm }) => {
 
         <div className="space-y-6">
           <div className="space-y-1">
-            <h2 className="text-xl font-black text-[#1A2B3D] tracking-tight">Extend Your Rental</h2>
+            <h2 className="text-xl font-medium text-[#1A2B3D] tracking-tight">Extend Your Rental</h2>
             <p className="text-xs text-slate-500 font-medium">Adjust your schedule easily.</p>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
-            <h4 className="font-black text-sm text-[#1A2B3D]">{booking.car?.brand} {booking.car?.model}</h4>
+            <h4 className="font-medium text-sm text-[#1A2B3D]">{booking.car?.brand} {booking.car?.model}</h4>
             <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
               Current End: {currentEndDate.format('MMM DD, YYYY')}
             </p>
@@ -165,7 +165,7 @@ const ExtendRentalModal = ({ isOpen, onClose, booking, onConfirm }) => {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between px-1">
-              <p className="text-[9px] font-black text-[#1A2B3D] uppercase tracking-widest">Additional Dates</p>
+              <p className="text-[9px] font-medium text-[#1A2B3D] uppercase tracking-widest">Additional Dates</p>
               {isLoadingAvailability && <span className="text-[8px] font-bold text-amber-500 animate-pulse uppercase">Syncing Blocks...</span>}
             </div>
             <div className="flex flex-wrap gap-1.5">
@@ -180,7 +180,7 @@ const ExtendRentalModal = ({ isOpen, onClose, booking, onConfirm }) => {
                     onClick={() => toggleDate(date)}
                     disabled={isBooked}
                     className={cn(
-                      "w-10 h-10 rounded-full font-black text-[10px] transition-all border flex flex-col items-center justify-center relative",
+                      "w-10 h-10 rounded-full font-medium text-[10px] transition-all border flex flex-col items-center justify-center relative",
                       isBooked
                         ? "bg-slate-50 border-slate-100 text-slate-200 cursor-not-allowed overflow-hidden line-through"
                         : isSelected
@@ -208,15 +208,15 @@ const ExtendRentalModal = ({ isOpen, onClose, booking, onConfirm }) => {
               <span>+{selectedDates.length} Days</span>
             </div>
             <div className="pt-2 border-t border-sky-200/50 flex justify-between items-center">
-              <span className="font-black text-sky-950 uppercase text-[9px]">Total Amount to Pay</span>
-              <span className="text-lg font-black text-sky-950">₦{(fullDailyRate * selectedDates.length).toLocaleString()}</span>
+              <span className="font-medium text-sky-950 uppercase text-[9px]">Total Amount to Pay</span>
+              <span className="text-lg font-medium text-sky-950">₦{(fullDailyRate * selectedDates.length).toLocaleString()}</span>
             </div>
           </div>
 
           <button
             onClick={handleExtend}
             disabled={isLoading || selectedDates.length === 0}
-            className="w-full bg-[#FDB813] hover:bg-[#EAA810] text-[#1A2B3D] font-black text-xs py-4 rounded-xl transition-all active:scale-95 disabled:opacity-50 shadow-xl shadow-yellow-500/10"
+            className="w-full bg-[#FDB813] hover:bg-[#EAA810] text-[#1A2B3D] font-medium text-xs py-4 rounded-xl transition-all active:scale-95 disabled:opacity-50 shadow-xl shadow-yellow-500/10"
           >
             {isLoading ? 'Processing...' : `Pay ₦${(fullDailyRate * selectedDates.length).toLocaleString()} to Extend`}
           </button>
@@ -240,7 +240,7 @@ const SuccessModal = ({ isOpen, onClose }) => {
         </div>
 
         <div className="space-y-3 mb-8">
-          <h2 className="text-2xl font-black text-[#1A2B3D] tracking-tight leading-tight">Your rental is extended.</h2>
+          <h2 className="text-2xl font-medium text-[#1A2B3D] tracking-tight leading-tight">Your rental is extended.</h2>
           <p className="text-sm font-medium text-slate-500 leading-relaxed px-4">
             Your new return code has been updated in your dashboard.
           </p>
@@ -248,7 +248,7 @@ const SuccessModal = ({ isOpen, onClose }) => {
 
         <button
           onClick={onClose}
-          className="w-full bg-[#002E3E] hover:bg-[#001D24] text-white font-black text-sm py-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95"
+          className="w-full bg-[#002E3E] hover:bg-[#001D24] text-white font-medium text-sm py-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95"
         >
           Back to Dashboard <ChevronRight size={16} />
         </button>
@@ -333,7 +333,7 @@ const MyBookings = () => {
       <SuccessModal isOpen={showSuccessModal} onClose={() => { setShowSuccessModal(false); refetch(); }} />
 
       <div>
-        <h1 className="text-3xl font-black text-[#1A2B3D] tracking-tight">My Rentals</h1>
+        <h1 className="text-3xl font-medium text-[#1A2B3D] tracking-tight">My Rentals</h1>
         <p className="text-slate-500 font-medium mt-1">Manage your active vehicle deployments and history.</p>
       </div>
 
@@ -351,18 +351,18 @@ const MyBookings = () => {
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
               <div className="space-y-1">
                 <span className={cn(
-                  "px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest",
+                  "px-3 py-1 rounded-lg text-[10px] font-medium uppercase tracking-widest",
                   featuredBooking.status === 'active' ? "bg-amber-50 text-amber-600" : "bg-blue-50 text-blue-600"
                 )}>
                   {featuredBooking.status === 'active' ? 'In Progress' : 'Confirmed'}
                 </span>
-                <h2 className="text-3xl font-black text-[#1A2B3D] tracking-tight mt-2">
+                <h2 className="text-3xl font-medium text-[#1A2B3D] tracking-tight mt-2">
                   {featuredBooking.car?.year || '2020'} {featuredBooking.car?.brand || 'Toyota'} {featuredBooking.car?.model || 'Camry'}
                 </h2>
                 <div className="flex items-center gap-3">
                   <p className="text-sm font-bold text-slate-400">Plate: <span className="text-[#1A2B3D]">{featuredBooking.car?.plateNumber || 'Pending'}</span></p>
                   {featuredBooking.car?.climateControl && (
-                    <div className="flex items-center gap-1 text-[10px] font-black text-sky-600 uppercase tracking-widest bg-sky-50 px-2 py-0.5 rounded-md">
+                    <div className="flex items-center gap-1 text-[10px] font-medium text-sky-600 uppercase tracking-widest bg-sky-50 px-2 py-0.5 rounded-md">
                       <ThermometerSnowflake size={12} /> A/C
                     </div>
                   )}
@@ -370,7 +370,7 @@ const MyBookings = () => {
               </div>
               <div className="text-right">
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Status</p>
-                <p className="text-xl font-black text-[#1A2B3D] tracking-tight">{getTimeRemaining(featuredBooking)}</p>
+                <p className="text-xl font-medium text-[#1A2B3D] tracking-tight">{getTimeRemaining(featuredBooking)}</p>
               </div>
             </div>
 
@@ -383,7 +383,7 @@ const MyBookings = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 disabled={true}
-                className="flex-1 bg-slate-100 text-slate-400 font-black text-xs py-4 rounded-xl flex items-center justify-center gap-2 cursor-not-allowed opacity-60"
+                className="flex-1 bg-slate-100 text-slate-400 font-medium text-xs py-4 rounded-xl flex items-center justify-center gap-2 cursor-not-allowed opacity-60"
               >
                 <History size={16} strokeWidth={3} />
                 Extend Rental
@@ -391,7 +391,7 @@ const MyBookings = () => {
               </button>
               <button
                 onClick={() => { setSelectedBooking(featuredBooking); setShowReturnModal(true); }}
-                className="flex-1 bg-[#002E3E] hover:bg-[#001D24] text-white font-black text-xs py-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95"
+                className="flex-1 bg-[#002E3E] hover:bg-[#001D24] text-white font-medium text-xs py-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95"
               >
                 <Info size={16} />
                 Return Instructions
@@ -431,8 +431,8 @@ const MyBookings = () => {
               </div>
               <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-black text-[#1A2B3D] tracking-tight">{booking.car?.brand} {booking.car?.model}</h3>
-                  <span className={cn("text-[8px] font-black px-2 py-0.5 rounded-lg uppercase tracking-widest",
+                  <h3 className="font-medium text-[#1A2B3D] tracking-tight">{booking.car?.brand} {booking.car?.model}</h3>
+                  <span className={cn("text-[8px] font-medium px-2 py-0.5 rounded-lg uppercase tracking-widest",
                     booking.status === 'confirmed' ? 'bg-blue-50 text-blue-600' :
                       booking.status === 'active' ? 'bg-amber-50 text-amber-600' :
                         booking.status === 'completed' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600'
@@ -444,13 +444,13 @@ const MyBookings = () => {
                   {dayjs(booking.startDate).format('MMM DD')} - {dayjs(booking.endDate).format('MMM DD')}
                 </p>
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-black text-[#1A2B3D]">₦{booking.totalPrice?.toLocaleString()}</p>
+                  <p className="text-sm font-medium text-[#1A2B3D]">₦{booking.totalPrice?.toLocaleString()}</p>
                   <p className="text-[9px] font-bold text-slate-400 flex items-center gap-1">Plate: <span className="text-slate-600">{booking.car?.plateNumber || 'N/A'}</span></p>
                 </div>
                 <div className="pt-2 flex items-center gap-4">
                   <button
                     onClick={() => { setSelectedBooking(booking); setShowReturnModal(true); }}
-                    className="text-[10px] font-black text-slate-400 hover:text-[#1A2B3D] flex items-center gap-1 transition-colors"
+                    className="text-[10px] font-medium text-slate-400 hover:text-[#1A2B3D] flex items-center gap-1 transition-colors"
                   >
                     View Details <ChevronRight size={14} />
                   </button>
@@ -465,10 +465,10 @@ const MyBookings = () => {
 
       <div className="bg-[#002E3E] rounded-[2.5rem] p-10 mt-12 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden group">
         <div className="max-w-md relative z-10">
-          <h2 className="text-3xl font-black text-white tracking-tight">Need help with your rental?</h2>
+          <h2 className="text-3xl font-medium text-white tracking-tight">Need help with your rental?</h2>
           <p className="text-slate-400 font-medium mt-3 leading-relaxed">Our 24/7 roadside assistance is one tap away.</p>
         </div>
-        <button className="relative z-10 px-10 py-5 bg-white text-[#1A2B3D] font-black text-sm rounded-2xl flex items-center gap-3 transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-black/20">
+        <button className="relative z-10 px-10 py-5 bg-white text-[#1A2B3D] font-medium text-sm rounded-2xl flex items-center gap-3 transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-black/20">
           <Phone size={18} /> Call Support
         </button>
         <Car size={300} className="absolute right-[-100px] bottom-[-100px] text-white/5 rotate-[-20deg]" />

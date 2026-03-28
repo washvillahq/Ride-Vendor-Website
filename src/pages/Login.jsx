@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,13 +6,14 @@ import { loginSchema } from '../features/auth/schema';
 import { useLogin } from '../features/auth/hooks';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
-import { Mail, Lock, AlertCircle } from 'lucide-react';
+import { Mail, Lock, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 
 const LoginPage = () => {
   const { mutate: login, isPending: isLoading } = useLogin();
   const [searchParams] = useSearchParams();
   const isExpired = searchParams.get('expired') === 'true';
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -38,7 +39,7 @@ const LoginPage = () => {
           </div>
         )}
         <h2 className="text-4xl font-medium text-slate-900 tracking-tight">Welcome back</h2>
-        <p className="text-slate-500 font-medium">Access your curated showroom dashboard.</p>
+        <p className="text-slate-500 font-medium tracking-tight">Access your curated showroom dashboard.</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -54,17 +55,31 @@ const LoginPage = () => {
         <div className="space-y-1">
           <Input
             label="Password"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             placeholder="••••••••"
             icon={<Lock size={18} className="text-slate-400" />}
+            suffix={
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="hover:text-accent focus:outline-none transition-colors"
+                tabIndex="-1"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            }
             className="bg-[#F4F3F5] border-transparent focus:bg-white h-14"
             {...register('password')}
             error={errors.password}
           />
           <div className="flex justify-end">
-            <Link to="/forgot-password" size="sm" className="text-xs font-meduim  uppercase tracking-widest text-[#785900] hover:text-accent transition-colors">
+            <button
+              type="button"
+              onClick={(e) => e.preventDefault()}
+              className="text-xs font-medium uppercase tracking-widest text-[#785900] hover:text-accent transition-colors"
+            >
               Forgot password?
-            </Link>
+            </button>
           </div>
         </div>
 

@@ -71,7 +71,7 @@ const CarRentals = () => {
               <h2 className="text-xl md:text-3xl font-semibold text-primary leading-tight">Available Fleet</h2>
               <p className="text-gray-medium text-sm font-medium">Discover our curated selection of high-performance rentals.</p>
             </div>
-            <Link to="/car-hire/all" className="flex items-center gap-2 text-[10px] font-black text-primary uppercase tracking-[0.2em] group hover:text-accent transition-colors">
+            <Link to="/car-hire/all" className="flex items-center gap-2 text-[10px] font-medium text-primary uppercase tracking-[0.2em] group hover:text-accent transition-colors">
               View All <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>

@@ -12,7 +12,7 @@ import { Sparkles } from 'lucide-react';
 
 const BookRental = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   const filters = useMemo(() => ({
     type: 'rental',
     category: searchParams.get('category') || '',
@@ -50,10 +50,10 @@ const BookRental = () => {
   };
 
   const handleSearchSubmit = (searchData) => {
-     handleBulkFilterChange({
-       category: searchData.category === 'Select Category' ? '' : searchData.category,
-       // Additional fields can be mapped here if backend supports them
-     });
+    handleBulkFilterChange({
+      category: searchData.category === 'Select Category' ? '' : searchData.category,
+      // Additional fields can be mapped here if backend supports them
+    });
   };
 
   return (
@@ -62,29 +62,29 @@ const BookRental = () => {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center gap-2 mb-2">
-             <div className="h-6 w-6 rounded-lg bg-amber-50 flex items-center justify-center">
-                <Sparkles size={14} className="text-amber-500" />
-             </div>
-             <span className="text-[10px] font-black uppercase tracking-widest text-amber-500">Premium Fleet</span>
+            <div className="h-6 w-6 rounded-lg bg-amber-50 flex items-center justify-center">
+              <Sparkles size={14} className="text-amber-500" />
+            </div>
+            <span className="text-[10px] font-medium uppercase tracking-widest text-amber-500">Premium Fleet</span>
           </div>
-          <h1 className="text-4xl font-black text-[#1A2B3D] tracking-tighter">Book a Ride</h1>
+          <h1 className="text-4xl font-medium text-[#1A2B3D] tracking-tighter">Book a Ride</h1>
           <p className="text-slate-500 font-medium tracking-tight">Discover and reserve high-performance vehicles across Ilorin.</p>
         </div>
       </div>
 
       {/* Hero Search */}
       <div className="relative group">
-         <div className="absolute -inset-4 bg-slate-100/50 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-         <div className="relative">
-            <RentalSearchBar onSearch={handleSearchSubmit} />
-         </div>
+        <div className="absolute -inset-4 bg-slate-100/50 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="relative">
+          <RentalSearchBar onSearch={handleSearchSubmit} />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
         {/* Filter Sidebar */}
         <aside className="lg:col-span-1">
-          <SidebarFilters 
-            filters={filters} 
+          <SidebarFilters
+            filters={filters}
             onFilterChange={handleBulkFilterChange}
             onApply={() => refetch()}
           />
@@ -93,20 +93,20 @@ const BookRental = () => {
         {/* Results Grid */}
         <main className="lg:col-span-3 space-y-10">
           <div className="flex items-center justify-between border-b border-slate-50 pb-6">
-             <p className="text-sm font-black text-[#1A2B3D]">
-                {isLoading ? 'Searching...' : `${data?.data?.pagination?.total || 0} Vehicles Found`}
-             </p>
-             <div className="flex items-center gap-3">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sort:</span>
-                <select 
-                  onChange={(e) => handleFilterChange('sort', e.target.value)}
-                  className="text-xs font-black text-[#1A2B3D] bg-transparent border-none focus:ring-0 cursor-pointer"
-                >
-                  <option value="-createdAt">Newest</option>
-                  <option value="price">Price Low</option>
-                  <option value="-price">Price High</option>
-                </select>
-             </div>
+            <p className="text-sm font-medium text-[#1A2B3D]">
+              {isLoading ? 'Searching...' : `${data?.data?.pagination?.total || 0} Vehicles Found`}
+            </p>
+            <div className="flex items-center gap-3">
+              <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">Sort:</span>
+              <select
+                onChange={(e) => handleFilterChange('sort', e.target.value)}
+                className="text-xs font-medium text-[#1A2B3D] bg-transparent border-none focus:ring-0 cursor-pointer"
+              >
+                <option value="-createdAt">Newest</option>
+                <option value="price">Price Low</option>
+                <option value="-price">Price High</option>
+              </select>
+            </div>
           </div>
 
           {isError ? (
@@ -124,21 +124,21 @@ const BookRental = () => {
               </div>
               {pagination.totalPages > 1 && (
                 <div className="flex justify-center pt-10">
-                   <Pagination 
-                     currentPage={filters.page} 
-                     totalPages={pagination.totalPages} 
-                     onPageChange={(p) => handleFilterChange('page', p)}
-                   />
+                  <Pagination
+                    currentPage={filters.page}
+                    totalPages={pagination.totalPages}
+                    onPageChange={(p) => handleFilterChange('page', p)}
+                  />
                 </div>
               )}
             </>
           ) : (
             <div className="py-20">
-              <EmptyState 
-                title="No rides available" 
+              <EmptyState
+                title="No rides available"
                 description="Try adjusting your filters to find your perfect vehicle."
                 action={
-                  <button onClick={() => setSearchParams({ type: 'rental' })} className="px-8 py-3 bg-[#1A2B3D] text-white rounded-xl font-black text-xs uppercase tracking-widest">Clear All</button>
+                  <button onClick={() => setSearchParams({ type: 'rental' })} className="px-8 py-3 bg-[#1A2B3D] text-white rounded-xl font-medium text-xs uppercase tracking-widest">Clear All</button>
                 }
               />
             </div>

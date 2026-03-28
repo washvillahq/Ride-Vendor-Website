@@ -158,7 +158,7 @@ const BookingWidget = ({ car }) => {
         <div className="mb-6">
           <p className="text-sm font-bold text-gray-medium uppercase tracking-widest mb-1">Rental Rate</p>
           <div className="flex items-baseline gap-1 focus-within:">
-            <span className="text-4xl font-black tracking-tighter text-primary">₦{car.pricePerDay}</span>
+            <span className="text-4xl font-medium tracking-tighter text-primary">₦{car.pricePerDay}</span>
             <span className="text-gray-medium font-bold">/ day</span>
           </div>
         </div>
@@ -192,7 +192,7 @@ const BookingWidget = ({ car }) => {
           {services.length > 0 && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-black uppercase text-gray-medium tracking-wider">Enhance Your Ride</label>
+                <label className="text-xs font-medium uppercase text-gray-medium tracking-wider">Enhance Your Ride</label>
                 <Badge variant="outline" className="text-[10px] font-bold">{services.length} AVAILABLE</Badge>
               </div>
               <div className="space-y-3 max-h-56 overflow-y-auto pr-2 custom-scrollbar">
@@ -200,8 +200,8 @@ const BookingWidget = ({ car }) => {
                   <label
                     key={service._id}
                     className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all cursor-pointer ${selectedServices.includes(service._id)
-                        ? 'border-primary bg-gray-50 shadow-sm'
-                        : 'border-gray-100 bg-white hover:border-gray-200'
+                      ? 'border-primary bg-gray-50 shadow-sm'
+                      : 'border-gray-100 bg-white hover:border-gray-200'
                       }`}
                   >
                     <div className="flex items-center gap-3">
@@ -211,11 +211,11 @@ const BookingWidget = ({ car }) => {
                         className="h-5 w-5 rounded-lg"
                       />
                       <div>
-                        <p className="text-sm font-black text-primary leading-none">{service.name}</p>
+                        <p className="text-sm font-medium text-primary leading-none">{service.name}</p>
                         <p className="text-[10px] font-bold text-gray-medium mt-1 uppercase tracking-tighter">One-time fee</p>
                       </div>
                     </div>
-                    <span className="text-sm font-black text-primary bg-white px-2 py-1 rounded-lg border shadow-sm">₦{service.price}</span>
+                    <span className="text-sm font-medium text-primary bg-white px-2 py-1 rounded-lg border shadow-sm">₦{service.price}</span>
                   </label>
                 ))}
               </div>
@@ -227,7 +227,7 @@ const BookingWidget = ({ car }) => {
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                 <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               </div>
- 
+
               <div className="space-y-2">
                 <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-slate-500/50">
                   <span>Standard Rental</span>
@@ -235,7 +235,7 @@ const BookingWidget = ({ car }) => {
                 </div>
                 <div className="flex justify-between items-baseline">
                   <span className="text-sm text-white/70 font-medium">₦{car.pricePerDay} / day</span>
-                  <span className="font-black text-lg">₦{priceSummary.basePrice.toLocaleString()}</span>
+                  <span className="font-medium text-lg">₦{priceSummary.basePrice.toLocaleString()}</span>
                 </div>
               </div>
 
@@ -246,15 +246,15 @@ const BookingWidget = ({ car }) => {
                   </div>
                   <div className="flex justify-between items-baseline">
                     <span className="text-sm text-white/70 font-medium">Selected Services</span>
-                    <span className="font-black text-lg">₦{priceSummary.servicesPrice.toLocaleString()}</span>
+                    <span className="font-medium text-lg">₦{priceSummary.servicesPrice.toLocaleString()}</span>
                   </div>
                 </div>
               )}
 
               <div className="pt-4 border-t border-white/20 flex justify-between items-end">
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Grand Total</span>
-                  <span className="text-3xl font-black text-white tracking-tighter">₦{priceSummary.total.toLocaleString()}</span>
+                  <span className="text-[10px] font-medium text-emerald-400 uppercase tracking-widest">Grand Total</span>
+                  <span className="text-3xl font-medium text-white tracking-tighter">₦{priceSummary.total.toLocaleString()}</span>
                 </div>
                 <span className="text-[10px] text-white/50 font-bold uppercase mb-1">Tax Incl.</span>
               </div>
@@ -268,7 +268,7 @@ const BookingWidget = ({ car }) => {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                 </div>
                 <div>
-                  <p className="text-sm font-black text-emerald-900 leading-none">Great choice!</p>
+                  <p className="text-sm font-medium text-emerald-900 leading-none">Great choice!</p>
                   <p className="text-xs font-bold text-emerald-600 mt-1">This vehicle is available for Your dates.</p>
                 </div>
               </div>
@@ -278,7 +278,7 @@ const BookingWidget = ({ car }) => {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                 </div>
                 <div>
-                  <p className="text-sm font-black text-red-900 leading-none">Vehicle Unavailable</p>
+                  <p className="text-sm font-medium text-red-900 leading-none">Vehicle Unavailable</p>
                   <p className="text-xs font-bold text-red-600 mt-1">Please try different dates or another car.</p>
                 </div>
               </div>
@@ -287,7 +287,7 @@ const BookingWidget = ({ car }) => {
             {isAvailable === true ? (
               <Button
                 type="submit"
-                className="w-full h-16 text-xl font-black rounded-3xl bg-primary hover:bg-primary/90 shadow-2xl transition-all hover:scale-[1.02] active:scale-95"
+                className="w-full h-16 text-xl font-medium rounded-3xl bg-primary hover:bg-primary/90 shadow-2xl transition-all hover:scale-[1.02] active:scale-95"
                 isLoading={isBooking || isPaying}
               >
                 Book & Pay Now
@@ -296,7 +296,7 @@ const BookingWidget = ({ car }) => {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full h-16 text-lg font-black rounded-3xl border-2 transition-all"
+                className="w-full h-16 text-lg font-medium rounded-3xl border-2 transition-all"
                 onClick={onCheckAvailability}
                 isLoading={checking}
                 disabled={!watchedValues.startDate || !watchedValues.endDate}

@@ -57,7 +57,7 @@ const Navbar = () => {
           <Logo />
 
           {/* Desktop Nav */}
-          {/* <nav className="hidden lg:flex items-center space-x-10 text-xs font-black uppercase tracking-widest text-slate-500">
+          {/* <nav className="hidden lg:flex items-center space-x-10 text-xs font-medium uppercase tracking-widest text-slate-500">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -76,10 +76,10 @@ const Navbar = () => {
             {isAuthenticated ? (
               <div className="flex items-center gap-4 bg-slate-50 p-1.5 pr-4 rounded-full border border-slate-100 shadow-sm">
                 <Link to={dashboardPath} className="flex items-center gap-2 group">
-                  <div className="h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center font-black text-xs shadow-md group-hover:bg-slate-900 transition-colors">
+                  <div className="h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center font-medium text-xs shadow-md group-hover:bg-slate-900 transition-colors">
                     {firstLetter}
                   </div>
-                  <span className="text-xs font-black text-slate-900 uppercase tracking-tight">Hi, {firstName}</span>
+                  <span className="text-xs font-medium text-slate-900 uppercase tracking-tight">Hi, {firstName}</span>
                 </Link>
                 <div className="w-px h-4 bg-slate-200" />
                 <button
@@ -99,7 +99,7 @@ const Navbar = () => {
                     size="sm"
                     isPill={true}
                     leftIcon={<User size={14} />}
-                    className="text-[10px] font-black uppercase tracking-widest px-6 h-11"
+                    className="text-[10px] font-medium uppercase tracking-widest px-6 h-11"
                   >
                     Login
                   </Button>
@@ -109,7 +109,7 @@ const Navbar = () => {
                     variant="nav-solid"
                     size="sm"
                     isPill={true}
-                    className="text-[10px] font-black uppercase tracking-widest px-8 h-11"
+                    className="text-[10px] font-medium uppercase tracking-widest px-8 h-11"
                   >
                     Sign Up
                   </Button>
@@ -120,7 +120,7 @@ const Navbar = () => {
 
           {/* Mobile Auth State (Just Icon if logged in) */}
           {isAuthenticated && (
-            <Link to={dashboardPath} className="md:hidden flex items-center justify-center h-10 w-10 rounded-full bg-primary text-white shadow-md active:scale-90 transition-all font-black text-xs">
+            <Link to={dashboardPath} className="md:hidden flex items-center justify-center h-10 w-10 rounded-full bg-primary text-white shadow-md active:scale-90 transition-all font-medium text-xs">
               {firstLetter}
             </Link>
           )}
@@ -145,7 +145,7 @@ const Navbar = () => {
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-lg font-black text-slate-900 uppercase tracking-widest py-2 border-b border-slate-50 flex items-center justify-between group"
+                  className="text-lg font-medium text-slate-900 uppercase tracking-widest py-2 border-b border-slate-50 flex items-center justify-between group"
                 >
                   {link.name}
                   <div className="h-2 w-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -161,17 +161,17 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className="flex items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100"
                   >
-                    <div className="h-12 w-12 rounded-2xl bg-primary text-white flex items-center justify-center font-black text-lg">
+                    <div className="h-12 w-12 rounded-2xl bg-primary text-white flex items-center justify-center font-medium text-lg">
                       {firstLetter}
                     </div>
                     <div className="space-y-0.5">
-                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Logged in as</p>
-                      <p className="text-sm font-black text-slate-900 uppercase">My Dashboard</p>
+                      <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">Logged in as</p>
+                      <p className="text-sm font-medium text-slate-900 uppercase">My Dashboard</p>
                     </div>
                   </Link>
                   <Button
                     variant="outline"
-                    className="w-full py-7 rounded-2xl border-slate-200 text-red-500 font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all active:scale-95"
+                    className="w-full py-7 rounded-2xl border-slate-200 text-red-500 font-medium uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all active:scale-95"
                     onClick={() => {
                       logout();
                       setIsMenuOpen(false);
@@ -188,7 +188,7 @@ const Navbar = () => {
                       variant="nav-outline"
                       isPill={true}
                       leftIcon={<User size={16} />}
-                      className="w-full py-7 font-black uppercase tracking-widest text-[11px]"
+                      className="w-full py-7 font-medium uppercase tracking-widest text-[11px]"
                     >
                       Login
                     </Button>
@@ -197,7 +197,7 @@ const Navbar = () => {
                     <Button
                       variant="nav-solid"
                       isPill={true}
-                      className="w-full py-7 font-black uppercase tracking-widest text-[11px]"
+                      className="w-full py-7 font-medium uppercase tracking-widest text-[11px]"
                     >
                       Sign Up
                     </Button>

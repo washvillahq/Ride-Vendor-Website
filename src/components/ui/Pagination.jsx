@@ -2,11 +2,11 @@ import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '../../utils/cn';
 
-const Pagination = ({ 
-  currentPage, 
-  totalPages, 
-  onPageChange, 
-  className 
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+  className
 }) => {
   if (totalPages <= 1) return null;
 
@@ -17,9 +17,9 @@ const Pagination = ({
         key={page}
         onClick={() => onPageChange(page)}
         className={cn(
-          "h-12 w-12 flex items-center justify-center rounded-2xl text-sm font-black transition-all",
-          isActive 
-            ? "bg-[#FDB813] text-[#1A2B3D] shadow-lg shadow-yellow-500/20 active:scale-90" 
+          "h-12 w-12 flex items-center justify-center rounded-2xl text-sm font-medium transition-all",
+          isActive
+            ? "bg-[#FDB813] text-[#1A2B3D] shadow-lg shadow-yellow-500/20 active:scale-90"
             : "text-[#1A2B3D] hover:text-[#FDB813] active:scale-95"
         )}
       >
@@ -35,7 +35,7 @@ const Pagination = ({
   pages.push(renderPageNumber(1));
 
   if (currentPage > range + 2) {
-    pages.push(<span key="dots-1" className="text-slate-400 font-black px-2">...</span>);
+    pages.push(<span key="dots-1" className="text-slate-400 font-medium px-2">...</span>);
   }
 
   // Show pages around current
@@ -44,7 +44,7 @@ const Pagination = ({
   }
 
   if (currentPage < totalPages - range - 1) {
-    pages.push(<span key="dots-2" className="text-slate-400 font-black px-2">...</span>);
+    pages.push(<span key="dots-2" className="text-slate-400 font-medium px-2">...</span>);
   }
 
   // Always show last page if more than 1

@@ -52,7 +52,7 @@ const AdminLayout = () => {
                 key={link.path}
                 to={link.path}
                 className={cn(
-                  "flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest rounded-2xl transition-all duration-500",
+                  "flex items-center gap-4 px-5 py-4 text-[11px] font-medium uppercase tracking-widest rounded-2xl transition-all duration-500",
                   isActive
                     ? 'bg-accent text-black shadow-xl shadow-accent/10'
                     : 'text-slate-400 hover:text-white hover:bg-white/5'
@@ -68,7 +68,7 @@ const AdminLayout = () => {
         <div className="p-8 mt-auto border-t border-white/5">
           <Button
             variant="ghost"
-            className="w-full justify-start text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-red-400 hover:bg-red-400/5 rounded-2xl px-5 py-4 transition-all"
+            className="w-full justify-start text-[10px] font-medium uppercase tracking-widest text-slate-500 hover:text-red-400 hover:bg-red-400/5 rounded-2xl px-5 py-4 transition-all"
             onClick={() => logout()}
             isLoading={isLoading}
           >
@@ -99,12 +99,12 @@ const AdminLayout = () => {
             <div className="h-8 w-[1px] bg-slate-100 mx-1" />
             <div className="flex items-center gap-4 pl-2 cursor-pointer group">
               <div className="text-right hidden sm:block">
-                <p className="text-[11px] font-black text-slate-900 leading-none uppercase tracking-widest">{user?.name || 'Administrator'}</p>
+                <p className="text-[11px] font-medium text-slate-900 leading-none uppercase tracking-widest">{user?.name || 'Administrator'}</p>
                 <p className="text-[9px] font-bold text-blue-500 uppercase tracking-[0.2em] mt-1.5 opacity-70">Super Admin</p>
               </div>
               <div className="flex items-center gap-3">
                 <div className="h-11 w-11 rounded-2xl bg-white border-2 border-slate-100 p-0.5 transition-transform group-hover:scale-105 duration-300">
-                  <div className="h-full w-full rounded-xl bg-slate-900 flex items-center justify-center font-black text-white text-[11px] uppercase tracking-tighter">
+                  <div className="h-full w-full rounded-xl bg-slate-900 flex items-center justify-center font-medium text-white text-[11px] uppercase tracking-tighter">
                     {user?.name?.split(' ').map(n => n[0]).join('') || 'AD'}
                   </div>
                 </div>

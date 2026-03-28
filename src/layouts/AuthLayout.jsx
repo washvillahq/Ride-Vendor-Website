@@ -13,7 +13,7 @@ const AuthLayout = () => {
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-white">
       {/* Visual & Branding Section - Now visible on all screens */}
-      <div className="flex w-full md:w-1/2 h-[320px] md:h-screen relative overflow-hidden bg-slate-900 shrink-0">
+      <div className="flex w-full md:w-1/2 h-[320px] md:h-auto relative overflow-hidden bg-slate-900 shrink-0">
         <img
           src={displayImg}
           alt="Authentication Visual"
@@ -28,7 +28,7 @@ const AuthLayout = () => {
 
           <div className="space-y-4 max-w-md pb-4 md:pb-0">
             <div className="h-1 w-12 bg-accent rounded-full mb-4" />
-            <h1 className="text-lg md:text-5xl font-semibold md:font-black text-white leading-tight tracking-tighter">
+            <h1 className="text-lg md:text-5xl font-semibold md:font-medium text-white leading-tight tracking-tighter">
               {isLogin ? "Ilorin’s premier automobile marketplace" : "Ilorin’s premier automobile marketplace"}
             </h1>
           </div>
@@ -38,7 +38,7 @@ const AuthLayout = () => {
       {/* Form Area */}
       <div className="flex-1 flex flex-col items-center justify-center relative bg-white">
         <div className="absolute top-6 right-6 md:top-8 md:right-8 z-10">
-          <Link to="/" className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-black transition-all">
+          <Link to="/" className="text-[10px] font-medium uppercase tracking-[0.2em] text-slate-400 hover:text-black transition-all">
             Back to Home
           </Link>
         </div>

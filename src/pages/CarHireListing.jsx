@@ -92,7 +92,7 @@ const CarHireListing = () => {
             />
             <div className="hidden md:flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-[#1A2B3D]">Live Fleet Status</span>
+              <span className="text-[10px] font-medium uppercase tracking-widest text-[#1A2B3D]">Live Fleet Status</span>
             </div>
           </div>
 
@@ -107,7 +107,7 @@ const CarHireListing = () => {
         {/* Results Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-100 pb-12">
           <div className="space-y-3">
-            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FDB813]">Ilorin Region</p>
+            <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-[#FDB813]">Ilorin Region</p>
             <h1 className="text-xl md:text-5xl font-medium text-[#1A2B3D] tracking-tighter">
               {isLoading ? 'Scanning Assets...' : `Showing ${data?.data?.pagination?.total || 0} available rides in ilorin`}
             </h1>
@@ -115,10 +115,10 @@ const CarHireListing = () => {
           </div>
           <div className="flex items-center gap-4">
             <div className="text-right hidden sm:block">
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sort By</p>
+              <p className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">Sort By</p>
               <select
                 onChange={(e) => handleFilterChange('sort', e.target.value)}
-                className="text-sm font-black text-[#1A2B3D] bg-transparent border-none focus:ring-0 cursor-pointer"
+                className="text-sm font-medium text-[#1A2B3D] bg-transparent border-none focus:ring-0 cursor-pointer"
               >
                 <option value="-createdAt">Newest First</option>
                 <option value="price">Price: Low to High</option>
@@ -135,7 +135,7 @@ const CarHireListing = () => {
               <SidebarFilters
                 filters={filters}
                 onFilterChange={handleBulkFilterChange}
-                onApply={() => {}}
+                onApply={() => { }}
                 minPriceLimit={20000}
                 maxPriceLimit={1000000}
               />
@@ -175,7 +175,7 @@ const CarHireListing = () => {
                   action={
                     <button
                       onClick={() => setSearchParams({ type: 'rental' })}
-                      className="px-10 py-4 bg-[#1A2B3D] text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-black transition-all"
+                      className="px-10 py-4 bg-[#1A2B3D] text-white rounded-2xl font-medium text-xs uppercase tracking-widest hover:bg-black transition-all"
                     >
                       Reset Discovery
                     </button>
@@ -188,7 +188,7 @@ const CarHireListing = () => {
             {!isLoading && cars.length > 0 && (
               <div className="bg-slate-50 rounded-[2.5rem] p-10 mt-20 flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-100">
                 <div className="space-y-2">
-                  <h4 className="text-xl font-black text-[#1A2B3D]">Secure Booking Guarantee</h4>
+                  <h4 className="text-xl font-medium text-[#1A2B3D]">Secure Booking Guarantee</h4>
                   <p className="text-slate-500 font-medium text-sm">All vehicles are inspected and verified by RideVendor agents.</p>
                 </div>
                 <div className="flex -space-x-4">
@@ -197,7 +197,7 @@ const CarHireListing = () => {
                       <img src={`https://i.pravatar.cc/150?u=${i}`} alt="" />
                     </div>
                   ))}
-                  <div className="h-12 w-12 rounded-full border-4 border-white bg-[#FDB813] flex items-center justify-center text-[10px] font-black text-[#1A2B3D]">
+                  <div className="h-12 w-12 rounded-full border-4 border-white bg-[#FDB813] flex items-center justify-center text-[10px] font-medium text-[#1A2B3D]">
                     +2k
                   </div>
                 </div>

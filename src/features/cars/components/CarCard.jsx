@@ -41,18 +41,18 @@ const CarCard = ({ car, className }) => {
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
           fallbackSrc="https://via.placeholder.com/800x600?text=No+Image"
         />
-        
+
         {/* Verified Badge */}
         <div className="absolute top-4 right-4 animate-in fade-in zoom-in duration-500">
           <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm border border-gray-200/50">
-            <span className="text-[10px] font-black uppercase tracking-widest text-primary">Verified</span>
+            <span className="text-[10px] font-medium uppercase tracking-widest text-primary">Verified</span>
             <CheckCircle2 className="w-3.5 h-3.5 text-accent fill-accent/20" />
           </div>
         </div>
 
         {status && status !== 'available' && (
           <div className="absolute inset-0 bg-primary/60 flex items-center justify-center backdrop-blur-[2px]">
-            <span className="bg-white text-primary px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.2em]">
+            <span className="bg-white text-primary px-6 py-2 rounded-full text-xs font-medium uppercase tracking-[0.2em]">
               {status}
             </span>
           </div>
@@ -62,16 +62,16 @@ const CarCard = ({ car, className }) => {
       <div className="p-6 space-y-4">
         <div className="space-y-1">
           <div className="flex justify-between items-center">
-             <span className="text-[10px] font-bold text-gray-medium uppercase tracking-widest">
-               {category || (isRental ? 'Rental' : 'Sale')}
-             </span>
-             <div className="flex items-center gap-1 text-gray-medium group-hover:text-accent-dark transition-colors">
-                <MapPin className="w-3 h-3" />
-                <span className="text-[10px] font-bold">{location || 'Ilorin'}</span>
-             </div>
+            <span className="text-[10px] font-bold text-gray-medium uppercase tracking-widest">
+              {category || (isRental ? 'Rental' : 'Sale')}
+            </span>
+            <div className="flex items-center gap-1 text-gray-medium group-hover:text-accent-dark transition-colors">
+              <MapPin className="w-3 h-3" />
+              <span className="text-[10px] font-bold">{location || 'Ilorin'}</span>
+            </div>
           </div>
-          <h3 className="font-black text-xl text-primary leading-tight group-hover:text-primary transition-colors line-clamp-1">
-             {name || `${brand} ${model} V6`}
+          <h3 className="font-medium text-xl text-primary leading-tight group-hover:text-primary transition-colors line-clamp-1">
+            {name || `${brand} ${model} V6`}
           </h3>
         </div>
 
@@ -80,7 +80,7 @@ const CarCard = ({ car, className }) => {
             {isRental ? 'From' : 'Price'}
           </span>
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-black text-primary tracking-tighter">
+            <span className="text-2xl font-medium text-primary tracking-tighter">
               ₦{formattedPrice}
             </span>
             {isRental && <span className="text-sm font-bold text-gray-medium tracking-tight">/ Day</span>}
@@ -94,7 +94,7 @@ const CarCard = ({ car, className }) => {
             </Button>
           </Link>
           <button className="h-12 w-12 rounded-xl border border-gray-100 flex items-center justify-center text-gray-medium hover:bg-gray-50 hover:text-accent-dark transition-all active:scale-90">
-             <Heart className="w-5 h-5 focus:fill-accent-dark" />
+            <Heart className="w-5 h-5 focus:fill-accent-dark" />
           </button>
         </div>
       </div>

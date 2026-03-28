@@ -87,9 +87,9 @@ const CarDetails = () => {
             {/* 360 Inspection Report */}
             <div className="space-y-6 bg-slate-50/50 p-10 rounded-[2.5rem] border border-slate-100">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-black text-[#1A2B3D] tracking-tight">360° Inspection Report</h2>
+                <h2 className="text-2xl font-medium text-[#1A2B3D] tracking-tight">360° Inspection Report</h2>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-black text-green-500">9.2</span>
+                  <span className="text-3xl font-medium text-green-500">9.2</span>
                   <span className="text-xs font-bold text-slate-400 capitalize">/10</span>
                 </div>
               </div>
@@ -117,7 +117,7 @@ const CarDetails = () => {
             </div>
 
             <div className="space-y-6">
-              <h2 className="text-2xl font-black text-[#1A2B3D] tracking-tight">Vehicle Description</h2>
+              <h2 className="text-2xl font-medium text-[#1A2B3D] tracking-tight">Vehicle Description</h2>
               <p className="text-slate-500 text-base font-medium leading-relaxed">
                 {description || `${brand} ${model} embodies luxury and reliability. Imported directly (Tokunbo), it features a sophisticated exterior paired with a meticulously maintained premium interior. The smooth engine provides effortless power across all terrains.`}
               </p>
@@ -132,7 +132,7 @@ const CarDetails = () => {
 
         {/* Similar Cars Section */}
         <div className="space-y-8 pt-12 border-t border-slate-100">
-          <h2 className="text-3xl font-black text-[#1A2B3D] tracking-tight">You might also like</h2>
+          <h2 className="text-3xl font-medium text-[#1A2B3D] tracking-tight">You might also like</h2>
           {isSimilarLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {Array(4).fill(0).map((_, i) => <CarCardSkeleton key={i} />)}

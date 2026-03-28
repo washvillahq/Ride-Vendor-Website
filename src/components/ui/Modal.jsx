@@ -54,7 +54,7 @@ const Modal = ({
       )}>
         <div className="flex items-center justify-between p-8 border-b border-slate-100">
           <div>
-            <h2 className="text-2xl font-black text-slate-900 tracking-tight">{title}</h2>
+            <h2 className="text-2xl font-medium text-slate-900 tracking-tight">{title}</h2>
           </div>
           <button
             onClick={onClose}

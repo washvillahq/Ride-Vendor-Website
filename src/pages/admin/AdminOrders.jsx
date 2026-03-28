@@ -45,7 +45,7 @@ const AdminOrders = () => {
     <div className="space-y-10 pb-20">
       <section className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-black text-primary tracking-tight">Sales Oversight</h1>
+          <h1 className="text-4xl font-medium text-primary tracking-tight">Sales Oversight</h1>
           <p className="text-gray-medium mt-1 font-medium">Monitor vehicle purchase requests and title transfer procedures.</p>
         </div>
         <div className="flex items-center gap-4">
@@ -67,11 +67,11 @@ const AdminOrders = () => {
         <Table>
           <TableHeader className="bg-gray-50/50">
             <TableRow>
-              <TableHead className="py-5 px-8 font-black uppercase tracking-widest text-[10px]">Merchant / Asset</TableHead>
-              <TableHead className="py-5 font-black uppercase tracking-widest text-[10px]">Timestamp</TableHead>
-              <TableHead className="py-5 font-black uppercase tracking-widest text-[10px]">Valuation</TableHead>
-              <TableHead className="py-5 font-black uppercase tracking-widest text-[10px]">Settlement</TableHead>
-              <TableHead className="py-5 px-8 font-black uppercase tracking-widest text-[10px] text-right">Transaction Status</TableHead>
+              <TableHead className="py-5 px-8 font-medium uppercase tracking-widest text-[10px]">Merchant / Asset</TableHead>
+              <TableHead className="py-5 font-medium uppercase tracking-widest text-[10px]">Timestamp</TableHead>
+              <TableHead className="py-5 font-medium uppercase tracking-widest text-[10px]">Valuation</TableHead>
+              <TableHead className="py-5 font-medium uppercase tracking-widest text-[10px]">Settlement</TableHead>
+              <TableHead className="py-5 px-8 font-medium uppercase tracking-widest text-[10px] text-right">Transaction Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -93,11 +93,11 @@ const AdminOrders = () => {
               <TableRow key={order._id} className="group hover:bg-gray-50/50 transition-colors">
                 <TableCell className="py-6 px-8">
                   <div className="flex items-center gap-4">
-                    <div className="h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center font-black text-[10px]">
+                    <div className="h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center font-medium text-[10px]">
                       {order.user?.name?.charAt(0) || 'C'}
                     </div>
                     <div>
-                      <p className="font-black text-primary leading-none">{order.user?.name || 'Customer'}</p>
+                      <p className="font-medium text-primary leading-none">{order.user?.name || 'Customer'}</p>
                       <div className="flex items-center gap-1.5 mt-1.5 font-bold text-[9px] text-gray-medium uppercase tracking-widest">
                         <Car size={10} className="text-accent" />
                         {order.car?.title || 'Unknown Vehicle'}
@@ -105,7 +105,7 @@ const AdminOrders = () => {
                     </div>
                   </div>
                 </TableCell>
-                <TableCell className="py-6 font-black text-gray-medium text-xs">
+                <TableCell className="py-6 font-medium text-gray-medium text-xs">
                   <div className="flex flex-col">
                     <span className="flex items-center gap-1.5">
                       <Calendar size={12} className="text-gray-300" />
@@ -116,11 +116,11 @@ const AdminOrders = () => {
                     </span>
                   </div>
                 </TableCell>
-                <TableCell className="py-6 font-black text-primary text-lg">
+                <TableCell className="py-6 font-medium text-primary text-lg">
                   ₦{order.totalPrice?.toLocaleString()}
                 </TableCell>
                 <TableCell className="py-6">
-                  <StatusBadge status={order.paymentStatus} className="text-[9px] font-black uppercase px-3 rounded-lg" />
+                  <StatusBadge status={order.paymentStatus} className="text-[9px] font-medium uppercase px-3 rounded-lg" />
                 </TableCell>
                 <TableCell className="py-6 px-8 text-right">
                   <div className="flex justify-end">
@@ -128,7 +128,7 @@ const AdminOrders = () => {
                       value={order.status}
                       onChange={(e) => handleStatusChange(order._id, e.target.value)}
                       options={statuses}
-                      className="max-w-[140px] h-10 text-[10px] font-black uppercase tracking-widest bg-gray-100 border-none rounded-xl hover:bg-gray-200 transition-colors cursor-pointer"
+                      className="max-w-[140px] h-10 text-[10px] font-medium uppercase tracking-widest bg-gray-100 border-none rounded-xl hover:bg-gray-200 transition-colors cursor-pointer"
                       disabled={isUpdating}
                     />
                   </div>

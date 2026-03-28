@@ -12,14 +12,14 @@ const SaleSpecsGrid = ({ specs = {} }) => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-black text-slate-900 tracking-tight">Vehicle Specifications</h2>
+      <h2 className="text-2xl font-medium text-slate-900 tracking-tight">Vehicle Specifications</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-y-12 border-t border-slate-100 pt-8">
         {specItems.map((spec, i) => (
           <div key={i} className="space-y-2">
             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">
               {spec.label}
             </label>
-            <p className="text-sm font-black text-[#1A2B3D] leading-tight">
+            <p className="text-sm font-medium text-[#1A2B3D] leading-tight">
               {spec.value}
             </p>
           </div>

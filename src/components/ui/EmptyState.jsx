@@ -1,12 +1,12 @@
 import React from 'react';
 import { cn } from '../../utils/cn';
 
-const EmptyState = ({ 
-  title = "No results found", 
-  description = "Try adjusting your filters or search terms.", 
+const EmptyState = ({
+  title = "No results found",
+  description = "Try adjusting your filters or search terms.",
   icon,
   action,
-  className 
+  className
 }) => {
   return (
     <div className={cn("flex flex-col items-center justify-center p-8 text-center", className)}>
@@ -23,9 +23,9 @@ const EmptyState = ({
       </p>
       {action && (
         !React.isValidElement(action) && typeof action === 'object' && action.label ? (
-          <button 
+          <button
             onClick={action.onClick}
-            className="px-6 py-2 bg-slate-900 text-white text-xs font-black uppercase tracking-widest rounded-xl hover:bg-accent hover:text-primary transition-all shadow-lg shadow-slate-200"
+            className="px-6 py-2 bg-slate-900 text-white text-xs font-medium uppercase tracking-widest rounded-xl hover:bg-accent hover:text-primary transition-all shadow-lg shadow-slate-200"
           >
             {action.label}
           </button>

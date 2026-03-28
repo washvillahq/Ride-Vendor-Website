@@ -168,12 +168,12 @@ const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
             const Icon = step.icon;
             const isActive = currentStep === step.id;
             const isCompleted = currentStep > step.id;
- 
+
             return (
               <React.Fragment key={step.id}>
                 <div className="flex flex-col items-center gap-2">
                   <div className={`flex items-center justify-center h-10 w-10 rounded-xl transition-all duration-300 ${isActive ? 'bg-accent text-primary shadow-md scale-110' :
-                      isCompleted ? 'bg-emerald-500 text-white' : 'bg-white text-gray-medium/50 border border-gray-200'
+                    isCompleted ? 'bg-emerald-500 text-white' : 'bg-white text-gray-medium/50 border border-gray-200'
                     }`}>
                     {isCompleted ? <CheckCircle2 className="w-5 h-5" /> : <Icon className="w-4 h-4" />}
                   </div>
@@ -198,7 +198,7 @@ const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
             {currentStep === 1 && (
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
                 <div className="space-y-1">
-                  <h2 className="text-xl font-black text-primary leading-tight">Enhance Your Experience</h2>
+                  <h2 className="text-xl font-medium text-primary leading-tight">Enhance Your Experience</h2>
                   <p className="text-gray-medium text-sm">Select additional services tailored for this vehicle.</p>
                 </div>
 
@@ -214,8 +214,8 @@ const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
                           key={service._id}
                           onClick={() => handleServiceToggle(service._id)}
                           className={`group relative p-4 rounded-2xl border-2 transition-all cursor-pointer ${selectedServices.includes(service._id)
-                              ? 'border-accent bg-accent/5'
-                              : 'border-gray-50 bg-gray-50 hover:border-gray-200 hover:bg-white'
+                            ? 'border-accent bg-accent/5'
+                            : 'border-gray-50 bg-gray-50 hover:border-gray-200 hover:bg-white'
                             }`}
                         >
                           <div className="flex items-start justify-between gap-2">
@@ -229,7 +229,7 @@ const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
                             </div>
                           </div>
                           <div className="pt-3">
-                            <span className="text-sm font-black text-primary">₦{service.pricePerDay?.toLocaleString()}</span>
+                            <span className="text-sm font-medium text-primary">₦{service.pricePerDay?.toLocaleString()}</span>
                             <span className="text-[9px] font-bold text-gray-medium uppercase tracking-widest ml-1">/ Day</span>
                           </div>
                         </div>
@@ -247,7 +247,7 @@ const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
             {currentStep === 2 && (
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
                 <div className="space-y-1">
-                  <h2 className="text-xl font-black text-primary leading-tight">When would you like it?</h2>
+                  <h2 className="text-xl font-medium text-primary leading-tight">When would you like it?</h2>
                   <p className="text-gray-medium text-sm">Select your preferred start and return dates.</p>
                 </div>
 
@@ -274,7 +274,7 @@ const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
             {currentStep === 3 && (
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
                 <div className="space-y-1">
-                  <h2 className="text-xl font-black text-primary leading-tight">Delivery & Logistics</h2>
+                  <h2 className="text-xl font-medium text-primary leading-tight">Delivery & Logistics</h2>
                   <p className="text-gray-medium text-sm">Tell us where we should meet you.</p>
                 </div>
 
@@ -306,13 +306,13 @@ const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
             {currentStep === 4 && (
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
                 <div className="space-y-1">
-                  <h2 className="text-xl font-black text-primary leading-tight">Review Your Booking</h2>
+                  <h2 className="text-xl font-medium text-primary leading-tight">Review Your Booking</h2>
                   <p className="text-gray-medium text-sm">Please verify all details before payment.</p>
                 </div>
 
                 <div className="space-y-4">
                   <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
-                    <h3 className="text-[10px] font-black uppercase tracking-widest text-gray-medium/50 mb-2">Logistics</h3>
+                    <h3 className="text-[10px] font-medium uppercase tracking-widest text-gray-medium/50 mb-2">Logistics</h3>
                     <div className="flex items-start gap-2 text-sm">
                       <MapPin className="w-4 h-4 text-accent mt-0.5 shrink-0" />
                       <span className="font-bold text-primary">{details.pickupLocation} → {details.dropoffLocation}</span>
@@ -320,7 +320,7 @@ const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
                   </div>
 
                   <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
-                    <h3 className="text-[10px] font-black uppercase tracking-widest text-gray-medium/50 mb-2">Selected Dates</h3>
+                    <h3 className="text-[10px] font-medium uppercase tracking-widest text-gray-medium/50 mb-2">Selected Dates</h3>
                     <div className="space-y-1">
                       <div className="flex flex-wrap gap-2">
                         {selectedDates.sort((a, b) => a - b).map((date, i) => (
@@ -345,7 +345,7 @@ const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
             <div className="bg-primary rounded-3xl p-6 text-white space-y-6 shadow-xl relative overflow-hidden">
               <div className="relative z-10 space-y-4">
                 <div className="space-y-0.5">
-                  <p className="text-[9px] font-black text-gray-medium/50 uppercase tracking-widest">Pricing Summary</p>
+                  <p className="text-[9px] font-medium text-gray-medium/50 uppercase tracking-widest">Pricing Summary</p>
                   <p className="text-sm font-bold border-b border-white/10 pb-2">
                     ₦{car.pricePerDay?.toLocaleString()} × {totalDays} days
                   </p>
@@ -353,7 +353,7 @@ const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
 
                 {selectedServices.length > 0 && (
                   <div className="space-y-2 border-b border-white/10 pb-4">
-                    <p className="text-[9px] font-black text-gray-medium/50 uppercase tracking-widest">Services added</p>
+                    <p className="text-[9px] font-medium text-gray-medium/50 uppercase tracking-widest">Services added</p>
                     {selectedServices.map(id => {
                       const s = services.find(x => x._id === id);
                       return (
@@ -367,8 +367,8 @@ const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
                 )}
 
                 <div className="pt-2">
-                  <p className="text-[9px] font-black text-accent uppercase tracking-[0.2em] mb-1">Total</p>
-                  <span className="text-3xl font-black text-accent tracking-tighter">₦{totalPrice?.toLocaleString()}</span>
+                  <p className="text-[9px] font-medium text-accent uppercase tracking-[0.2em] mb-1">Total</p>
+                  <span className="text-3xl font-medium text-accent tracking-tighter">₦{totalPrice?.toLocaleString()}</span>
                 </div>
               </div>
 
@@ -403,7 +403,7 @@ const HireCheckoutModal = ({ isOpen, onClose, car, initialData }) => {
             onClick={handleBooking}
             isLoading={isCreating || isBooking}
             disabled={isCreating || isBooking}
-            className="bg-accent hover:bg-accent/90 text-primary px-8 rounded-xl text-xs font-black uppercase tracking-widest shadow-md"
+            className="bg-accent hover:bg-accent/90 text-primary px-8 rounded-xl text-xs font-medium uppercase tracking-widest shadow-md"
           >
             Pay ₦{totalPrice?.toLocaleString()}
           </Button>

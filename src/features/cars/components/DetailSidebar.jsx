@@ -18,46 +18,46 @@ const DetailSidebar = ({ car }) => {
         {/* Price Section */}
         <div className="flex items-start justify-between">
           <div className="space-y-1">
-             <div className="flex items-baseline gap-1">
-               <span className="text-3xl font-black text-[#1A2B3D]">₦{formattedPrice}</span>
-             </div>
-             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">per day</p>
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl font-medium text-[#1A2B3D]">₦{formattedPrice}</span>
+            </div>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">per day</p>
           </div>
           <div className="bg-[#FDB813]/10 px-3 py-1.5 rounded-full border border-[#FDB813]/20">
-             <span className="text-[9px] font-black text-[#B8860B] uppercase tracking-widest">Available Now</span>
+            <span className="text-[9px] font-medium text-[#B8860B] uppercase tracking-widest">Available Now</span>
           </div>
         </div>
 
         <div className="space-y-6">
           {/* Rental Period */}
           <div className="space-y-3">
-             <label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] px-1">Rental Period</label>
-             <div className="flex items-center gap-3 bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 cursor-pointer hover:border-slate-300 transition-colors group">
-                <Calendar className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
-                <span className="text-slate-400 text-xs font-bold">Select Dates</span>
-             </div>
+            <label className="text-[9px] font-medium text-slate-400 uppercase tracking-[0.2em] px-1">Rental Period</label>
+            <div className="flex items-center gap-3 bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 cursor-pointer hover:border-slate-300 transition-colors group">
+              <Calendar className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
+              <span className="text-slate-400 text-xs font-bold">Select Dates</span>
+            </div>
           </div>
 
           {/* Pickup Location */}
           <div className="space-y-3">
-             <label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] px-1">Pickup Location</label>
-             <div className="flex items-center gap-3 bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 cursor-pointer hover:border-slate-300 transition-colors group">
-                <MapPin className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
-                <span className="text-slate-900 text-xs font-bold">{location || 'Ilorin Central'}</span>
-                <ChevronDown className="w-4 h-4 text-slate-300 ml-auto" />
-             </div>
+            <label className="text-[9px] font-medium text-slate-400 uppercase tracking-[0.2em] px-1">Pickup Location</label>
+            <div className="flex items-center gap-3 bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 cursor-pointer hover:border-slate-300 transition-colors group">
+              <MapPin className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
+              <span className="text-slate-900 text-xs font-bold">{location || 'Ilorin Central'}</span>
+              <ChevronDown className="w-4 h-4 text-slate-300 ml-auto" />
+            </div>
           </div>
         </div>
 
         {/* Buttons */}
         <div className="space-y-6 pt-2">
-          <Button className="w-full h-16 bg-[#FDB813] hover:bg-[#EAA810] text-[#1A2B3D] rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-yellow-500/20 active:scale-95 transition-all">
+          <Button className="w-full h-16 bg-[#FDB813] hover:bg-[#EAA810] text-[#1A2B3D] rounded-2xl font-medium text-xs uppercase tracking-widest shadow-lg shadow-yellow-500/20 active:scale-95 transition-all">
             Book This Ride
           </Button>
 
           <button className="w-full flex items-center justify-center gap-2 text-primary hover:text-primary/70 transition-colors group">
-             <MessageSquare className="w-5 h-5 text-primary" />
-             <span className="text-[11px] font-bold">Chat with a rental specialist</span>
+            <MessageSquare className="w-5 h-5 text-primary" />
+            <span className="text-[11px] font-bold">Chat with a rental specialist</span>
           </button>
         </div>
 

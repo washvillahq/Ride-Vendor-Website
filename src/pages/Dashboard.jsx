@@ -1,11 +1,11 @@
 import React from 'react';
-import { 
-  Car, 
-  ShoppingBag, 
-  Package, 
-  Plus, 
-  Calendar, 
-  CheckCircle2, 
+import {
+  Car,
+  ShoppingBag,
+  Package,
+  Plus,
+  Calendar,
+  CheckCircle2,
   MessageSquare,
   ChevronRight,
   Clock
@@ -125,9 +125,8 @@ const DashboardPage = () => {
             </div>
             <h3 className="text-lg font-bold text-slate-900">{card.title}</h3>
             <p className="text-sm text-slate-500 mt-1 mb-6">{card.description}</p>
-            <button className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${
-              i === 0 ? 'bg-accent text-black hover:bg-accent-light' : 'bg-primary text-white hover:opacity-90'
-            }`}>
+            <button className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${i === 0 ? 'bg-accent text-black hover:bg-accent-light' : 'bg-primary text-white hover:opacity-90'
+              }`}>
               {card.buttonText}
             </button>
           </div>
@@ -138,7 +137,7 @@ const DashboardPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         <div className="lg:col-span-3 bg-accent rounded-3xl p-8 relative overflow-hidden flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-black text-black">List a Vehicle</h2>
+            <h2 className="text-2xl font-medium text-black">List a Vehicle</h2>
             <p className="text-black/70 font-medium mt-1">Ready to sell? Get the best market value today.</p>
           </div>
           <button className="h-12 w-12 bg-white/30 backdrop-blur-md text-white rounded-2xl flex items-center justify-center hover:bg-white/40 transition-all">
@@ -151,7 +150,7 @@ const DashboardPage = () => {
             <p className="text-slate-500 font-medium mt-1">Get 10% off at Wash Villa on your next wash</p>
           </div>
           <div className="relative z-10 h-12 w-12 bg-white border border-slate-100 rounded-2xl flex items-center justify-center shadow-sm">
-             <Calendar className="text-slate-400" size={20} />
+            <Calendar className="text-slate-400" size={20} />
           </div>
           {/* Abstract wash pattern decoration */}
           <div className="absolute top-0 right-0 w-32 h-full bg-blue-50/50 -mr-10 skew-x-12 group-hover:bg-blue-100/50 transition-colors" />
@@ -180,13 +179,13 @@ const DashboardPage = () => {
               <div className="flex-1 py-1">
                 <div className="flex items-center justify-between">
                   <h3 className="font-bold text-slate-900">{car.name}</h3>
-                  <span className={`text-[9px] font-black px-2 py-0.5 rounded-lg uppercase tracking-wider ${car.statusColor}`}>
+                  <span className={`text-[9px] font-medium px-2 py-0.5 rounded-lg uppercase tracking-wider ${car.statusColor}`}>
                     {car.status}
                   </span>
                 </div>
                 <p className="text-xs text-slate-400 mt-1">{car.specs}</p>
                 <div className="mt-4 flex items-center justify-between">
-                  <span className="font-black text-slate-900">{car.price}</span>
+                  <span className="font-medium text-slate-900">{car.price}</span>
                   <span className="text-[10px] text-slate-400">{car.time}</span>
                 </div>
               </div>
