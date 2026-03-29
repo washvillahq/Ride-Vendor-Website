@@ -7,7 +7,11 @@ import Textarea from '../../components/ui/Textarea';
 import Button from '../../components/ui/Button';
 import RichTextEditor from '../../components/ui/RichTextEditor';
 import PageSeoSidebar from './components/PageSeoSidebar';
-import { useAdminBlogPosts, useCreateBlogPost, useUpdateBlogPost } from '../../features/blog/hooks';
+import { useAdminBlogPosts, useCreateBlogPost, useUpdateBlogPost, useUploadBlogImage } from '../../features/blog/hooks';
+import SlugField from '../../components/admin/SlugField';
+import ImageUploaderField from '../../components/admin/ImageUploaderField';
+import { useAutoSlug } from '../../hooks/useAutoSlug';
+import SeoFieldsSection from '../../components/admin/SeoFieldsSection';
 
 const AdminBlogEditor = () => {
   const navigate = useNavigate();
@@ -19,6 +23,7 @@ const AdminBlogEditor = () => {
 
   const { mutateAsync: createPost, isLoading: isCreating } = useCreateBlogPost();
   const { mutateAsync: updatePost, isLoading: isUpdating } = useUpdateBlogPost();
+  const { mutateAsync: uploadBlogImage, isLoading: isUploadingImage } = useUploadBlogImage();
 
   const { register, handleSubmit, setValue, reset, control } = useForm({
     defaultValues: {
@@ -55,6 +60,44 @@ const AdminBlogEditor = () => {
 
   const values = useWatch({ control });
 
+  const { slugTouched, onSlugChange, resetSlugFromTitle } = useAutoSlug({
+    title: values?.title,
+    slug: values?.slug,
+    setValue,
+    isEdit,
+  });
+
+  const handleUploadCoverImage = async (file) => {
+    try {
+      const response = await uploadBlogImage(file);
+      const imageUrl = response?.data?.url;
+      if (imageUrl) {
+        setValue('coverImage', imageUrl, { shouldDirty: true });
+        toast.success('Cover image uploaded');
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Image upload failed');
+    }
+  };
+
+  const handleUploadOgImage = async (file) => {
+    try {
+      const response = await uploadBlogImage(file);
+      const imageUrl = response?.data?.url;
+      if (imageUrl) {
+        setValue('ogImage', imageUrl, { shouldDirty: true });
+        toast.success('Social image uploaded');
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Image upload failed');
+    }
+  };
+
+  const handleEditorImageUpload = async (file) => {
+    const response = await uploadBlogImage(file);
+    return { url: response?.data?.url };
+  };
+
   const onSubmit = async (formValues) => {
     try {
       if (isEdit) {
@@ -81,15 +124,27 @@ const AdminBlogEditor = () => {
           <div className="bg-white rounded-2xl border border-slate-100 p-6 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input label="Post Title" {...register('title')} />
-              <Input label="Slug" {...register('slug')} />
+              <SlugField
+                value={values?.slug || ''}
+                onChange={onSlugChange}
+                onResetFromTitle={resetSlugFromTitle}
+                touched={slugTouched}
+              />
             </div>
             <Textarea label="Excerpt" rows={3} {...register('excerpt')} />
-            <Input label="Cover Image URL" {...register('coverImage')} />
+            <ImageUploaderField
+              label="Cover Image"
+              value={values?.coverImage || ''}
+              isUploading={isUploadingImage}
+              onUpload={handleUploadCoverImage}
+              onClear={() => setValue('coverImage', '', { shouldDirty: true })}
+            />
 
             <RichTextEditor
               label="Post Content"
               value={values?.contentHtml || ''}
               onChange={(content) => setValue('contentHtml', content, { shouldDirty: true })}
+              onUploadImage={handleEditorImageUpload}
             />
 
             <div className="flex items-center justify-between pt-2">
@@ -104,15 +159,15 @@ const AdminBlogEditor = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-100 p-6 space-y-4">
-            <h2 className="text-base font-semibold text-slate-900">SEO Settings</h2>
-            <Input label="SEO Title" {...register('metaTitle')} />
-            <Textarea label="Meta Description" rows={4} {...register('metaDescription')} />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input label="Canonical URL" placeholder="/blog/post-slug" {...register('canonicalUrl')} />
-              <Input label="OG Image URL" {...register('ogImage')} />
-            </div>
-          </div>
+          <SeoFieldsSection
+            register={register}
+            values={values}
+            setValue={setValue}
+            isUploadingImage={isUploadingImage}
+            onUploadOgImage={handleUploadOgImage}
+            includeFocusKeyword={false}
+            canonicalPlaceholder="/blog/post-slug"
+          />
         </div>
 
         <PageSeoSidebar

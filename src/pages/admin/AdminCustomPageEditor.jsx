@@ -3,11 +3,13 @@ import { useForm, useWatch } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import Input from '../../components/ui/Input';
-import Textarea from '../../components/ui/Textarea';
 import Button from '../../components/ui/Button';
 import RichTextEditor from '../../components/ui/RichTextEditor';
-import { useAdminPageById, useCreatePage, useUpdatePage } from '../../features/cms/hooks';
+import { useAdminPageById, useCreatePage, useUpdatePage, useUploadCmsImage } from '../../features/cms/hooks';
 import PageSeoSidebar from './components/PageSeoSidebar';
+import SlugField from '../../components/admin/SlugField';
+import { useAutoSlug } from '../../hooks/useAutoSlug';
+import SeoFieldsSection from '../../components/admin/SeoFieldsSection';
 
 const AdminCustomPageEditor = () => {
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ const AdminCustomPageEditor = () => {
 
   const { mutateAsync: createPage, isLoading: isCreating } = useCreatePage();
   const { mutateAsync: updatePage, isLoading: isUpdating } = useUpdatePage();
+  const { mutateAsync: uploadCmsImage, isLoading: isUploadingImage } = useUploadCmsImage();
 
   const { register, handleSubmit, setValue, reset, control } = useForm({
     defaultValues: {
@@ -52,6 +55,31 @@ const AdminCustomPageEditor = () => {
   }, [page, reset]);
 
   const values = useWatch({ control });
+
+  const { slugTouched, onSlugChange, resetSlugFromTitle } = useAutoSlug({
+    title: values?.title,
+    slug: values?.slug,
+    setValue,
+    isEdit,
+  });
+
+  const handleUploadOgImage = async (file) => {
+    try {
+      const response = await uploadCmsImage(file);
+      const imageUrl = response?.data?.url;
+      if (imageUrl) {
+        setValue('ogImage', imageUrl, { shouldDirty: true });
+        toast.success('Image uploaded');
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Image upload failed');
+    }
+  };
+
+  const handleEditorImageUpload = async (file) => {
+    const response = await uploadCmsImage(file);
+    return { url: response?.data?.url };
+  };
 
   const onSubmit = async (formValues) => {
     try {
@@ -89,13 +117,19 @@ const AdminCustomPageEditor = () => {
           <div className="bg-white rounded-2xl border border-slate-100 p-6 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input label="Page Title" placeholder="Fleet Leasing" {...register('title')} />
-              <Input label="URL Slug" placeholder="fleet-leasing" {...register('slug')} />
+              <SlugField
+                value={values?.slug || ''}
+                onChange={onSlugChange}
+                onResetFromTitle={resetSlugFromTitle}
+                touched={slugTouched}
+              />
             </div>
 
             <RichTextEditor
               label="Page Content"
               value={values?.contentHtml || ''}
               onChange={(content) => setValue('contentHtml', content, { shouldDirty: true })}
+              onUploadImage={handleEditorImageUpload}
             />
 
             <div className="flex items-center justify-between gap-3 pt-2">
@@ -118,26 +152,15 @@ const AdminCustomPageEditor = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-100 p-6 space-y-4">
-            <h2 className="text-base font-semibold text-slate-900">SEO Settings</h2>
-            <Input label="SEO Title" placeholder="Fleet Leasing in Ilorin" {...register('metaTitle')} />
-            <Textarea label="Meta Description" rows={4} {...register('metaDescription')} />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input label="Focus Keyword" {...register('focusKeyword')} />
-              <Input label="Canonical URL" placeholder="/fleet-leasing" {...register('canonicalUrl')} />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input label="OG Image URL" placeholder="https://..." {...register('ogImage')} />
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium leading-none">Robots</label>
-                <select className="h-10 px-3 rounded-md border border-slate-200 text-sm w-full" {...register('robotsDirective')}>
-                  <option value="index,follow">Index and follow</option>
-                  <option value="noindex,follow">Noindex, follow</option>
-                  <option value="noindex,nofollow">Noindex, nofollow</option>
-                </select>
-              </div>
-            </div>
-          </div>
+          <SeoFieldsSection
+            register={register}
+            values={values}
+            setValue={setValue}
+            isUploadingImage={isUploadingImage}
+            onUploadOgImage={handleUploadOgImage}
+            includeFocusKeyword
+            canonicalPlaceholder="/fleet-leasing"
+          />
         </div>
 
         <PageSeoSidebar

@@ -23,3 +23,11 @@ export const updateContactSubmission = async ({ id, data }) => api.patch(`/cms/c
 export const getGlobalSeoSettings = async () => api.get('/cms/seo-settings');
 
 export const updateGlobalSeoSettings = async (data) => api.patch('/cms/seo-settings', data);
+
+export const uploadCmsImage = async (file) => {
+  const formData = new FormData();
+  formData.append('image', file);
+  return api.post('/cms/upload-image', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};

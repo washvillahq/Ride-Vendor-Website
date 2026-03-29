@@ -107,3 +107,9 @@ export const useUpdateGlobalSeoSettings = () => {
     },
   });
 };
+
+export const useUploadCmsImage = () => {
+  return useMutation({
+    mutationFn: cmsApi.uploadCmsImage,
+  });
+};

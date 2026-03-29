@@ -5,8 +5,9 @@ import { toast } from 'react-hot-toast';
 import Input from '../../components/ui/Input';
 import Textarea from '../../components/ui/Textarea';
 import Button from '../../components/ui/Button';
-import { useCmsPage, useUpdatePage } from '../../features/cms/hooks';
+import { useCmsPage, useUpdatePage, useUploadCmsImage } from '../../features/cms/hooks';
 import PageSeoSidebar from './components/PageSeoSidebar';
+import ImageUploaderField from '../../components/admin/ImageUploaderField';
 
 const AdminStaticPageSeoEditor = () => {
   const navigate = useNavigate();
@@ -14,8 +15,9 @@ const AdminStaticPageSeoEditor = () => {
   const { data: pageData } = useCmsPage(slug);
   const page = pageData?.data;
   const { mutateAsync: updatePage, isLoading } = useUpdatePage();
+  const { mutateAsync: uploadCmsImage, isLoading: isUploadingImage } = useUploadCmsImage();
 
-  const { register, handleSubmit, reset, control } = useForm({
+  const { register, handleSubmit, reset, setValue, control } = useForm({
     defaultValues: {
       title: '',
       metaTitle: '',
@@ -43,6 +45,19 @@ const AdminStaticPageSeoEditor = () => {
   }, [page, reset]);
 
   const values = useWatch({ control });
+
+  const handleUploadOgImage = async (file) => {
+    try {
+      const response = await uploadCmsImage(file);
+      const imageUrl = response?.data?.url;
+      if (imageUrl) {
+        setValue('ogImage', imageUrl, { shouldDirty: true });
+        toast.success('Social image uploaded');
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Image upload failed');
+    }
+  };
 
   const onSubmit = async (formValues) => {
     try {
@@ -87,7 +102,13 @@ const AdminStaticPageSeoEditor = () => {
             <Input label="Canonical URL" {...register('canonicalUrl')} />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input label="OG Image URL" {...register('ogImage')} />
+            <ImageUploaderField
+              label="Social Image"
+              value={values?.ogImage || ''}
+              isUploading={isUploadingImage}
+              onUpload={handleUploadOgImage}
+              onClear={() => setValue('ogImage', '', { shouldDirty: true })}
+            />
             <div className="space-y-1.5">
               <label className="text-sm font-medium leading-none">Robots</label>
               <select className="h-10 px-3 rounded-md border border-slate-200 text-sm w-full" {...register('robotsDirective')}>

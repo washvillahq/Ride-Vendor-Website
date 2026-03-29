@@ -61,3 +61,9 @@ export const useDeleteBlogPost = () => {
     },
   });
 };
+
+export const useUploadBlogImage = () => {
+  return useMutation({
+    mutationFn: blogApi.uploadBlogImage,
+  });
+};
