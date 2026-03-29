@@ -97,9 +97,14 @@ const DetailedCarCard = ({ car, className }) => {
             >
               View Details
             </Link>
-            <button className="h-10 w-10 rounded-xl bg-accent flex items-center justify-center text-primary hover:bg-accent-light transition-all active:scale-90 shadow-lg shadow-accent/20">
+            <a 
+              href="https://wa.me/2348144123316?text=Hello%20Ride%20Vendor,%20I%20want%20to%20book%20a%20car"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-10 w-10 rounded-xl bg-accent flex items-center justify-center text-primary hover:bg-accent-light transition-all active:scale-90 shadow-lg shadow-accent/20"
+            >
               <MessageCircle className="w-5 h-5 fill-primary" />
-            </button>
+            </a>
           </div>
         </div>
       </div>

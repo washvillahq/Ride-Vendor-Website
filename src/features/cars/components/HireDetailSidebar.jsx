@@ -135,10 +135,15 @@ const HireDetailSidebar = ({ car, onBookNow }) => {
             Book This Ride
           </Button>
 
-          <button className="w-full flex items-center justify-center gap-3 text-[#1A2B3D] hover:text-primary transition-colors group">
+          <a 
+            href="https://wa.me/2348144123316?text=Hello%20Ride%20Vendor,%20I%20want%20to%20book%20a%20car"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-center gap-3 text-[#1A2B3D] hover:text-primary transition-colors group"
+          >
             <MessageSquare className="w-6 h-6 text-[#1A2B3D]" />
             <span className="text-sm font-medium border-b-2 border-transparent group-hover:border-primary transition-all">Chat with a rental specialist</span>
-          </button>
+          </a>
         </div>
 
         {/* Footer Text */}

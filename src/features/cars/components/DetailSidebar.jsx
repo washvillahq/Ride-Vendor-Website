@@ -55,10 +55,15 @@ const DetailSidebar = ({ car }) => {
             Book This Ride
           </Button>
 
-          <button className="w-full flex items-center justify-center gap-2 text-primary hover:text-primary/70 transition-colors group">
+          <a 
+            href="https://wa.me/2348144123316?text=Hello%20Ride%20Vendor,%20I%20want%20to%20book%20a%20car"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-center gap-2 text-primary hover:text-primary/70 transition-colors group"
+          >
             <MessageSquare className="w-5 h-5 text-primary" />
             <span className="text-[11px] font-bold">Chat with a rental specialist</span>
-          </button>
+          </a>
         </div>
 
         {/* Footer Text */}

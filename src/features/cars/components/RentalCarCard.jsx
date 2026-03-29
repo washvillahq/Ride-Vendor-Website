@@ -80,9 +80,14 @@ const RentalCarCard = ({ car, className }) => {
               Book Now
             </Button>
           </Link>
-          <button className="h-[45px] w-[60px] rounded-2xl flex items-center justify-center bg-[#FDB813] hover:bg-[#EAA810] text-primary transition-all active:scale-95 shadow-lg shadow-yellow-500/10 shrink-0">
+          <a 
+            href="https://wa.me/2348144123316?text=Hello%20Ride%20Vendor,%20I%20want%20to%20book%20a%20car"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="h-[45px] w-[60px] rounded-2xl flex items-center justify-center bg-[#FDB813] hover:bg-[#EAA810] text-primary transition-all active:scale-95 shadow-lg shadow-yellow-500/10 shrink-0"
+          >
             <MessageSquareText className="w-6 h-6" />
-          </button>
+          </a>
         </div>
       </div>
     </div>

@@ -35,10 +35,15 @@ const SaleDetailSidebar = ({ car }) => {
         </div>
 
         <div className="space-y-4 pt-4">
-          <Button className="w-full h-16 bg-[#FDB813] hover:bg-[#EAA810] text-[#1A2B3D] rounded-2xl font-medium text-xs uppercase tracking-widest shadow-lg shadow-yellow-500/20 flex items-center justify-center gap-3 transition-all active:scale-95">
+          <a 
+            href="https://wa.me/2348144123316?text=Hello%20Ride%20Vendor,%20I%20want%20to%20book%20a%20car"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full h-16 bg-[#FDB813] hover:bg-[#EAA810] text-[#1A2B3D] rounded-2xl font-medium text-xs uppercase tracking-widest shadow-lg shadow-yellow-500/20 flex items-center justify-center gap-3 transition-all active:scale-95"
+          >
             <MessageCircle className="w-5 h-5 fill-primary" />
             Chat with Vendor
-          </Button>
+          </a>
           <Button variant="outline" className="w-full h-16 border-slate-200 hover:bg-slate-50 text-[#1A2B3D] rounded-2xl font-medium text-xs uppercase tracking-widest flex items-center justify-center gap-3 transition-all active:scale-95">
             <Phone className="w-5 h-5" />
             Call to Inquire

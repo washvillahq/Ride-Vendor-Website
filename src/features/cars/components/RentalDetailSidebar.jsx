@@ -60,10 +60,15 @@ const RentalDetailSidebar = ({ car, onBookNow }) => {
           >
             Book This Car Now
           </Button>
-          <Button variant="outline" className="w-full border-[#8A6D3B]/20 hover:bg-slate-50 text-[#8A6D3B] py-7 rounded-2xl font-medium uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all active:scale-95">
+          <a 
+            href="https://wa.me/2348144123316?text=Hello%20Ride%20Vendor,%20I%20want%20to%20book%20a%20car"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full border border-[#8A6D3B]/20 hover:bg-slate-50 text-[#8A6D3B] py-7 rounded-2xl font-medium uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 transition-all active:scale-95"
+          >
             <MessageCircle className="w-5 h-5 fill-[#8A6D3B]/20" />
             Chat with Owner
-          </Button>
+          </a>
         </div>
 
         <div className="pt-6 border-t border-slate-50 flex items-center gap-4">
