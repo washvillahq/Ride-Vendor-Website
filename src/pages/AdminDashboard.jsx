@@ -5,7 +5,6 @@ import {
    Users,
    Car,
    ShoppingBag,
-   DollarSign,
    ChevronRight,
    Clock,
    CheckCircle2,
@@ -38,6 +37,10 @@ const StatCard = ({ title, value, icon: Icon, color, bg, trend }) => (
          <h3 className="text-lg md:text:3xl font-medium text-slate-900 tracking-tighter">{value}</h3>
       </div>
    </div>
+);
+
+const NairaIcon = ({ size = 28 }) => (
+   <span style={{ fontSize: size, lineHeight: 1, fontWeight: 600 }}>₦</span>
 );
 
 const AdminDashboard = () => {
@@ -102,7 +105,7 @@ const AdminDashboard = () => {
                   <StatCard
                      title="Total Performance"
                      value={`₦${stats.totalRevenue?.toLocaleString() || 0}`}
-                     icon={DollarSign}
+                     icon={NairaIcon}
                      bg="bg-purple-600"
                      color="text-white"
                      trend="18"
@@ -226,4 +229,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-
