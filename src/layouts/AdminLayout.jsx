@@ -18,7 +18,8 @@ import {
   ChevronDown,
   FileText,
   Mail,
-  Globe
+  Globe,
+  BookOpen
 } from 'lucide-react';
 const LOGO_WHITE = '/ride_vendor_logo_white.svg';
 
@@ -33,6 +34,7 @@ const AdminLayout = () => {
     { name: 'Services', path: '/admin/services', icon: Settings },
     { name: 'Global SEO', path: '/admin/seo-settings', icon: Globe },
     { name: 'Pages', path: '/admin/pages', icon: FileText },
+    { name: 'Blog', path: '/admin/blog', icon: BookOpen },
     { name: 'Contact Inbox', path: '/admin/contact', icon: Mail },
     { name: 'Bookings', path: '/admin/bookings', icon: CalendarClock },
     { name: 'Orders', path: '/admin/orders', icon: ShoppingBag },

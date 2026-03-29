@@ -49,6 +49,7 @@ const Navbar = () => {
     { name: 'Car Hire', path: '/car-hire' },
     { name: 'Car Sales', path: '/car-sales' },
     { name: 'Services', path: '/services' },
+    { name: 'Blog', path: '/blog' },
   ];
 
   return (
@@ -245,6 +246,7 @@ const Footer = () => (
             <li><Link to="/services" className="hover:text-accent transition-colors">Services</Link></li>
             <li><Link to="/contact" className="hover:text-accent transition-colors">Contact</Link></li>
             <li><Link to="/shop" className="hover:text-accent transition-colors">Shop</Link></li>
+            <li><Link to="/blog" className="hover:text-accent transition-colors">Blog</Link></li>
           </ul>
         </div>
 

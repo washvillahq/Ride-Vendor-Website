@@ -23,6 +23,8 @@ const About = lazy(() => import('../pages/About'));
 const Services = lazy(() => import('../pages/Services'));
 const Contact = lazy(() => import('../pages/Contact'));
 const Shop = lazy(() => import('../pages/Shop'));
+const BlogList = lazy(() => import('../pages/BlogList'));
+const BlogPost = lazy(() => import('../pages/BlogPost'));
 const Login = lazy(() => import('../pages/Login'));
 const Register = lazy(() => import('../pages/Register'));
 const ForgotPassword = lazy(() => import('../pages/ForgotPassword'));
@@ -56,6 +58,8 @@ const AdminGlobalSeoSettings = lazy(() => import('../pages/admin/AdminGlobalSeoS
 const AdminCustomPageEditor = lazy(() => import('../pages/admin/AdminCustomPageEditor'));
 const AdminStaticPageSeoEditor = lazy(() => import('../pages/admin/AdminStaticPageSeoEditor'));
 const CmsCustomPage = lazy(() => import('../pages/CmsCustomPage'));
+const AdminBlogPosts = lazy(() => import('../pages/admin/AdminBlogPosts'));
+const AdminBlogEditor = lazy(() => import('../pages/admin/AdminBlogEditor'));
 
 
 export const router = createBrowserRouter([
@@ -68,6 +72,8 @@ export const router = createBrowserRouter([
       { path: 'services', element: <Suspense fallback={<PageLoading />}><Services /></Suspense> },
       { path: 'contact', element: <Suspense fallback={<PageLoading />}><Contact /></Suspense> },
       { path: 'shop', element: <Suspense fallback={<PageLoading />}><Shop /></Suspense> },
+      { path: 'blog', element: <Suspense fallback={<PageLoading />}><BlogList /></Suspense> },
+      { path: 'blog/:slug', element: <Suspense fallback={<PageLoading />}><BlogPost /></Suspense> },
       { path: 'car-sales', element: <Suspense fallback={<PageLoading />}><CarSales /></Suspense> },
       { path: 'car-hire', element: <Suspense fallback={<PageLoading />}><CarRentals /></Suspense> },
       { path: 'cars', element: <Suspense fallback={<PageLoading />}><CarsList /></Suspense> },
@@ -126,6 +132,9 @@ export const router = createBrowserRouter([
           { path: 'pages/new', element: <Suspense fallback={<PageLoading />}><AdminCustomPageEditor /></Suspense> },
           { path: 'pages/:pageId/edit', element: <Suspense fallback={<PageLoading />}><AdminCustomPageEditor /></Suspense> },
           { path: 'pages/static/:slug/seo', element: <Suspense fallback={<PageLoading />}><AdminStaticPageSeoEditor /></Suspense> },
+          { path: 'blog', element: <Suspense fallback={<PageLoading />}><AdminBlogPosts /></Suspense> },
+          { path: 'blog/new', element: <Suspense fallback={<PageLoading />}><AdminBlogEditor /></Suspense> },
+          { path: 'blog/:postId/edit', element: <Suspense fallback={<PageLoading />}><AdminBlogEditor /></Suspense> },
           { path: 'contact', element: <Suspense fallback={<PageLoading />}><AdminContactSubmissions /></Suspense> },
           { path: 'users', element: <Suspense fallback={<PageLoading />}><AdminUsers /></Suspense> },
           { path: 'bookings', element: <Suspense fallback={<PageLoading />}><AdminBookings /></Suspense> },
