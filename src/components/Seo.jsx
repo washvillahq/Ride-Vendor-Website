@@ -18,6 +18,31 @@ const clearManagedTags = () => {
 };
 
 const appendMeta = (attrs) => {
+  const name = attrs.name;
+  const property = attrs.property;
+  
+  if (name) {
+    const existing = document.querySelector(`meta[name="${name}"]:not([${MANAGED_ATTR}="true"])`);
+    if (existing) {
+      Object.entries(attrs).forEach(([key, val]) => {
+        existing.setAttribute(key, val);
+      });
+      existing.setAttribute(MANAGED_ATTR, 'true');
+      return;
+    }
+  }
+  
+  if (property) {
+    const existing = document.querySelector(`meta[property="${property}"]:not([${MANAGED_ATTR}="true"])`);
+    if (existing) {
+      Object.entries(attrs).forEach(([key, val]) => {
+        existing.setAttribute(key, val);
+      });
+      existing.setAttribute(MANAGED_ATTR, 'true');
+      return;
+    }
+  }
+  
   const el = document.createElement('meta');
   Object.entries(attrs).forEach(([key, val]) => {
     el.setAttribute(key, val);
@@ -27,6 +52,19 @@ const appendMeta = (attrs) => {
 };
 
 const appendLink = (attrs) => {
+  const rel = attrs.rel;
+  
+  if (rel) {
+    const existing = document.querySelector(`link[rel="${rel}"]:not([${MANAGED_ATTR}="true"])`);
+    if (existing) {
+      Object.entries(attrs).forEach(([key, val]) => {
+        existing.setAttribute(key, val);
+      });
+      existing.setAttribute(MANAGED_ATTR, 'true');
+      return;
+    }
+  }
+  
   const el = document.createElement('link');
   Object.entries(attrs).forEach(([key, val]) => {
     el.setAttribute(key, val);
