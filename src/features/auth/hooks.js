@@ -74,7 +74,7 @@ export const useAuth = () => {
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
   const { setUser } = useAuthStore();
-  
+
   return useMutation({
     mutationFn: authApi.updateProfile,
     onSuccess: (data) => {
@@ -96,5 +96,39 @@ export const useUpdateProfile = () => {
     onError: (error) => {
       toast.error(error.response?.data?.message || 'Failed to update profile');
     }
+  });
+};
+
+export const useForgotPassword = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: authApi.forgotPassword,
+    onSuccess: () => {
+      toast.success('Password reset link sent! Check your email.');
+      // Don't navigate, let the page show success state
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || 'Failed to send reset link');
+    },
+  });
+};
+
+export const useResetPassword = () => {
+  const navigate = useNavigate();
+  const { setAuth } = useAuthStore();
+
+  return useMutation({
+    mutationFn: ({ token, password }) => authApi.resetPassword(token, password),
+    onSuccess: (data) => {
+      const { token } = data.data;
+      // Optionally log the user in automatically
+      // setAuth(null, token);
+      toast.success('Password reset successfully! Please log in.');
+      navigate('/login');
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || 'Failed to reset password');
+    },
   });
 };

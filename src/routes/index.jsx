@@ -21,6 +21,8 @@ const PageLoading = () => (
 const Home = lazy(() => import('../pages/Home'));
 const Login = lazy(() => import('../pages/Login'));
 const Register = lazy(() => import('../pages/Register'));
+const ForgotPassword = lazy(() => import('../pages/ForgotPassword'));
+const ResetPassword = lazy(() => import('../pages/ResetPassword'));
 const CarSales = lazy(() => import('../pages/CarSales'));
 const CarRentals = lazy(() => import('../pages/CarRentals'));
 const CarsList = lazy(() => import('../pages/CarsList'));
@@ -70,6 +72,8 @@ export const router = createBrowserRouter([
         children: [
           { path: 'login', element: <Suspense fallback={<PageLoading />}><Login /></Suspense> },
           { path: 'register', element: <Suspense fallback={<PageLoading />}><Register /></Suspense> },
+          { path: 'forgot-password', element: <Suspense fallback={<PageLoading />}><ForgotPassword /></Suspense> },
+          { path: 'reset-password/:token', element: <Suspense fallback={<PageLoading />}><ResetPassword /></Suspense> },
         ],
       },
     ],

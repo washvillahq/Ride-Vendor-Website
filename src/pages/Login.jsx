@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '../features/auth/schema';
@@ -10,6 +10,7 @@ import { Mail, Lock, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const { mutate: login, isPending: isLoading } = useLogin();
   const [searchParams] = useSearchParams();
   const isExpired = searchParams.get('expired') === 'true';
@@ -75,7 +76,7 @@ const LoginPage = () => {
           <div className="flex justify-end">
             <button
               type="button"
-              onClick={(e) => e.preventDefault()}
+              onClick={() => navigate('/forgot-password')}
               className="text-xs font-medium uppercase tracking-widest text-[#785900] hover:text-accent transition-colors"
             >
               Forgot password?
