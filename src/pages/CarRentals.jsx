@@ -5,6 +5,7 @@ import RentalCategoryCard from '../features/cars/components/RentalCategoryCard';
 import RentalCarCard from '../features/cars/components/RentalCarCard';
 import CarCardSkeleton from '../features/cars/components/CarCardSkeleton';
 import Breadcrumbs from '../components/shared/Breadcrumbs';
+import Seo from '../components/Seo';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -37,6 +38,11 @@ const CarRentals = () => {
 
   return (
     <div className="bg-white min-h-screen pb-20">
+      <Seo
+        title="Car Hire & Rentals in Ilorin"
+        description="Book clean and reliable rental vehicles in Ilorin with RideVendor. Daily, weekly, and corporate car rental options available."
+        url="/car-hire"
+      />
       <div className="container px-4 py-8 space-y-12">
         {/* Breadcrumbs */}
         <Breadcrumbs
