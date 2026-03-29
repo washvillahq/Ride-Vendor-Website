@@ -85,13 +85,15 @@ const DashboardLayout = () => {
         </nav>
 
         <div className="p-4 space-y-1 border-t border-white/5">
-          <Link
-            to="/help"
+          <a 
+            href="https://wa.me/2348144123316?text=Hello%20Ride%20Vendor,%20I%20want%20to%20book%20a%20car"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-white transition-all"
           >
             <HelpCircle size={18} className="text-[#FDB813]" />
             Help Center
-          </Link>
+          </a>
           <button
             onClick={() => logout()}
             className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-400 hover:text-white transition-all w-full"
