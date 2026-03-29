@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCars } from '../features/cars/hooks';
+import { useCmsPage } from '../features/cms/hooks';
 import CarCard from '../features/cars/components/CarCard';
 import CarCardSkeleton from '../features/cars/components/CarCardSkeleton';
 import Button from '../components/ui/Button';
@@ -294,11 +295,17 @@ const BlogSection = () => (
 );
 
 const HomePage = () => {
+  const { data: pageData } = useCmsPage('home');
+  const page = pageData?.data;
+
   return (
     <div className="flex flex-col bg-white">
       <Seo 
-        title="Car Hire, Car Sales & Auto Services in Ilorin"
-        description="Buy, hire, lease, and manage vehicles with ease. Ride Vendor provides trusted car hire, car sales, and logistics services for individuals and businesses in Ilorin."
+        title={page?.metaTitle || page?.title || 'Car Hire, Car Sales & Auto Services in Ilorin'}
+        description={page?.metaDescription || 'Buy, hire, lease, and manage vehicles with ease. Ride Vendor provides trusted car hire, car sales, and logistics services for individuals and businesses in Ilorin.'}
+        image={page?.ogImage}
+        url={page?.canonicalUrl || '/'}
+        robots={page?.robotsDirective}
       />
       <Hero />
       <FeatureSection
