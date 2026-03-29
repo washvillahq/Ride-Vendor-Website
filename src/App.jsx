@@ -14,7 +14,7 @@ function App() {
       <AuthBootstrap>
         <RouterProvider router={router} />
       </AuthBootstrap>
-      <Toaster 
+      <Toaster
         position="top-right"
         toastOptions={{
           duration: 4000,
@@ -33,12 +33,12 @@ function App() {
         {(t) => (
           <div
             className={cn(
-              "flex items-center gap-3 bg-[#1A2B3D] text-white px-4 py-3 rounded-2xl shadow-2xl border border-white/10 animate-in fade-in slide-in-from-top-2 duration-300",
-              t.visible ? "opacity-100" : "opacity-0"
+              'flex items-center gap-3 bg-[#1A2B3D] text-white px-4 py-3 rounded-2xl shadow-2xl border border-white/10 animate-in fade-in slide-in-from-top-2 duration-300',
+              t.visible ? 'opacity-100' : 'opacity-0'
             )}
           >
             <div className="flex-1">{resolveValue(t.message, t)}</div>
-            <button 
+            <button
               onClick={() => toast.dismiss(t.id)}
               className="p-1 hover:bg-white/10 rounded-lg transition-colors text-white/40 hover:text-white"
             >

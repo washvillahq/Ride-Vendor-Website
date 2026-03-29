@@ -19,6 +19,10 @@ const PageLoading = () => (
 
 // Lazy Loaded Pages
 const Home = lazy(() => import('../pages/Home'));
+const About = lazy(() => import('../pages/About'));
+const Services = lazy(() => import('../pages/Services'));
+const Contact = lazy(() => import('../pages/Contact'));
+const Shop = lazy(() => import('../pages/Shop'));
 const Login = lazy(() => import('../pages/Login'));
 const Register = lazy(() => import('../pages/Register'));
 const ForgotPassword = lazy(() => import('../pages/ForgotPassword'));
@@ -54,6 +58,10 @@ export const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <Suspense fallback={<PageLoading />}><Home /></Suspense> },
+      { path: 'about', element: <Suspense fallback={<PageLoading />}><About /></Suspense> },
+      { path: 'services', element: <Suspense fallback={<PageLoading />}><Services /></Suspense> },
+      { path: 'contact', element: <Suspense fallback={<PageLoading />}><Contact /></Suspense> },
+      { path: 'shop', element: <Suspense fallback={<PageLoading />}><Shop /></Suspense> },
       { path: 'car-sales', element: <Suspense fallback={<PageLoading />}><CarSales /></Suspense> },
       { path: 'car-hire', element: <Suspense fallback={<PageLoading />}><CarRentals /></Suspense> },
       { path: 'cars', element: <Suspense fallback={<PageLoading />}><CarsList /></Suspense> },

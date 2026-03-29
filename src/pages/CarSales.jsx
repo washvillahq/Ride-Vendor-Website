@@ -9,6 +9,7 @@ import Pagination from '../components/ui/Pagination';
 import EmptyState from '../components/ui/EmptyState';
 import ErrorState from '../components/feedback/ErrorState';
 import Button from '../components/ui/Button';
+import Seo from '../components/Seo';
 import { Search, Car, ShieldCheck, ChevronDown } from 'lucide-react';
 
 const CarSales = () => {
@@ -74,6 +75,11 @@ const CarSales = () => {
 
   return (
     <div className="bg-slate-50/50 min-h-screen pb-20">
+      <Seo
+        title="Car Sales in Ilorin"
+        description="Browse verified cars for sale in Ilorin. Compare prices, filter by brand, and buy with confidence on RideVendor."
+        url="/car-sales"
+      />
       <div className="container px-4 py-8 space-y-8">
         {/* Top Header Row */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">

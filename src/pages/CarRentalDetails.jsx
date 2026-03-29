@@ -12,6 +12,7 @@ import HireCheckoutModal from '../features/cars/components/HireCheckoutModal';
 import Breadcrumbs from '../components/shared/Breadcrumbs';
 import Skeleton from '../components/ui/Skeleton';
 import ErrorState from '../components/feedback/ErrorState';
+import Seo from '../components/Seo';
 import { ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 const RentalDetailsSkeleton = () => (
@@ -70,6 +71,13 @@ const CarRentalDetails = () => {
 
   return (
     <div className="bg-white min-h-screen pb-20">
+      <Seo 
+        title={`${brand} ${model} - Car Rental in Ilorin`}
+        description={description ? `${description.slice(0, 160)}...` : `Rent ${brand} ${model} from RideVendor. Daily car hire with professional driver options available.`}
+        image={images?.[0]?.url}
+        type="product"
+        url={`/car-hire/${carId}`}
+      />
       <div className="container px-4 py-8 space-y-10">
         {/* Breadcrumbs */}
         <Breadcrumbs

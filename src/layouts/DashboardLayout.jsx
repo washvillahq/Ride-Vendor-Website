@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useLogout } from '../features/auth/hooks';
+import Seo from '../components/Seo';
 import {
   LayoutDashboard,
   Car,
@@ -37,6 +38,7 @@ const DashboardLayout = () => {
 
   return (
     <div className="flex min-h-screen bg-[#F8FAFB]">
+      <Seo title="Dashboard" description="Manage your RideVendor account and bookings." />
 
 
       {/* Sidebar Overlay */}

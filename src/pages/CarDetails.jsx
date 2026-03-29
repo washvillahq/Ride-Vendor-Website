@@ -9,6 +9,7 @@ import CarCardSkeleton from '../features/cars/components/CarCardSkeleton';
 import Breadcrumbs from '../components/shared/Breadcrumbs';
 import Skeleton from '../components/ui/Skeleton';
 import ErrorState from '../components/feedback/ErrorState';
+import Seo from '../components/Seo';
 import { Search, CheckCircle2 } from 'lucide-react';
 
 const CarDetailsSkeleton = () => (
@@ -53,6 +54,13 @@ const CarDetails = () => {
 
   return (
     <div className="bg-white min-h-screen pb-20">
+      <Seo 
+        title={`${year} ${brand} ${model} For Sale`}
+        description={description ? `${description.slice(0, 160)}...` : `Buy ${year} ${brand} ${model} at RideVendor. Verified vehicles with inspection reports.`}
+        image={images?.[0]?.url}
+        type="product"
+        url={`/cars/${carId}`}
+      />
       <div className="container px-4 py-8 space-y-10">
         {/* Top Header Row with Search */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">

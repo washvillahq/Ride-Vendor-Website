@@ -5,6 +5,7 @@ import CarCard from '../features/cars/components/CarCard';
 import CarCardSkeleton from '../features/cars/components/CarCardSkeleton';
 import Button from '../components/ui/Button';
 import { SectionHeader } from '../components/shared/Headers';
+import Seo from '../components/Seo';
 
 import carhire from '../assets/carhire.png';
 import carsale from '../assets/carsale.png';
@@ -295,6 +296,10 @@ const BlogSection = () => (
 const HomePage = () => {
   return (
     <div className="flex flex-col bg-white">
+      <Seo 
+        title="Car Hire, Car Sales & Auto Services in Ilorin"
+        description="Buy, hire, lease, and manage vehicles with ease. Ride Vendor provides trusted car hire, car sales, and logistics services for individuals and businesses in Ilorin."
+      />
       <Hero />
       <FeatureSection
         type="rental"

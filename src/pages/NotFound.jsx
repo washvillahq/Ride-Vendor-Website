@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button';
+import Seo from '../components/Seo';
 
 const NotFound = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-6">
+      <Seo title="Page Not Found" description="The page you are trying to access does not exist on RideVendor." />
       <div className="max-w-md w-full text-center space-y-8">
         <div className="relative">
           <h1 className="text-[12rem] font-medium text-slate-200 leading-none">404</h1>

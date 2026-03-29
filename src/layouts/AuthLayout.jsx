@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
+import Seo from '../components/Seo';
 import loginImg from '../assets/loginimage.png';
 import registerImg from '../assets/registerimage.png';
 // import logo from '../assets/ridevendor_logo.png';
@@ -12,6 +13,7 @@ const AuthLayout = () => {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-white">
+      <Seo title={isLogin ? 'Login' : 'Register'} description="Access your RideVendor account." />
       {/* Visual & Branding Section - Now visible on all screens */}
       <div className="flex w-full md:w-1/2 h-[320px] md:h-auto relative overflow-hidden bg-slate-900 shrink-0">
         <img

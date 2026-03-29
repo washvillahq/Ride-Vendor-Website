@@ -3,6 +3,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useLogout } from '../features/auth/hooks';
 import Button from '../components/ui/Button';
+import Seo from '../components/Seo';
 import { cn } from '../utils/cn';
 import {
   LayoutDashboard,
@@ -34,6 +35,7 @@ const AdminLayout = () => {
 
   return (
     <div className="flex min-h-screen bg-[#F8FAFB]">
+      <Seo title="Admin Dashboard" description="Manage RideVendor operations from the admin dashboard." />
       {/* Sidebar */}
       <aside className="w-72 bg-[#00212E] hidden lg:flex flex-col text-white shadow-[10px_0_40px_rgba(0,0,0,0.04)] border-r border-white/5">
         <div className="p-8 pb-12">
@@ -124,4 +126,3 @@ const AdminLayout = () => {
 };
 
 export default AdminLayout;
-

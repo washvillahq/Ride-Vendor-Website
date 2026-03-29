@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and dashboard routes
+Disallow: /dashboard/
+Disallow: /admin/
+
+# Disallow API routes
+Disallow: /api/
+
+# Allow static pages
+Allow: /about
+Allow: /services
+Allow: /contact
+Allow: /shop
+Allow: /car-sales
+Allow: /car-hire
+
+# Sitemap
+Sitemap: https://ridevendor.com/sitemap.xml

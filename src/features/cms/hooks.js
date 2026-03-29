@@ -1,0 +1,77 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import * as cmsApi from './api';
+
+const CMS_KEYS = {
+  pages: ['cms', 'pages'],
+  page: (slug) => ['cms', 'page', slug],
+  contact: ['cms', 'contact'],
+};
+
+export const useCmsPage = (slug) => {
+  return useQuery({
+    queryKey: CMS_KEYS.page(slug),
+    queryFn: () => cmsApi.getPageBySlug(slug),
+    enabled: Boolean(slug),
+    retry: false,
+  });
+};
+
+export const useAdminPages = (params = {}) => {
+  return useQuery({
+    queryKey: [...CMS_KEYS.pages, params],
+    queryFn: () => cmsApi.getPages(params),
+  });
+};
+
+export const useCreatePage = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: cmsApi.createPage,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: CMS_KEYS.pages });
+    },
+  });
+};
+
+export const useUpdatePage = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: cmsApi.updatePage,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: CMS_KEYS.pages });
+    },
+  });
+};
+
+export const useDeletePage = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: cmsApi.deletePage,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: CMS_KEYS.pages });
+    },
+  });
+};
+
+export const useSubmitContact = () => {
+  return useMutation({
+    mutationFn: cmsApi.submitContact,
+  });
+};
+
+export const useContactSubmissions = (params = {}) => {
+  return useQuery({
+    queryKey: [...CMS_KEYS.contact, params],
+    queryFn: () => cmsApi.getContactSubmissions(params),
+  });
+};
+
+export const useUpdateContactSubmission = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: cmsApi.updateContactSubmission,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: CMS_KEYS.contact });
+    },
+  });
+};
