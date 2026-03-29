@@ -5,7 +5,7 @@ import Link from '@tiptap/extension-link';
 import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import Heading from '@tiptap/extension-heading';
-import { Bold, Italic, Link2, List, ListOrdered, Quote, Image as ImageIcon, Heading1, Heading2 } from 'lucide-react';
+import { Bold, Italic, Link2, List, ListOrdered, Quote, Image as ImageIcon, Pilcrow } from 'lucide-react';
 
 const ToolbarButton = ({ icon, label, active, onClick }) => (
   <button
@@ -33,7 +33,7 @@ const RichTextEditor = ({
       StarterKit.configure({
         heading: false,
       }),
-      Heading.configure({ levels: [1, 2] }),
+      Heading.configure({ levels: [1, 2, 3, 4, 5, 6] }),
       Link.configure({
         openOnClick: false,
         autolink: true,
@@ -103,8 +103,42 @@ const RichTextEditor = ({
       <label className="text-sm font-medium leading-none">{label}</label>
       <div className="rounded-xl border border-slate-200 overflow-hidden bg-white">
         <div className="p-3 border-b border-slate-100 flex flex-wrap items-center gap-2 bg-slate-50">
-          <ToolbarButton icon={<Heading1 size={14} />} label="Heading 1" active={editor.isActive('heading', { level: 1 })} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} />
-          <ToolbarButton icon={<Heading2 size={14} />} label="Heading 2" active={editor.isActive('heading', { level: 2 })} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} />
+          <ToolbarButton icon={<Pilcrow size={14} />} label="Paragraph" active={editor.isActive('paragraph')} onClick={() => editor.chain().focus().setParagraph().run()} />
+          <div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 h-9">
+            <label className="text-xs text-slate-500">Heading</label>
+            <select
+              className="text-xs bg-transparent outline-none"
+              value={editor.isActive('heading', { level: 1 })
+                ? '1'
+                : editor.isActive('heading', { level: 2 })
+                ? '2'
+                : editor.isActive('heading', { level: 3 })
+                ? '3'
+                : editor.isActive('heading', { level: 4 })
+                ? '4'
+                : editor.isActive('heading', { level: 5 })
+                ? '5'
+                : editor.isActive('heading', { level: 6 })
+                ? '6'
+                : 'p'}
+              onChange={(e) => {
+                const val = e.target.value;
+                if (val === 'p') {
+                  editor.chain().focus().setParagraph().run();
+                  return;
+                }
+                editor.chain().focus().setHeading({ level: Number(val) }).run();
+              }}
+            >
+              <option value="p">P</option>
+              <option value="1">H1</option>
+              <option value="2">H2</option>
+              <option value="3">H3</option>
+              <option value="4">H4</option>
+              <option value="5">H5</option>
+              <option value="6">H6</option>
+            </select>
+          </div>
           <ToolbarButton icon={<Bold size={14} />} label="Bold" active={editor.isActive('bold')} onClick={() => editor.chain().focus().toggleBold().run()} />
           <ToolbarButton icon={<Italic size={14} />} label="Italic" active={editor.isActive('italic')} onClick={() => editor.chain().focus().toggleItalic().run()} />
           <ToolbarButton icon={<List size={14} />} label="Bulleted list" active={editor.isActive('bulletList')} onClick={() => editor.chain().focus().toggleBulletList().run()} />

@@ -17,4 +17,4 @@ Allow: /car-sales
 Allow: /car-hire
 
 # Sitemap
-Sitemap: https://ridevendor.com/sitemap.xml
+Sitemap: https://ridevendor.com/api/v1/seo/sitemap.xml
