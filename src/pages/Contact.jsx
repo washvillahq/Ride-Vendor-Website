@@ -49,6 +49,7 @@ const ContactPage = () => {
         description={page?.metaDescription || 'Get in touch with RideVendor for car hire, car sales, and auto services. Contact us today for inquiries and bookings.'}
         image={page?.ogImage}
         url={page?.canonicalUrl || '/contact'}
+        robots={page?.robotsDirective}
       />
       <div className="container px-4 py-12 max-w-6xl mx-auto">
         <div className="text-center mb-16">

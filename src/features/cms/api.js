@@ -15,3 +15,7 @@ export const submitContact = async (data) => api.post('/cms/contact', data);
 export const getContactSubmissions = async (params = {}) => api.get('/cms/contact', { params });
 
 export const updateContactSubmission = async ({ id, data }) => api.patch(`/cms/contact/${id}`, data);
+
+export const getGlobalSeoSettings = async () => api.get('/cms/seo-settings');
+
+export const updateGlobalSeoSettings = async (data) => api.patch('/cms/seo-settings', data);

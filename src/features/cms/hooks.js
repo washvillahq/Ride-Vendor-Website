@@ -5,6 +5,7 @@ const CMS_KEYS = {
   pages: ['cms', 'pages'],
   page: (slug) => ['cms', 'page', slug],
   contact: ['cms', 'contact'],
+  seoSettings: ['cms', 'seo-settings'],
 };
 
 export const useCmsPage = (slug) => {
@@ -72,6 +73,23 @@ export const useUpdateContactSubmission = () => {
     mutationFn: cmsApi.updateContactSubmission,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: CMS_KEYS.contact });
+    },
+  });
+};
+
+export const useGlobalSeoSettings = () => {
+  return useQuery({
+    queryKey: CMS_KEYS.seoSettings,
+    queryFn: cmsApi.getGlobalSeoSettings,
+  });
+};
+
+export const useUpdateGlobalSeoSettings = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: cmsApi.updateGlobalSeoSettings,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: CMS_KEYS.seoSettings });
     },
   });
 };

@@ -1,11 +1,29 @@
 export const seoConfig = {
   siteName: 'RideVendor',
+  titleSuffix: 'RideVendor',
   siteDescription: 'Car hire, car sales, and auto services in Ilorin, Kwara State. Trusted vehicle rentals, car sales, and logistics services for individuals and businesses.',
   siteUrl: import.meta.env.VITE_SITE_URL || 'https://ridevendor.com',
   defaultImage: '/og-default.png',
   twitterHandle: '@ridevendor',
   locale: 'en_US',
   country: 'NG',
+  organizationName: 'RideVendor',
+  organizationPhone: '+2348144123316',
+  organizationEmail: 'info@ridevendor.com',
+};
+
+const RUNTIME_KEY = '__RV_SEO_SETTINGS__';
+
+export const getSeoConfig = () => {
+  const runtime = window[RUNTIME_KEY] || {};
+  return { ...seoConfig, ...runtime };
+};
+
+export const setRuntimeSeoConfig = (settings = {}) => {
+  window[RUNTIME_KEY] = {
+    ...(window[RUNTIME_KEY] || {}),
+    ...settings,
+  };
 };
 
 export const getMetaTags = (options = {}) => {
@@ -18,10 +36,12 @@ export const getMetaTags = (options = {}) => {
     metaTitle,
   } = options;
 
-  const pageTitle = metaTitle || (title ? `${title} | ${seoConfig.siteName}` : seoConfig.siteName);
-  const pageDescription = description || seoConfig.siteDescription;
-  const pageImage = image || seoConfig.defaultImage;
-  const pageUrl = url || seoConfig.siteUrl;
+  const config = getSeoConfig();
+  const titleSuffix = config.titleSuffix || config.siteName;
+  const pageTitle = metaTitle || (title ? `${title} | ${titleSuffix}` : config.siteName);
+  const pageDescription = description || config.siteDescription;
+  const pageImage = image || config.defaultImage;
+  const pageUrl = url || config.siteUrl;
 
   return [
     { charset: 'utf-8' },
@@ -33,26 +53,28 @@ export const getMetaTags = (options = {}) => {
     { property: 'og:image', content: pageImage },
     { property: 'og:url', content: pageUrl },
     { property: 'og:type', content: type },
-    { property: 'og:site_name', content: seoConfig.siteName },
-    { property: 'og:locale', content: seoConfig.locale },
+    { property: 'og:site_name', content: config.siteName },
+    { property: 'og:locale', content: config.locale },
 
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: pageTitle },
     { name: 'twitter:description', content: pageDescription },
     { name: 'twitter:image', content: pageImage },
-    { name: 'twitter:site', content: seoConfig.twitterHandle },
+    { name: 'twitter:site', content: config.twitterHandle },
   ];
 };
 
 export const getJsonLd = (type = 'Organization') => {
+  const config = getSeoConfig();
+
   if (type === 'Organization') {
     return {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: seoConfig.siteName,
-      url: seoConfig.siteUrl,
-      logo: `${seoConfig.siteUrl}/ride_vendor_logo_black.svg`,
-      description: seoConfig.siteDescription,
+      name: config.organizationName || config.siteName,
+      url: config.siteUrl,
+      logo: `${config.siteUrl}/ride_vendor_logo_black.svg`,
+      description: config.siteDescription,
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Oniyangi Complex, OFFA GARAGE RAILWAY LINE, off Asa-Dam Road',
@@ -63,7 +85,7 @@ export const getJsonLd = (type = 'Organization') => {
       },
       contactPoint: {
         '@type': 'ContactPoint',
-        telephone: '+2348144123316',
+        telephone: config.organizationPhone,
         contactType: 'customer service',
         availableLanguage: 'English',
       },
@@ -79,11 +101,11 @@ export const getJsonLd = (type = 'Organization') => {
     return {
       '@context': 'https://schema.org',
       '@type': 'Product',
-      name: seoConfig.siteName,
-      description: seoConfig.siteDescription,
+      name: config.siteName,
+      description: config.siteDescription,
       brand: {
         '@type': 'Brand',
-        name: seoConfig.siteName,
+        name: config.siteName,
       },
       offers: {
         '@type': 'Offer',

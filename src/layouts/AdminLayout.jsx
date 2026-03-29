@@ -17,7 +17,8 @@ import {
   Search,
   ChevronDown,
   FileText,
-  Mail
+  Mail,
+  Globe
 } from 'lucide-react';
 const LOGO_WHITE = '/ride_vendor_logo_white.svg';
 
@@ -30,6 +31,7 @@ const AdminLayout = () => {
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
     { name: 'Manage Cars', path: '/admin/cars', icon: Car },
     { name: 'Services', path: '/admin/services', icon: Settings },
+    { name: 'Global SEO', path: '/admin/seo-settings', icon: Globe },
     { name: 'CMS Pages', path: '/admin/pages', icon: FileText },
     { name: 'Contact Inbox', path: '/admin/contact', icon: Mail },
     { name: 'Bookings', path: '/admin/bookings', icon: CalendarClock },

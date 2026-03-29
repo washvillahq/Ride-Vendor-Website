@@ -5,12 +5,14 @@ import { Toaster, toast, resolveValue } from 'react-hot-toast';
 import { router } from './routes';
 import { queryClient } from './lib/react-query';
 import AuthBootstrap from './components/auth/AuthBootstrap';
+import SeoSettingsBootstrap from './components/SeoSettingsBootstrap';
 import { X } from 'lucide-react';
 import { cn } from './utils/cn';
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <SeoSettingsBootstrap />
       <AuthBootstrap>
         <RouterProvider router={router} />
       </AuthBootstrap>

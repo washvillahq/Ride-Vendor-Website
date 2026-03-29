@@ -13,6 +13,7 @@ const AboutPage = () => {
         description={page?.metaDescription || 'Learn more about RideVendor - your trusted partner for car hire, car sales, and auto services in Ilorin, Kwara State, Nigeria since 2012.'}
         image={page?.ogImage}
         url={page?.canonicalUrl || '/about'}
+        robots={page?.robotsDirective}
       />
       <div className="container px-4 py-12 max-w-4xl mx-auto">
         <h1 className="text-4xl font-semibold text-primary mb-8">About RideVendor</h1>

@@ -54,6 +54,7 @@ const ServicesPage = () => {
         description={page?.metaDescription || 'Explore RideVendor professional car hire, car sales, and auto services in Ilorin. From daily rentals to vehicle tracking, we have you covered.'}
         image={page?.ogImage}
         url={page?.canonicalUrl || '/services'}
+        robots={page?.robotsDirective}
       />
       <div className="container px-4 py-12 max-w-6xl mx-auto">
         <div className="text-center mb-16">

@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
-import { getJsonLd, getMetaTags, seoConfig } from '../config/seo';
+import { getJsonLd, getMetaTags, getSeoConfig } from '../config/seo';
 
 const MANAGED_ATTR = 'data-rv-seo';
 
 const getAbsoluteUrl = (value) => {
-  if (!value) return seoConfig.siteUrl;
+  const config = getSeoConfig();
+  if (!value) return config.siteUrl;
   if (value.startsWith('http://') || value.startsWith('https://')) return value;
   const normalized = value.startsWith('/') ? value : `/${value}`;
-  return `${seoConfig.siteUrl}${normalized}`;
+  return `${config.siteUrl}${normalized}`;
 };
 
 const clearManagedTags = () => {
@@ -49,13 +50,15 @@ const shouldNoIndex = (pathname) => {
   return noIndexPrefixes.some((prefix) => pathname.startsWith(prefix)) || noIndexPaths.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 };
 
-const Seo = ({ title, description, image, url, type = 'website', jsonLdType = 'Organization' }) => {
+const Seo = ({ title, description, image, url, type = 'website', jsonLdType = 'Organization', robots }) => {
   useEffect(() => {
+    const config = getSeoConfig();
     const pathname = window.location.pathname;
     const absoluteUrl = getAbsoluteUrl(url || pathname);
-    const absoluteImage = getAbsoluteUrl(image || seoConfig.defaultImage);
+    const absoluteImage = getAbsoluteUrl(image || config.defaultImage);
 
-    document.title = title ? `${title} | ${seoConfig.siteName}` : seoConfig.siteName;
+    const titleSuffix = config.titleSuffix || config.siteName;
+    document.title = title ? `${title} | ${titleSuffix}` : config.siteName;
 
     clearManagedTags();
 
@@ -79,11 +82,12 @@ const Seo = ({ title, description, image, url, type = 'website', jsonLdType = 'O
 
     appendLink({ rel: 'canonical', href: absoluteUrl });
 
-    appendMeta({ name: 'robots', content: shouldNoIndex(pathname) ? 'noindex,nofollow' : 'index,follow' });
+    const robotsValue = robots || (shouldNoIndex(pathname) ? 'noindex,nofollow' : 'index,follow');
+    appendMeta({ name: 'robots', content: robotsValue });
 
     const jsonLd = getJsonLd(jsonLdType);
     if (jsonLd) appendScript(jsonLd);
-  }, [title, description, image, url, type, jsonLdType]);
+  }, [title, description, image, url, type, jsonLdType, robots]);
 
   return null;
 };
