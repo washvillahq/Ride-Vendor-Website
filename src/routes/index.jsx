@@ -50,6 +50,8 @@ const AdminServices = lazy(() => import('../pages/admin/AdminServices'));
 const AdminUsers = lazy(() => import('../pages/admin/AdminUsers'));
 const AdminBookings = lazy(() => import('../pages/admin/AdminBookings'));
 const AdminOrders = lazy(() => import('../pages/admin/AdminOrders'));
+const AdminCmsPages = lazy(() => import('../pages/admin/AdminCmsPages'));
+const AdminContactSubmissions = lazy(() => import('../pages/admin/AdminContactSubmissions'));
 
 
 export const router = createBrowserRouter([
@@ -114,6 +116,8 @@ export const router = createBrowserRouter([
           { index: true, element: <Suspense fallback={<PageLoading />}><AdminDashboard /></Suspense> },
           { path: 'cars', element: <Suspense fallback={<PageLoading />}><AdminCars /></Suspense> },
           { path: 'services', element: <Suspense fallback={<PageLoading />}><AdminServices /></Suspense> },
+          { path: 'pages', element: <Suspense fallback={<PageLoading />}><AdminCmsPages /></Suspense> },
+          { path: 'contact', element: <Suspense fallback={<PageLoading />}><AdminContactSubmissions /></Suspense> },
           { path: 'users', element: <Suspense fallback={<PageLoading />}><AdminUsers /></Suspense> },
           { path: 'bookings', element: <Suspense fallback={<PageLoading />}><AdminBookings /></Suspense> },
           { path: 'orders', element: <Suspense fallback={<PageLoading />}><AdminOrders /></Suspense> },

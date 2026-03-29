@@ -77,6 +77,7 @@ const CarRentalDetails = () => {
         image={images?.[0]?.url}
         type="product"
         url={`/car-hire/${carId}`}
+        jsonLdType="Product"
       />
       <div className="container px-4 py-8 space-y-10">
         {/* Breadcrumbs */}

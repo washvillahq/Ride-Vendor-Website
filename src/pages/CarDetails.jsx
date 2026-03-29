@@ -60,6 +60,7 @@ const CarDetails = () => {
         image={images?.[0]?.url}
         type="product"
         url={`/cars/${carId}`}
+        jsonLdType="Product"
       />
       <div className="container px-4 py-8 space-y-10">
         {/* Top Header Row with Search */}
