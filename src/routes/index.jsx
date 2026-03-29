@@ -53,6 +53,9 @@ const AdminOrders = lazy(() => import('../pages/admin/AdminOrders'));
 const AdminCmsPages = lazy(() => import('../pages/admin/AdminCmsPages'));
 const AdminContactSubmissions = lazy(() => import('../pages/admin/AdminContactSubmissions'));
 const AdminGlobalSeoSettings = lazy(() => import('../pages/admin/AdminGlobalSeoSettings'));
+const AdminCustomPageEditor = lazy(() => import('../pages/admin/AdminCustomPageEditor'));
+const AdminStaticPageSeoEditor = lazy(() => import('../pages/admin/AdminStaticPageSeoEditor'));
+const CmsCustomPage = lazy(() => import('../pages/CmsCustomPage'));
 
 
 export const router = createBrowserRouter([
@@ -72,6 +75,7 @@ export const router = createBrowserRouter([
       { path: 'car-hire/:carId', element: <Suspense fallback={<PageLoading />}><CarRentalDetails /></Suspense> },
       { path: 'car-hire/all', element: <Suspense fallback={<PageLoading />}><CarHireListing /></Suspense> },
       { path: 'payment-success', element: <Suspense fallback={<PageLoading />}><PaymentSuccess /></Suspense> },
+      { path: ':slug', element: <Suspense fallback={<PageLoading />}><CmsCustomPage /></Suspense> },
     ],
   },
   {
@@ -119,6 +123,9 @@ export const router = createBrowserRouter([
           { path: 'services', element: <Suspense fallback={<PageLoading />}><AdminServices /></Suspense> },
           { path: 'seo-settings', element: <Suspense fallback={<PageLoading />}><AdminGlobalSeoSettings /></Suspense> },
           { path: 'pages', element: <Suspense fallback={<PageLoading />}><AdminCmsPages /></Suspense> },
+          { path: 'pages/new', element: <Suspense fallback={<PageLoading />}><AdminCustomPageEditor /></Suspense> },
+          { path: 'pages/:pageId/edit', element: <Suspense fallback={<PageLoading />}><AdminCustomPageEditor /></Suspense> },
+          { path: 'pages/static/:slug/seo', element: <Suspense fallback={<PageLoading />}><AdminStaticPageSeoEditor /></Suspense> },
           { path: 'contact', element: <Suspense fallback={<PageLoading />}><AdminContactSubmissions /></Suspense> },
           { path: 'users', element: <Suspense fallback={<PageLoading />}><AdminUsers /></Suspense> },
           { path: 'bookings', element: <Suspense fallback={<PageLoading />}><AdminBookings /></Suspense> },

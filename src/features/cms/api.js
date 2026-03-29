@@ -4,6 +4,10 @@ export const getPageBySlug = async (slug) => api.get(`/cms/pages/${slug}`);
 
 export const getPages = async (params = {}) => api.get('/cms/pages', { params });
 
+export const getAdminPages = async (params = {}) => api.get('/cms/admin/pages', { params });
+
+export const getPageById = async (id) => api.get('/cms/pages', { params: { _id: id, limit: 1 } });
+
 export const createPage = async (data) => api.post('/cms/pages', data);
 
 export const updatePage = async ({ id, data }) => api.patch(`/cms/pages/id/${id}`, data);

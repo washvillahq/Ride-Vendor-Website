@@ -20,7 +20,21 @@ export const useCmsPage = (slug) => {
 export const useAdminPages = (params = {}) => {
   return useQuery({
     queryKey: [...CMS_KEYS.pages, params],
-    queryFn: () => cmsApi.getPages(params),
+    queryFn: () => cmsApi.getAdminPages(params),
+  });
+};
+
+export const useAdminPageById = (id) => {
+  return useQuery({
+    queryKey: [...CMS_KEYS.pages, 'id', id],
+    queryFn: async () => {
+      const adminResponse = await cmsApi.getAdminPages({ _id: id, limit: 1 });
+      return {
+        ...adminResponse,
+        data: adminResponse?.data?.pages?.[0] || null,
+      };
+    },
+    enabled: Boolean(id),
   });
 };
 
