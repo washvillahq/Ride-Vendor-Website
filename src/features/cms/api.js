@@ -31,3 +31,5 @@ export const uploadCmsImage = async (file) => {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };
+
+export const createStaticSeoTarget = async (data) => api.post('/cms/static-seo-target', data);

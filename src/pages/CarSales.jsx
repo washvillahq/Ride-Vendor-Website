@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useCars } from '../features/cars/hooks';
+import { useCmsPage } from '../features/cms/hooks';
 import SidebarFilters from '../features/cars/components/SidebarFilters';
 import DetailedCarCard from '../features/cars/components/DetailedCarCard';
 import CarCardSkeleton from '../features/cars/components/CarCardSkeleton';
@@ -15,6 +16,8 @@ import { Search, Car, ShieldCheck, ChevronDown } from 'lucide-react';
 const CarSales = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState(searchParams.get('searchTerm') || '');
+  const { data: pageData } = useCmsPage('car-sales');
+  const page = pageData?.data;
 
   // Extract filters from URL
   const filters = useMemo(() => ({
@@ -77,8 +80,11 @@ const CarSales = () => {
     <div className="bg-slate-50/50 min-h-screen pb-20">
       <Seo
         title="Car Sales in Ilorin"
-        description="Browse verified cars for sale in Ilorin. Compare prices, filter by brand, and buy with confidence on RideVendor."
-        url="/car-sales"
+        metaTitle={page?.metaTitle}
+        description={page?.metaDescription || 'Browse verified cars for sale in Ilorin. Compare prices, filter by brand, and buy with confidence on RideVendor.'}
+        image={page?.ogImage}
+        url={page?.canonicalUrl || '/car-sales'}
+        robots={page?.robotsDirective}
       />
       <div className="container px-4 py-8 space-y-8">
         {/* Top Header Row */}

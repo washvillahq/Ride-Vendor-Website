@@ -1,5 +1,6 @@
 import React from 'react';
 import { useCars } from '../features/cars/hooks';
+import { useCmsPage } from '../features/cms/hooks';
 import RentalHero from '../features/cars/components/RentalHero';
 import RentalCategoryCard from '../features/cars/components/RentalCategoryCard';
 import RentalCarCard from '../features/cars/components/RentalCarCard';
@@ -10,6 +11,8 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const CarRentals = () => {
+  const { data: pageData } = useCmsPage('car-hire');
+  const page = pageData?.data;
   const { data, isLoading } = useCars({ type: 'rental', limit: 6 });
   const cars = data?.data?.cars || [];
 
@@ -40,8 +43,11 @@ const CarRentals = () => {
     <div className="bg-white min-h-screen pb-20">
       <Seo
         title="Car Hire & Rentals in Ilorin"
-        description="Book clean and reliable rental vehicles in Ilorin with RideVendor. Daily, weekly, and corporate car rental options available."
-        url="/car-hire"
+        metaTitle={page?.metaTitle}
+        description={page?.metaDescription || 'Book clean and reliable rental vehicles in Ilorin with RideVendor. Daily, weekly, and corporate car rental options available.'}
+        image={page?.ogImage}
+        url={page?.canonicalUrl || '/car-hire'}
+        robots={page?.robotsDirective}
       />
       <div className="container px-4 py-8 space-y-12">
         {/* Breadcrumbs */}

@@ -1,9 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Pencil, SearchCheck } from 'lucide-react';
-import { useAdminPages } from '../../features/cms/hooks';
+import { Plus, Pencil, SearchCheck, X } from 'lucide-react';
+import { useAdminPages, useCreateStaticSeoTarget } from '../../features/cms/hooks';
 import Button from '../../components/ui/Button';
+import Input from '../../components/ui/Input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/Table';
+import { toast } from 'react-hot-toast';
 
 const TABS = [
   { id: 'all', label: 'All Pages' },
@@ -40,7 +42,10 @@ const scorePage = (page) => {
 
 const AdminCmsPages = () => {
   const [activeTab, setActiveTab] = useState('all');
+  const [showAddTarget, setShowAddTarget] = useState(false);
+  const [newTarget, setNewTarget] = useState({ slug: '', title: '' });
   const { data, isLoading } = useAdminPages({ sort: '-updatedAt', limit: 100 });
+  const { mutateAsync: createStaticSeoTarget, isLoading: isCreating } = useCreateStaticSeoTarget();
   const pages = data?.data?.pages || [];
 
   const filteredPages = useMemo(() => {
@@ -52,6 +57,22 @@ const AdminCmsPages = () => {
   const seoRows = useMemo(() => {
     return pages.map((page) => ({ page, ...scorePage(page) })).sort((a, b) => a.score - b.score);
   }, [pages]);
+
+  const handleAddTarget = async (e) => {
+    e.preventDefault();
+    if (!newTarget.slug || !newTarget.title) {
+      toast.error('Please fill in both slug and title');
+      return;
+    }
+    try {
+      await createStaticSeoTarget(newTarget);
+      toast.success('Static SEO target created');
+      setShowAddTarget(false);
+      setNewTarget({ slug: '', title: '' });
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to create target');
+    }
+  };
 
   return (
     <div className="space-y-8 pb-20">
@@ -83,6 +104,52 @@ const AdminCmsPages = () => {
           </button>
         ))}
       </div>
+
+      <div className="flex items-center justify-between">
+        {activeTab === 'seo' && (
+          <Button variant="outline" onClick={() => setShowAddTarget(true)}>
+            <Plus size={16} className="mr-2" />
+            Add Static SEO Target
+          </Button>
+        )}
+        {activeTab !== 'seo' && <div />}
+      </div>
+
+      {showAddTarget && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Add Static SEO Target</h3>
+              <button onClick={() => setShowAddTarget(false)} className="text-slate-400 hover:text-slate-600">
+                <X size={20} />
+              </button>
+            </div>
+            <form onSubmit={handleAddTarget} className="space-y-4">
+              <Input
+                label="Slug"
+                placeholder="e.g. my-page"
+                value={newTarget.slug}
+                onChange={(e) => setNewTarget({ ...newTarget, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })}
+              />
+              <Input
+                label="Page Title"
+                placeholder="e.g. My Page"
+                value={newTarget.title}
+                onChange={(e) => setNewTarget({ ...newTarget, title: e.target.value })}
+              />
+              <p className="text-xs text-slate-500">This will create a static page entry that can be edited for SEO from the Admin Pages list.</p>
+              <div className="flex gap-3 pt-2">
+                <Button type="button" variant="outline" onClick={() => setShowAddTarget(false)} className="flex-1">
+                  Cancel
+                </Button>
+                <Button type="submit" isLoading={isCreating} className="flex-1">
+                  Create
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {activeTab === 'seo' ? (
         <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">

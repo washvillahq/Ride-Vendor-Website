@@ -113,3 +113,13 @@ export const useUploadCmsImage = () => {
     mutationFn: cmsApi.uploadCmsImage,
   });
 };
+
+export const useCreateStaticSeoTarget = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: cmsApi.createStaticSeoTarget,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: CMS_KEYS.pages });
+    },
+  });
+};
