@@ -300,9 +300,10 @@ const Footer = () => (
       <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-medium text-slate-500">
         <p>© {new Date().getFullYear()} Ride Vendor. All Rights Reserved.</p>
         <div className="flex gap-8">
-          <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-          <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-          <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
+          <Link to="/terms-and-conditions" className="hover:text-white transition-colors">Terms of Service</Link>
+          <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+          <Link to="/refund-policy" className="hover:text-white transition-colors">Refund Policy</Link>
+          <Link to="/cookie-policy" className="hover:text-white transition-colors">Cookie Policy</Link>
         </div>
       </div>
     </div>

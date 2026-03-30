@@ -55,8 +55,8 @@ const AuthLayout = () => {
         <div className="w-full p-8 flex flex-col sm:flex-row items-center justify-between border-t border-slate-50 text-[9px] font-bold uppercase tracking-widest text-slate-400 gap-4">
           <span>© 2026 Ride Vendor</span>
           <div className="flex items-center gap-6">
-            <Link to="/privacy" className="hover:text-black transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-black transition-colors">Terms of Service</Link>
+            <Link to="/privacy-policy" className="hover:text-black transition-colors">Privacy Policy</Link>
+            <Link to="/terms-and-conditions" className="hover:text-black transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

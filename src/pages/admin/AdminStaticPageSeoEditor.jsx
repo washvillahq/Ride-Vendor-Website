@@ -5,6 +5,7 @@ import { toast } from 'react-hot-toast';
 import Input from '../../components/ui/Input';
 import Textarea from '../../components/ui/Textarea';
 import Button from '../../components/ui/Button';
+import RichTextEditor from '../../components/ui/RichTextEditor';
 import { useCmsPage, useUpdatePage, useUploadCmsImage } from '../../features/cms/hooks';
 import PageSeoSidebar from './components/PageSeoSidebar';
 import ImageUploaderField from '../../components/admin/ImageUploaderField';
@@ -17,9 +18,12 @@ const AdminStaticPageSeoEditor = () => {
   const { mutateAsync: updatePage, isLoading } = useUpdatePage();
   const { mutateAsync: uploadCmsImage, isLoading: isUploadingImage } = useUploadCmsImage();
 
+  const isContentManaged = page?.contentLocked === false;
+
   const { register, handleSubmit, reset, setValue, control } = useForm({
     defaultValues: {
       title: '',
+      contentHtml: '',
       metaTitle: '',
       metaDescription: '',
       focusKeyword: '',
@@ -34,6 +38,7 @@ const AdminStaticPageSeoEditor = () => {
     if (!page) return;
     reset({
       title: page.title || '',
+      contentHtml: page.contentHtml || '',
       metaTitle: page.metaTitle || '',
       metaDescription: page.metaDescription || '',
       focusKeyword: page.focusKeyword || '',
@@ -59,42 +64,71 @@ const AdminStaticPageSeoEditor = () => {
     }
   };
 
+  const handleEditorImageUpload = async (file) => {
+    const response = await uploadCmsImage(file);
+    return { url: response?.data?.url };
+  };
+
   const onSubmit = async (formValues) => {
     try {
+      const payload = {
+        title: formValues.title,
+        metaTitle: formValues.metaTitle,
+        metaDescription: formValues.metaDescription,
+        focusKeyword: formValues.focusKeyword,
+        canonicalUrl: formValues.canonicalUrl,
+        ogImage: formValues.ogImage,
+        robotsDirective: formValues.robotsDirective,
+        status: formValues.status,
+      };
+
+      if (isContentManaged) {
+        payload.contentHtml = formValues.contentHtml;
+      }
+
       await updatePage({
         id: page._id,
-        data: {
-          title: formValues.title,
-          metaTitle: formValues.metaTitle,
-          metaDescription: formValues.metaDescription,
-          focusKeyword: formValues.focusKeyword,
-          canonicalUrl: formValues.canonicalUrl,
-          ogImage: formValues.ogImage,
-          robotsDirective: formValues.robotsDirective,
-          status: formValues.status,
-        },
+        data: payload,
       });
-      toast.success('Static page SEO updated');
+      toast.success('Page updated');
       navigate('/admin/pages');
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Unable to update static page SEO');
+      toast.error(error.response?.data?.message || 'Unable to update page');
     }
   };
 
   return (
     <div className="space-y-8 pb-20">
       <section>
-        <h1 className="text-3xl font-medium text-slate-900">Edit Static Page SEO</h1>
-        <p className="text-slate-500 mt-1">This is a system page. Content is locked; SEO can be edited.</p>
+        <h1 className="text-3xl font-medium text-slate-900">
+          {isContentManaged ? 'Edit Static Page' : 'Edit Static Page SEO'}
+        </h1>
+        <p className="text-slate-500 mt-1">
+          {isContentManaged
+            ? 'Edit page content and SEO settings.'
+            : 'This is a system page. Content is locked; SEO can be edited.'}
+        </p>
       </section>
 
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         <div className="xl:col-span-2 bg-white rounded-2xl border border-slate-100 p-6 space-y-4">
-          <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-sm">
-            System page: content editing is disabled for static pages.
-          </div>
+          {!isContentManaged && (
+            <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-sm">
+              System page: content editing is disabled for static pages.
+            </div>
+          )}
 
           <Input label="Page Name" {...register('title')} />
+
+          {isContentManaged && (
+            <RichTextEditor
+              label="Page Content"
+              value={values?.contentHtml || ''}
+              onChange={(content) => setValue('contentHtml', content, { shouldDirty: true })}
+              onUploadImage={handleEditorImageUpload}
+            />
+          )}
+
           <Input label="SEO Title" {...register('metaTitle')} />
           <Textarea label="Meta Description" rows={4} {...register('metaDescription')} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -124,7 +158,7 @@ const AdminStaticPageSeoEditor = () => {
               Back
             </Button>
             <Button type="submit" isLoading={isLoading}>
-              Save SEO
+              {isContentManaged ? 'Save Page' : 'Save SEO'}
             </Button>
           </div>
         </div>

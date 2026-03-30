@@ -210,7 +210,8 @@ const AdminCmsPages = () => {
                 <TableRow key={page._id}>
                   <TableCell>
                     <p className="font-medium text-slate-900">{page.title}</p>
-                    {page.contentLocked && <p className="text-xs text-amber-700 mt-1">System page - content locked</p>}
+                    {page.contentLocked === false && <p className="text-xs text-emerald-700 mt-1">Content managed</p>}
+                    {page.contentLocked === true && <p className="text-xs text-amber-700 mt-1">System page - content locked</p>}
                   </TableCell>
                   <TableCell className="font-mono text-xs">/{page.slug}</TableCell>
                   <TableCell className="capitalize">{page.pageType}</TableCell>
@@ -220,7 +221,7 @@ const AdminCmsPages = () => {
                     <Link to={page.pageType === 'static' ? `/admin/pages/static/${page.slug}/seo` : `/admin/pages/${page._id}/edit`}>
                       <Button variant="outline" size="sm">
                         <Pencil size={14} className="mr-1" />
-                        {page.pageType === 'static' ? 'Edit SEO' : 'Edit'}
+                        {page.pageType === 'static' ? (page.contentLocked === false ? 'Edit' : 'Edit SEO') : 'Edit'}
                       </Button>
                     </Link>
                   </TableCell>

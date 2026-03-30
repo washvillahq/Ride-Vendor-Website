@@ -60,6 +60,7 @@ const AdminStaticPageSeoEditor = lazy(() => import('../pages/admin/AdminStaticPa
 const CmsCustomPage = lazy(() => import('../pages/CmsCustomPage'));
 const AdminBlogPosts = lazy(() => import('../pages/admin/AdminBlogPosts'));
 const AdminBlogEditor = lazy(() => import('../pages/admin/AdminBlogEditor'));
+const PolicyPage = lazy(() => import('../pages/PolicyPage'));
 
 
 export const router = createBrowserRouter([
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
       { path: 'car-hire/:carId', element: <Suspense fallback={<PageLoading />}><CarRentalDetails /></Suspense> },
       { path: 'car-hire/all', element: <Suspense fallback={<PageLoading />}><CarHireListing /></Suspense> },
       { path: 'payment-success', element: <Suspense fallback={<PageLoading />}><PaymentSuccess /></Suspense> },
+      { path: 'privacy-policy', element: <Suspense fallback={<PageLoading />}><PolicyPage slug="privacy-policy" /></Suspense> },
+      { path: 'refund-policy', element: <Suspense fallback={<PageLoading />}><PolicyPage slug="refund-policy" /></Suspense> },
+      { path: 'terms-and-conditions', element: <Suspense fallback={<PageLoading />}><PolicyPage slug="terms-and-conditions" /></Suspense> },
+      { path: 'cookie-policy', element: <Suspense fallback={<PageLoading />}><PolicyPage slug="cookie-policy" /></Suspense> },
       { path: ':slug', element: <Suspense fallback={<PageLoading />}><CmsCustomPage /></Suspense> },
     ],
   },
