@@ -9,7 +9,8 @@ const AboutPage = () => {
   return (
     <div className="bg-white min-h-screen pb-20">
       <Seo 
-        title={page?.metaTitle || page?.title || 'About Us'}
+        title={page?.title || 'About Us'}
+        metaTitle={page?.metaTitle}
         description={page?.metaDescription || 'Learn more about RideVendor - your trusted partner for car hire, car sales, and auto services in Ilorin, Kwara State, Nigeria since 2012.'}
         image={page?.ogImage}
         url={page?.canonicalUrl || '/about'}

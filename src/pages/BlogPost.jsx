@@ -27,7 +27,8 @@ const BlogPost = () => {
   return (
     <div className="bg-white min-h-screen pb-20">
       <Seo
-        title={post.metaTitle || post.title}
+        title={post.title}
+        metaTitle={post.metaTitle}
         description={post.metaDescription || post.excerpt}
         image={post.ogImage || post.coverImage}
         url={post.canonicalUrl || `/blog/${post.slug}`}

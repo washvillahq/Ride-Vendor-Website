@@ -27,7 +27,8 @@ const CmsCustomPage = () => {
   return (
     <div className="bg-white min-h-screen pb-20">
       <Seo
-        title={page.metaTitle || page.title}
+        title={page.title}
+        metaTitle={page.metaTitle}
         description={page.metaDescription}
         image={page.ogImage}
         url={page.canonicalUrl || `/${page.slug}`}

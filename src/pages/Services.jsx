@@ -50,7 +50,8 @@ const ServicesPage = () => {
   return (
     <div className="bg-white min-h-screen pb-20">
       <Seo 
-        title={page?.metaTitle || page?.title || 'Our Services'}
+        title={page?.title || 'Our Services'}
+        metaTitle={page?.metaTitle}
         description={page?.metaDescription || 'Explore RideVendor professional car hire, car sales, and auto services in Ilorin. From daily rentals to vehicle tracking, we have you covered.'}
         image={page?.ogImage}
         url={page?.canonicalUrl || '/services'}

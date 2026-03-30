@@ -45,7 +45,8 @@ const ContactPage = () => {
   return (
     <div className="bg-white min-h-screen pb-20">
       <Seo 
-        title={page?.metaTitle || page?.title || 'Contact Us'}
+        title={page?.title || 'Contact Us'}
+        metaTitle={page?.metaTitle}
         description={page?.metaDescription || 'Get in touch with RideVendor for car hire, car sales, and auto services. Contact us today for inquiries and bookings.'}
         image={page?.ogImage}
         url={page?.canonicalUrl || '/contact'}
