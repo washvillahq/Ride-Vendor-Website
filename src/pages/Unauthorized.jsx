@@ -4,11 +4,22 @@ import Button from '../components/ui/Button';
 import { Card, CardContent } from '../components/ui/Card';
 import Seo from '../components/Seo';
 import { useAuthStore } from '../store/authStore';
+import { useCmsPage } from '../features/cms/hooks';
 
 const Unauthorized = () => {
+  const { data: pageData } = useCmsPage('unauthorized');
+  const page = pageData?.data;
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-900 px-6 overflow-hidden relative">
-      <Seo title="Unauthorized" description="You do not have permission to access this page." />
+      <Seo 
+        title={page?.title || 'Unauthorized'}
+        metaTitle={page?.metaTitle}
+        description={page?.metaDescription || 'You do not have permission to access this page.'}
+        image={page?.ogImage}
+        url={page?.canonicalUrl || '/unauthorized'}
+        robots={page?.robotsDirective}
+      />
       <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600 rounded-full blur-[120px]" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600 rounded-full blur-[120px]" />

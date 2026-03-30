@@ -2,14 +2,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
 import { useBlogPosts } from '../features/blog/hooks';
+import { useCmsPage } from '../features/cms/hooks';
 
 const BlogList = () => {
+  const { data: pageData } = useCmsPage('blog');
+  const page = pageData?.data;
   const { data, isLoading } = useBlogPosts({ sort: '-publishedAt', limit: 20 });
   const posts = data?.data?.posts || [];
 
   return (
     <div className="bg-white min-h-screen pb-20">
-      <Seo title="Blog" description="Insights, updates, and guides from RideVendor." url="/blog" />
+      <Seo 
+        title={page?.title || 'Blog'}
+        metaTitle={page?.metaTitle}
+        description={page?.metaDescription || 'Insights, updates, and guides from RideVendor.'}
+        image={page?.ogImage}
+        url={page?.canonicalUrl || '/blog'}
+        robots={page?.robotsDirective}
+      />
       <div className="container px-4 py-12 max-w-6xl mx-auto">
         <h1 className="text-4xl font-semibold text-primary mb-3">Blog</h1>
         <p className="text-slate-500 mb-10">Insights and updates from RideVendor.</p>

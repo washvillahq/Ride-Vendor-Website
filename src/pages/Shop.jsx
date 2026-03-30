@@ -2,6 +2,7 @@ import React from 'react';
 import Seo from '../components/Seo';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Package, Search } from 'lucide-react';
+import { useCmsPage } from '../features/cms/hooks';
 
 const accessories = [
   { id: 1, name: 'Car Floor Mats', category: 'Interior', price: 15000 },
@@ -13,11 +14,18 @@ const accessories = [
 ];
 
 const ShopPage = () => {
+  const { data: pageData } = useCmsPage('shop');
+  const page = pageData?.data;
+
   return (
     <div className="bg-white min-h-screen pb-20">
       <Seo 
-        title="Car Accessories & Spare Parts"
-        description="Browse quality car accessories and spare parts at RideVendor. Dash cameras, GPS units, seat covers, and more available in Ilorin."
+        title={page?.title || 'Car Accessories & Spare Parts'}
+        metaTitle={page?.metaTitle}
+        description={page?.metaDescription || 'Browse quality car accessories and spare parts at RideVendor. Dash cameras, GPS units, seat covers, and more available in Ilorin.'}
+        image={page?.ogImage}
+        url={page?.canonicalUrl || '/shop'}
+        robots={page?.robotsDirective}
       />
       <div className="container px-4 py-12 max-w-6xl mx-auto">
         <div className="text-center mb-16">
