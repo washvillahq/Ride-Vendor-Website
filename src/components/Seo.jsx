@@ -8,7 +8,8 @@ const getAbsoluteUrl = (value) => {
   if (!value) return config.siteUrl;
   if (value.startsWith('http://') || value.startsWith('https://')) return value;
   const normalized = value.startsWith('/') ? value : `/${value}`;
-  return `${config.siteUrl}${normalized}`;
+  const encoded = encodeURI(normalized);
+  return `${config.siteUrl}${encoded}`;
 };
 
 const clearManagedTags = () => {
@@ -88,7 +89,7 @@ const shouldNoIndex = (pathname) => {
   return noIndexPrefixes.some((prefix) => pathname.startsWith(prefix)) || noIndexPaths.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 };
 
-const Seo = ({ title, description, image, url, type = 'website', jsonLdType = 'Organization', robots }) => {
+const Seo = ({ title, metaTitle, description, image, url, type = 'website', jsonLdType = 'Organization', robots }) => {
   useEffect(() => {
     const config = getSeoConfig();
     const pathname = window.location.pathname;
@@ -96,12 +97,15 @@ const Seo = ({ title, description, image, url, type = 'website', jsonLdType = 'O
     const absoluteImage = getAbsoluteUrl(image || config.defaultImage);
 
     const titleSuffix = config.titleSuffix || config.siteName;
-    document.title = title ? `${title} | ${titleSuffix}` : config.siteName;
+    
+    const finalTitle = metaTitle || (title ? `${title} | ${titleSuffix}` : config.siteName);
+    document.title = finalTitle;
 
     clearManagedTags();
 
     const tags = getMetaTags({
-      title,
+      title: finalTitle,
+      metaTitle,
       description,
       image: absoluteImage,
       url: absoluteUrl,

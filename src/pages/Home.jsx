@@ -301,7 +301,8 @@ const HomePage = () => {
   return (
     <div className="flex flex-col bg-white">
       <Seo 
-        title={page?.metaTitle || page?.title || 'Car Hire, Car Sales & Auto Services in Ilorin'}
+        title={page?.title || 'Car Hire, Car Sales & Auto Services in Ilorin'}
+        metaTitle={page?.metaTitle}
         description={page?.metaDescription || 'Buy, hire, lease, and manage vehicles with ease. Ride Vendor provides trusted car hire, car sales, and logistics services for individuals and businesses in Ilorin.'}
         image={page?.ogImage}
         url={page?.canonicalUrl || '/'}
