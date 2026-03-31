@@ -118,6 +118,10 @@ const AdminStaticPageSeoEditor = () => {
             </div>
           )}
 
+          {/* Hidden inputs to ensure RHF registers fields set only via setValue */}
+          <input type="hidden" {...register('ogImage')} />
+          <input type="hidden" {...register('contentHtml')} />
+
           <Input label="Page Name" {...register('title')} />
 
           {isContentManaged && (

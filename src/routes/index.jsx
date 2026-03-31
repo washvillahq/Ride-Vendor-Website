@@ -138,7 +138,6 @@ export const router = createBrowserRouter([
           { path: 'pages/new', element: <Suspense fallback={<PageLoading />}><AdminCustomPageEditor /></Suspense> },
           { path: 'pages/:pageId/edit', element: <Suspense fallback={<PageLoading />}><AdminCustomPageEditor /></Suspense> },
           { path: 'pages/static/:slug/seo', element: <Suspense fallback={<PageLoading />}><AdminStaticPageSeoEditor /></Suspense> },
-          { path: 'pages/visual/:slug/edit', element: <Suspense fallback={<PageLoading />}><AdminVisualPageEditor /></Suspense> },
           { path: 'blog', element: <Suspense fallback={<PageLoading />}><AdminBlogPosts /></Suspense> },
           { path: 'blog/new', element: <Suspense fallback={<PageLoading />}><AdminBlogEditor /></Suspense> },
           { path: 'blog/:postId/edit', element: <Suspense fallback={<PageLoading />}><AdminBlogEditor /></Suspense> },
@@ -147,7 +146,10 @@ export const router = createBrowserRouter([
           { path: 'bookings', element: <Suspense fallback={<PageLoading />}><AdminBookings /></Suspense> },
           { path: 'orders', element: <Suspense fallback={<PageLoading />}><AdminOrders /></Suspense> },
         ]
-      }
+      },
+      // Visual page editor is rendered outside AdminLayout to get full viewport width.
+      // Auth is still enforced by the parent AdminRoute wrapper.
+      { path: 'pages/visual/:slug/edit', element: <Suspense fallback={<PageLoading />}><AdminVisualPageEditor /></Suspense> },
     ]
   },
   { path: '/unauthorized', element: <Suspense fallback={<PageLoading />}><Unauthorized /></Suspense> },

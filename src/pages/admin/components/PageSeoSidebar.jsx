@@ -88,8 +88,12 @@ const PageSeoSidebar = ({ slug, metaTitle, metaDescription, ogImage, focusKeywor
       <div className="rounded-2xl border border-slate-200 p-5 bg-white">
         <h3 className="text-sm font-semibold text-slate-900">Social preview</h3>
         <div className="mt-3 border border-slate-200 rounded-xl overflow-hidden">
-          <div className="bg-slate-100 h-28 flex items-center justify-center text-xs text-slate-400">
-            {ogImage ? 'Social image added' : 'No social image added'}
+          <div className="bg-slate-100 h-28 flex items-center justify-center text-xs text-slate-400 overflow-hidden">
+            {ogImage ? (
+              <img src={ogImage} alt="Social preview" className="w-full h-full object-cover" />
+            ) : (
+              'No social image added'
+            )}
           </div>
           <div className="p-4">
             <p className="text-xs uppercase text-slate-400">ridevendor.com</p>
