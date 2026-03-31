@@ -16,6 +16,7 @@ const AdminStaticPageSeoEditor = () => {
   const { data: pageData } = useCmsPage(slug);
   const page = pageData?.data;
   const { mutateAsync: updatePage, isLoading } = useUpdatePage();
+  const { mutateAsync: removePage, isLoading: isRemovingImage } = useUpdatePage();
   const { mutateAsync: uploadCmsImage, isLoading: isUploadingImage } = useUploadCmsImage();
 
   const isContentManaged = page?.contentLocked === false;
@@ -61,6 +62,16 @@ const AdminStaticPageSeoEditor = () => {
       }
     } catch (error) {
       toast.error(error.response?.data?.message || 'Image upload failed');
+    }
+  };
+
+  const handleRemoveOgImage = async () => {
+    try {
+      await removePage({ id: page._id, data: { ogImage: '' } });
+      setValue('ogImage', '', { shouldDirty: true });
+      toast.success('Image removed');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to remove image');
     }
   };
 
@@ -145,7 +156,8 @@ const AdminStaticPageSeoEditor = () => {
               value={values?.ogImage || ''}
               isUploading={isUploadingImage}
               onUpload={handleUploadOgImage}
-              onClear={() => setValue('ogImage', '', { shouldDirty: true })}
+              onClear={handleRemoveOgImage}
+              isRemoving={isRemovingImage}
             />
             <div className="space-y-1.5">
               <label className="text-sm font-medium leading-none">Robots</label>

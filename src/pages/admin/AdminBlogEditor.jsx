@@ -23,7 +23,10 @@ const AdminBlogEditor = () => {
 
   const { mutateAsync: createPost, isLoading: isCreating } = useCreateBlogPost();
   const { mutateAsync: updatePost, isLoading: isUpdating } = useUpdateBlogPost();
-  const { mutateAsync: uploadBlogImage, isLoading: isUploadingImage } = useUploadBlogImage();
+  const { mutateAsync: uploadBlogImage, isLoading: isUploadingCover } = useUploadBlogImage();
+  const { mutateAsync: uploadBlogImageOg, isLoading: isUploadingOg } = useUploadBlogImage();
+  const { mutateAsync: removeCoverPost, isLoading: isRemovingCover } = useUpdateBlogPost();
+  const { mutateAsync: removeOgPost, isLoading: isRemovingOg } = useUpdateBlogPost();
 
   const { register, handleSubmit, setValue, reset, control } = useForm({
     defaultValues: {
@@ -80,9 +83,23 @@ const AdminBlogEditor = () => {
     }
   };
 
+  const handleRemoveCoverImage = async () => {
+    if (isEdit) {
+      try {
+        await removeCoverPost({ id: postId, data: { coverImage: '' } });
+        setValue('coverImage', '', { shouldDirty: true });
+        toast.success('Cover image removed');
+      } catch (error) {
+        toast.error(error.response?.data?.message || 'Failed to remove image');
+      }
+    } else {
+      setValue('coverImage', '', { shouldDirty: true });
+    }
+  };
+
   const handleUploadOgImage = async (file) => {
     try {
-      const response = await uploadBlogImage(file);
+      const response = await uploadBlogImageOg(file);
       const imageUrl = response?.data?.url;
       if (imageUrl) {
         setValue('ogImage', imageUrl, { shouldDirty: true });
@@ -90,6 +107,20 @@ const AdminBlogEditor = () => {
       }
     } catch (error) {
       toast.error(error.response?.data?.message || 'Image upload failed');
+    }
+  };
+
+  const handleRemoveOgImage = async () => {
+    if (isEdit) {
+      try {
+        await removeOgPost({ id: postId, data: { ogImage: '' } });
+        setValue('ogImage', '', { shouldDirty: true });
+        toast.success('Image removed');
+      } catch (error) {
+        toast.error(error.response?.data?.message || 'Failed to remove image');
+      }
+    } else {
+      setValue('ogImage', '', { shouldDirty: true });
     }
   };
 
@@ -135,9 +166,10 @@ const AdminBlogEditor = () => {
             <ImageUploaderField
               label="Cover Image"
               value={values?.coverImage || ''}
-              isUploading={isUploadingImage}
+              isUploading={isUploadingCover}
+              isRemoving={isRemovingCover}
               onUpload={handleUploadCoverImage}
-              onClear={() => setValue('coverImage', '', { shouldDirty: true })}
+              onClear={handleRemoveCoverImage}
             />
 
             <RichTextEditor
@@ -163,8 +195,10 @@ const AdminBlogEditor = () => {
             register={register}
             values={values}
             setValue={setValue}
-            isUploadingImage={isUploadingImage}
+            isUploadingImage={isUploadingOg}
+            isRemovingImage={isRemovingOg}
             onUploadOgImage={handleUploadOgImage}
+            onClearOgImage={handleRemoveOgImage}
             includeFocusKeyword={false}
             canonicalPlaceholder="/blog/post-slug"
           />

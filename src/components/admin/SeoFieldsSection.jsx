@@ -8,10 +8,14 @@ const SeoFieldsSection = ({
   values,
   setValue,
   isUploadingImage,
+  isRemovingImage,
   onUploadOgImage,
+  onClearOgImage,
   includeFocusKeyword = true,
   canonicalPlaceholder = '/page-slug',
 }) => {
+  const handleClear = onClearOgImage ?? (() => setValue('ogImage', '', { shouldDirty: true }));
+
   return (
     <div className="bg-white rounded-2xl border border-slate-100 p-6 space-y-4">
       <h2 className="text-base font-semibold text-slate-900">SEO Settings</h2>
@@ -26,8 +30,9 @@ const SeoFieldsSection = ({
           label="Social Image"
           value={values?.ogImage || ''}
           isUploading={isUploadingImage}
+          isRemoving={isRemovingImage}
           onUpload={onUploadOgImage}
-          onClear={() => setValue('ogImage', '', { shouldDirty: true })}
+          onClear={handleClear}
         />
         <div className="space-y-1.5">
           <label className="text-sm font-medium leading-none">Robots</label>
