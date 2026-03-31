@@ -57,6 +57,7 @@ const AdminContactSubmissions = lazy(() => import('../pages/admin/AdminContactSu
 const AdminGlobalSeoSettings = lazy(() => import('../pages/admin/AdminGlobalSeoSettings'));
 const AdminCustomPageEditor = lazy(() => import('../pages/admin/AdminCustomPageEditor'));
 const AdminStaticPageSeoEditor = lazy(() => import('../pages/admin/AdminStaticPageSeoEditor'));
+const AdminVisualPageEditor = lazy(() => import('../pages/admin/AdminVisualPageEditor'));
 const CmsCustomPage = lazy(() => import('../pages/CmsCustomPage'));
 const AdminBlogPosts = lazy(() => import('../pages/admin/AdminBlogPosts'));
 const AdminBlogEditor = lazy(() => import('../pages/admin/AdminBlogEditor'));
@@ -137,6 +138,7 @@ export const router = createBrowserRouter([
           { path: 'pages/new', element: <Suspense fallback={<PageLoading />}><AdminCustomPageEditor /></Suspense> },
           { path: 'pages/:pageId/edit', element: <Suspense fallback={<PageLoading />}><AdminCustomPageEditor /></Suspense> },
           { path: 'pages/static/:slug/seo', element: <Suspense fallback={<PageLoading />}><AdminStaticPageSeoEditor /></Suspense> },
+          { path: 'pages/visual/:slug/edit', element: <Suspense fallback={<PageLoading />}><AdminVisualPageEditor /></Suspense> },
           { path: 'blog', element: <Suspense fallback={<PageLoading />}><AdminBlogPosts /></Suspense> },
           { path: 'blog/new', element: <Suspense fallback={<PageLoading />}><AdminBlogEditor /></Suspense> },
           { path: 'blog/:postId/edit', element: <Suspense fallback={<PageLoading />}><AdminBlogEditor /></Suspense> },

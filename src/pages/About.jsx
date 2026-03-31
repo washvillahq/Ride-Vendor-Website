@@ -1,5 +1,6 @@
 import React from 'react';
 import Seo from '../components/Seo';
+import PuckPageRenderer from '../components/PuckPageRenderer';
 import { useCmsPage } from '../features/cms/hooks';
 
 const DEFAULT_CONTENT = `
@@ -98,13 +99,17 @@ const AboutPage = () => {
       <div className="container px-4 py-12 max-w-4xl mx-auto">
         <h1 className="text-4xl font-semibold text-primary mb-8">{page?.title || 'About RideVendor'}</h1>
 
-        <div className="prose prose-lg max-w-none">
-          {page?.contentHtml ? (
-            <div dangerouslySetInnerHTML={{ __html: page.contentHtml }} />
-          ) : (
-            <div dangerouslySetInnerHTML={{ __html: DEFAULT_CONTENT }} />
-          )}
-        </div>
+        {page?.contentJson ? (
+          <PuckPageRenderer data={page.contentJson} />
+        ) : (
+          <div className="prose prose-lg max-w-none">
+            {page?.contentHtml ? (
+              <div dangerouslySetInnerHTML={{ __html: page.contentHtml }} />
+            ) : (
+              <div dangerouslySetInnerHTML={{ __html: DEFAULT_CONTENT }} />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

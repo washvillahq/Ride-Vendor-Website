@@ -218,7 +218,13 @@ const AdminCmsPages = () => {
                   <TableCell className="capitalize">{page.status || (page.isPublished ? 'published' : 'draft')}</TableCell>
                   <TableCell>{new Date(page.updatedAt).toLocaleDateString()}</TableCell>
                   <TableCell className="text-right">
-                    <Link to={page.pageType === 'static' ? `/admin/pages/static/${page.slug}/seo` : `/admin/pages/${page._id}/edit`}>
+                    <Link to={
+                      page.pageType === 'static'
+                        ? (page.contentLocked === false
+                          ? `/admin/pages/visual/${page.slug}/edit`
+                          : `/admin/pages/static/${page.slug}/seo`)
+                        : `/admin/pages/${page._id}/edit`
+                    }>
                       <Button variant="outline" size="sm">
                         <Pencil size={14} className="mr-1" />
                         {page.pageType === 'static' ? (page.contentLocked === false ? 'Edit' : 'Edit SEO') : 'Edit'}
