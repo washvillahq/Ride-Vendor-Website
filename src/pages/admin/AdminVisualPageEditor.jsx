@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Puck } from '@puckeditor/core';
+import { Puck, createUsePuck } from '@puckeditor/core';
 import '@puckeditor/core/puck.css';
 import { toast } from 'react-hot-toast';
 import { X, Settings } from 'lucide-react';
@@ -11,6 +11,8 @@ import Input from '../../components/ui/Input';
 import Textarea from '../../components/ui/Textarea';
 import ImageUploaderField from '../../components/admin/ImageUploaderField';
 import PageSeoSidebar from './components/PageSeoSidebar';
+
+const usePuck = createUsePuck();
 
 const EMPTY_DATA = { content: [], root: { props: {} }, zones: {} };
 
@@ -162,6 +164,33 @@ const SeoModal = ({ page, isOpen, onClose, onSave, isSaving }) => {
   );
 };
 
+// Custom Publish button that reads editor data via usePuck
+const PublishButton = ({ onPublish, isSaving }) => {
+  const appState = usePuck((s) => s.appState);
+
+  return (
+    <button
+      disabled={isSaving}
+      onClick={() => onPublish(appState.data)}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 6,
+        padding: '8px 20px',
+        fontSize: 14,
+        fontWeight: 600,
+        border: 'none',
+        borderRadius: 8,
+        background: isSaving ? '#94a3b8' : '#0f172a',
+        cursor: isSaving ? 'not-allowed' : 'pointer',
+        color: '#fff',
+      }}
+    >
+      {isSaving ? 'Publishing…' : 'Publish'}
+    </button>
+  );
+};
+
 const AdminVisualPageEditor = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -220,7 +249,7 @@ const AdminVisualPageEditor = () => {
         data={initialData}
         onPublish={handlePublish}
         overrides={{
-          headerActions: ({ children }) => (
+          headerActions: () => (
             <>
               <button
                 onClick={() => setShowSeoModal(true)}
@@ -259,7 +288,7 @@ const AdminVisualPageEditor = () => {
               >
                 Back to Pages
               </button>
-              {children}
+              <PublishButton onPublish={handlePublish} isSaving={isSaving} />
             </>
           ),
           iframe: IframeWrapper,
