@@ -33,10 +33,10 @@ const API_BASE =
 const SITE_URL = process.env.VITE_SITE_URL || 'https://ridevendor.com';
 
 const SITE_DEFAULTS = {
-  siteName: 'RideVendor',
-  titleSuffix: 'RideVendor',
+  siteName: 'Ride Vendor Limited',
+  titleSuffix: 'Ride Vendor',
   siteDescription:
-    'Car hire, car sales, and auto services in Ilorin, Kwara State. Trusted vehicle rentals, car sales, and logistics services for individuals and businesses.',
+    'Ride Vendor Limited (RC: 8808136) is Ilorin’s premier hub for professional Car Rental, Car Sales, and Dispatch Logistics. Trusted vehicle hire and same-day delivery services in Kwara State for individuals and businesses.',
   defaultImage: `${SITE_URL}/og-default.png`,
   twitterHandle: '@ridevendor',
   locale: 'en_US',
