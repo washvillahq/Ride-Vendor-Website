@@ -28,7 +28,8 @@ import {
   ChevronRight,
   Star,
   ArrowRight,
-  Quote
+  Quote,
+  Bike
 } from 'lucide-react';
 
 const Hero = () => (
@@ -44,7 +45,7 @@ const Hero = () => (
       </div>
 
       {/* Service Icons */}
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-4 sm:gap-8 md:w-[70%] mx-auto pt-2 sm:pt-4">
+      <div className="grid grid-cols-4 md:grid-cols-7 gap-4 sm:gap-6 md:w-[80%] mx-auto pt-2 sm:pt-4">
         {[
           { icon: carhire, lines: ["car hire", "& Rentals"], path: "/car-hire" },
           { icon: carsale, lines: ["car", "sale"], path: "/car-sales" },
@@ -52,6 +53,7 @@ const Hero = () => (
           { icon: carleasing, lines: ["car", "leasing"], path: "/services/washing" },
           { icon: consignement, lines: ["Vehicle", "Consignment"], path: "/services/consignment" },
           { icon: vehicletracking, lines: ["Vehicle Tracking", "& Security"], path: "/services/tracking" },
+          { icon: null, lines: ["Bike", "Delivery"], path: "/logistics", isLogistics: true },
         ].map((service, i) => (
           <Link
             key={i}
@@ -60,7 +62,10 @@ const Hero = () => (
             style={{ animationDelay: `${i * 100}ms` }}
           >
             <div className="h-12 w-12 rounded-full border border-gray-100 flex items-center justify-center bg-gray-50 group-hover:bg-accent group-hover:scale-110 transition-all duration-300 overflow-hidden">
-              <img src={service.icon} alt={service.lines.join(' ')} className="w-6 h-6 object-contain" />
+              {service.isLogistics
+                ? <Bike className="w-6 h-6 text-primary group-hover:text-primary" />
+                : <img src={service.icon} alt={service.lines.join(' ')} className="w-6 h-6 object-contain" />
+              }
             </div>
             <span className="text-[10px] font-medium text-gray-medium group-hover:text-primary transition-colors uppercase tracking-widest text-center leading-tight">
               {service.lines.map((line, index) => (
@@ -75,7 +80,7 @@ const Hero = () => (
       </div>
 
       {/* Hero CTA Boxes */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto pt-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto pt-8">
         <Link to="/car-hire" className="relative overflow-hidden bg-primary text-white p-8 rounded-[2rem] text-left group cursor-pointer hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500">
           <div className="relative z-10 space-y-4">
             <h3 className="text-2xl font-medium">Book a Car Now</h3>
@@ -93,6 +98,17 @@ const Hero = () => (
           </div>
           <div className="absolute right-[-20px] bottom-[-20px] opacity-10 group-hover:opacity-20 transition-opacity rotate-[-15deg] group-hover:rotate-0 duration-500">
             <ShieldCheck size={160} strokeWidth={1} />
+          </div>
+        </Link>
+
+        <Link to="/logistics" className="relative overflow-hidden bg-slate-800 text-white p-8 rounded-[2rem] text-left group cursor-pointer hover:shadow-2xl hover:shadow-slate-800/20 transition-all duration-500">
+          <div className="relative z-10 space-y-4">
+            <span className="inline-block bg-accent text-primary text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">New</span>
+            <h3 className="text-2xl font-medium">Same-Day Delivery</h3>
+            <p className="text-white/70 text-xs font-medium max-w-[200px]">Bike pickup & delivery anywhere in Ilorin.</p>
+          </div>
+          <div className="absolute right-[-20px] bottom-[-20px] opacity-10 group-hover:opacity-20 transition-opacity rotate-[-15deg] group-hover:rotate-0 duration-500">
+            <Bike size={160} strokeWidth={1} />
           </div>
         </Link>
       </div>

@@ -258,6 +258,7 @@ const Footer = () => (
             <li><Link to="/services/rental" className="hover:text-accent transition-colors">Rentals & Services</Link></li>
             <li><Link to="/services/care" className="hover:text-accent transition-colors">Car Washing</Link></li>
             <li><Link to="/services/tracking" className="hover:text-accent transition-colors">Vehicle Tracking & Security</Link></li>
+            <li><Link to="/logistics" className="hover:text-accent transition-colors">Bike Delivery & Logistics</Link></li>
           </ul>
         </div>
 
