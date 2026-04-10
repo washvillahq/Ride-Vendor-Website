@@ -22,9 +22,9 @@ const WHATSAPP_MESSAGE = encodeURIComponent(
 );
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://ridevendor.com';
-const DEFAULT_LOGISTICS_TITLE = 'Bike Delivery in Ilorin, Kwara State';
+const DEFAULT_LOGISTICS_TITLE = 'Bike Delivery in Ilorin, Kwara State | Ride Vendor Logistics';
 const DEFAULT_LOGISTICS_META_TITLE = 'Bike Delivery in Ilorin, Kwara | Same-Day Last-Mile Delivery';
-const DEFAULT_LOGISTICS_DESCRIPTION = 'Book same-day bike delivery in Ilorin, Kwara State with RideVendor. Fast pickup, secure last-mile delivery, and WhatsApp booking for businesses and individuals.';
+const DEFAULT_LOGISTICS_DESCRIPTION = 'Book same-day bike delivery in Ilorin, Kwara State with Ride Vendor Logistics. Fast pickup, secure last-mile delivery, and WhatsApp booking for businesses and individuals.';
 const DEFAULT_LOGISTICS_KEYWORDS = 'bike delivery in Ilorin, same day delivery Ilorin, last mile delivery Kwara, dispatch rider Ilorin, logistics in Ilorin, WhatsApp delivery service Ilorin';
 
 const WhatsAppIcon = ({ className = 'w-5 h-5' }) => (
@@ -520,7 +520,7 @@ const LogisticsPage = () => {
     {
       '@context': 'https://schema.org',
       '@type': 'Service',
-      name: 'RideVendor Bike Delivery',
+      name: 'Ride Vendor Logistics Bike Delivery',
       serviceType: 'Same-day last-mile delivery',
       description,
       url: absoluteCanonicalUrl,
@@ -531,7 +531,7 @@ const LogisticsPage = () => {
       ],
       provider: {
         '@type': 'Organization',
-        name: 'RideVendor',
+        name: 'Ride Vendor Logistics',
         url: SITE_URL,
         telephone: '+2348144123316',
       },
