@@ -67,20 +67,20 @@ const WHATSAPP_LINK = `https://wa.me/2349069999851?text=${encodeURIComponent("He
 
 const PAGE_FALLBACKS = {
   logistics: {
-    metaTitle: 'Bike Delivery in Ilorin, Kwara | Same-Day Last-Mile Delivery',
+    metaTitle: 'Dispatch Rider & Logistics in Ilorin | Ride Vendor',
     metaDescription:
-      'Book same-day bike delivery in Ilorin, Kwara State with Ride Vendor Logistics. Fast pickup, secure last-mile delivery, and WhatsApp booking for businesses and individuals.',
+      'Best dispatch rider in Ilorin. Ride Vendor Logistics (RC: 8808136) offers same-day delivery, waybills, and secure warehousing at Oniyangi Complex. Fast & reliable book now on WhatsApp for businesses and individuals.',
     focusKeyword:
-      'bike delivery in Ilorin, same day delivery Ilorin, last mile delivery Kwara, dispatch rider Ilorin',
+      'dispatch rider ilorin, same day delivery ilorin, waybill ilorin, logistics in kwara, bike delivery ilorin, bike delivery in Ilorin, same day delivery Ilorin, last mile delivery Kwara, dispatch rider Ilorin',
     robotsDirective: 'index,follow',
     jsonLd: [
       {
         '@context': 'https://schema.org',
         '@type': 'Service',
-        name: 'Ride Vendor Logistics Bike Delivery',
-        serviceType: 'Same-day last-mile delivery',
+        name: 'Ride Vendor Logistics: Dispatch & Waybill Services',
+        serviceType: 'Express Dispatch and Same-day Delivery',
         description:
-          'Book same-day bike delivery in Ilorin, Kwara State with Ride Vendor Logistics. Fast pickup, secure last-mile delivery, and WhatsApp booking for businesses and individuals.',
+          'Professional dispatch rider services and warehousing in Ilorin, Kwara State. Duly registered under Ride Vendor Limited (RC: 8808136). Fast & reliable book now on WhatsApp for businesses and individuals.',
         url: `${SITE_URL}/logistics`,
         areaServed: [
           { '@type': 'City', name: 'Ilorin' },
@@ -91,7 +91,7 @@ const PAGE_FALLBACKS = {
           '@type': 'Organization',
           name: 'Ride Vendor Logistics',
           url: SITE_URL,
-          telephone: '+2348144123316',
+          telephone: '+2349069999851',
         },
         availableChannel: {
           '@type': 'ServiceChannel',
