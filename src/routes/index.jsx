@@ -31,6 +31,7 @@ const ForgotPassword = lazy(() => import('../pages/ForgotPassword'));
 const ResetPassword = lazy(() => import('../pages/ResetPassword'));
 const CarSales = lazy(() => import('../pages/CarSales'));
 const CarRentals = lazy(() => import('../pages/CarRentals'));
+const Logistics = lazy(() => import('../pages/Logistics'));
 const CarsList = lazy(() => import('../pages/CarsList'));
 const AdminDashboard = lazy(() => import('../pages/AdminDashboard'));
 const NotFound = lazy(() => import('../pages/NotFound'));
@@ -87,6 +88,7 @@ export const router = createBrowserRouter([
       { path: 'refund-policy', element: <Suspense fallback={<PageLoading />}><PolicyPage slug="refund-policy" /></Suspense> },
       { path: 'terms-and-conditions', element: <Suspense fallback={<PageLoading />}><PolicyPage slug="terms-and-conditions" /></Suspense> },
       { path: 'cookie-policy', element: <Suspense fallback={<PageLoading />}><PolicyPage slug="cookie-policy" /></Suspense> },
+      { path: 'logistics', element: <Suspense fallback={<PageLoading />}><Logistics /></Suspense> },
       { path: ':slug', element: <Suspense fallback={<PageLoading />}><CmsCustomPage /></Suspense> },
     ],
   },
