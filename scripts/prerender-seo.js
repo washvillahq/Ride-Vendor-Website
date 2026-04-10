@@ -63,6 +63,8 @@ const ROUTES = [
 
 // Hardcoded per-page fallbacks for pages not seeded in the CMS.
 // These mirror the hardcoded defaults in each page component.
+const WHATSAPP_LINK = `https://wa.me/2349069999851?text=${encodeURIComponent("Hello! I'd like to book a delivery in Ilorin, Kwara State. Please assist me.")}`;
+
 const PAGE_FALLBACKS = {
   logistics: {
     metaTitle: 'Bike Delivery in Ilorin, Kwara | Same-Day Last-Mile Delivery',
@@ -71,6 +73,69 @@ const PAGE_FALLBACKS = {
     focusKeyword:
       'bike delivery in Ilorin, same day delivery Ilorin, last mile delivery Kwara, dispatch rider Ilorin',
     robotsDirective: 'index,follow',
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: 'Ride Vendor Logistics Bike Delivery',
+        serviceType: 'Same-day last-mile delivery',
+        description:
+          'Book same-day bike delivery in Ilorin, Kwara State with Ride Vendor Logistics. Fast pickup, secure last-mile delivery, and WhatsApp booking for businesses and individuals.',
+        url: `${SITE_URL}/logistics`,
+        areaServed: [
+          { '@type': 'City', name: 'Ilorin' },
+          { '@type': 'AdministrativeArea', name: 'Kwara State' },
+          { '@type': 'Country', name: 'Nigeria' },
+        ],
+        provider: {
+          '@type': 'Organization',
+          name: 'Ride Vendor Logistics',
+          url: SITE_URL,
+          telephone: '+2348144123316',
+        },
+        availableChannel: {
+          '@type': 'ServiceChannel',
+          serviceUrl: WHATSAPP_LINK,
+          availableLanguage: 'English',
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'How do I book a delivery?',
+            acceptedAnswer: { '@type': 'Answer', text: "Simply send us a WhatsApp message with your pickup address, delivery address, and a description of what you're sending. We'll confirm the details and dispatch a rider immediately." },
+          },
+          {
+            '@type': 'Question',
+            name: 'How much does a delivery cost?',
+            acceptedAnswer: { '@type': 'Answer', text: 'Pricing depends on distance within Ilorin. We give you a transparent price before any rider is dispatched — no surprises after pickup. Message us for a quick quote.' },
+          },
+          {
+            '@type': 'Question',
+            name: 'How fast will my item be delivered?',
+            acceptedAnswer: { '@type': 'Answer', text: 'Most deliveries within Ilorin are completed within 1–3 hours. For urgent orders, we prioritise same-hour dispatch.' },
+          },
+          {
+            '@type': 'Question',
+            name: 'What areas do you cover?',
+            acceptedAnswer: { '@type': 'Answer', text: 'We cover major areas across Ilorin — including GRA, Tanke, Fate, Offa Garage, Asa Dam Road, Garin Alimi, and Unity. Nearby Kwara deliveries can also be arranged on request.' },
+          },
+          {
+            '@type': 'Question',
+            name: 'What if my item is fragile or valuable?',
+            acceptedAnswer: { '@type': 'Answer', text: "Let us know when you message and we'll handle it with extra care. All our riders are trained to handle items responsibly and are accountable for every delivery." },
+          },
+          {
+            '@type': 'Question',
+            name: 'Do you operate on weekends and public holidays?',
+            acceptedAnswer: { '@type': 'Answer', text: "Yes — we operate 7 days a week. Whether it's a Saturday afternoon or a public holiday, we're available." },
+          },
+        ],
+      },
+    ],
   },
 };
 
@@ -107,6 +172,7 @@ function buildHeadBlock(meta) {
     canonical = '',
     ogType = 'website',
     ogImage = '',
+    jsonLd = null,
   } = meta;
 
   const lines = [];
@@ -132,6 +198,14 @@ function buildHeadBlock(meta) {
   if (description)  lines.push(`<meta name="twitter:description" content="${esc(description)}" />`);
   if (ogImage)      lines.push(`<meta name="twitter:image" content="${esc(ogImage)}" />`);
   lines.push(`<meta name="twitter:site" content="${esc(SITE_DEFAULTS.twitterHandle)}" />`);
+
+  // JSON-LD
+  if (jsonLd) {
+    const schemas = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
+    for (const schema of schemas) {
+      lines.push(`<script type="application/ld+json">${JSON.stringify(schema)}</script>`);
+    }
+  }
 
   return lines.join('\n  ');
 }
@@ -186,6 +260,7 @@ async function resolvePageMeta(slug, routePath, globalSeo) {
     canonical,
     ogImage:     absoluteUrl(page?.ogImage || g.defaultImage || SITE_DEFAULTS.defaultImage),
     ogType:      'website',
+    jsonLd:      fb.jsonLd || null,
   };
 }
 
