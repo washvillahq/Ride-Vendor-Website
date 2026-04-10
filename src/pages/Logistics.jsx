@@ -16,7 +16,7 @@ import {
 
 const WHATSAPP_NUMBER = '2348144123316';
 const WHATSAPP_MESSAGE = encodeURIComponent(
-  "Hello! I'd like to book a delivery in Ilorin. Please assist me."
+  "Hello! I'd like to book a delivery in Ilorin, Kwara State. Please assist me."
 );
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 
@@ -56,7 +56,7 @@ const Hero = () => (
 
       <span className="inline-flex items-center gap-2 bg-accent/20 text-accent-dark text-[10px] font-bold uppercase tracking-[0.22em] px-5 py-2.5 rounded-full animate-in fade-in duration-500">
         <Bike className="w-3.5 h-3.5" />
-        Ilorin's Fastest Bike Delivery
+        Bike Delivery in Ilorin, Kwara
       </span>
 
       <h1 className="text-4xl md:text-6xl font-bold text-primary leading-[1.1] tracking-tight animate-in fade-in slide-in-from-bottom-6 duration-700">
@@ -67,9 +67,9 @@ const Hero = () => (
       </h1>
 
       <p className="text-gray-medium text-base md:text-xl max-w-2xl mx-auto font-medium leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700">
-        One WhatsApp message is all it takes. Our bike riders pick up from
-        anywhere in Ilorin and deliver directly to your recipient — fast,
-        tracked, and affordable.
+        One WhatsApp message is all it takes. Our riders handle pickups across
+        Ilorin, the capital of Kwara State, and deliver directly to your
+        recipient — fast, tracked, and affordable.
       </p>
 
       <div className="animate-in fade-in slide-in-from-bottom-10 duration-700">
@@ -218,7 +218,7 @@ const HowItWorks = () => (
         <WACta
           label="Get Started — Message Us Now"
           size="lg"
-          note="Available 7 days a week · Ilorin & Kwara State"
+          note="Available 7 days a week · Across Ilorin, Kwara State"
         />
       </div>
     </div>
@@ -237,12 +237,12 @@ const Benefits = () => (
             What Makes Us Different
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-primary leading-tight">
-            Fast. Reliable. Built for Ilorin.
+            Fast. Reliable. Built for Ilorin, Kwara State.
           </h2>
           <p className="text-gray-medium text-sm leading-relaxed font-medium max-w-md">
-            We're not a national courier with a local number. We're a Ilorin-first
-            operation — our riders live here, know the streets, and show up when
-            they say they will.
+            We're not a national courier with a local number. We're an
+            Ilorin-first operation — our riders know the city, understand the
+            routes, and show up when they say they will.
           </p>
 
           <ul className="space-y-4 pt-2">
@@ -282,8 +282,8 @@ const Benefits = () => (
             },
             {
               icon: <MapPin className="w-6 h-6 text-primary" />,
-              title: 'All of Ilorin Covered',
-              desc: 'GRA, Tanke, Fate, Offa Garage, Asa Dam, Unity, Garin Alimi — all covered.',
+              title: 'Across Ilorin, Kwara',
+              desc: 'GRA, Tanke, Fate, Offa Garage, Asa Dam, Unity, and Garin Alimi — covered.',
               bg: 'bg-accent',
               titleColor: 'text-primary',
               descColor: 'text-primary/70',
@@ -326,7 +326,7 @@ const UseCases = () => (
           Who Uses This Service?
         </p>
         <h2 className="text-3xl md:text-4xl font-bold text-primary leading-tight">
-          We Deliver for Everyone in Ilorin
+          We Deliver Across Ilorin, Kwara State
         </h2>
       </div>
 
@@ -398,7 +398,7 @@ const faqs = [
   },
   {
     q: 'What areas do you cover?',
-    a: 'We cover all of Ilorin — GRA, Tanke, Fate, Offa Garage, Asa Dam Road, Garin Alimi, Unity, and surrounding areas in Kwara State.',
+    a: 'We cover major areas across Ilorin — including GRA, Tanke, Fate, Offa Garage, Asa Dam Road, Garin Alimi, and Unity. Nearby Kwara deliveries can also be arranged on request.',
   },
   {
     q: 'What if my item is fragile or valuable?',
@@ -487,7 +487,7 @@ const BottomCTA = () => (
             size="lg"
           />
           <p className="text-white/25 text-[10px] font-semibold uppercase tracking-widest mt-5">
-            Available 7 days a week · Ilorin, Kwara State
+            Available 7 days a week · Across Ilorin, Kwara State
           </p>
         </div>
       </div>
