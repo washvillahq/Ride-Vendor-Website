@@ -16,7 +16,7 @@ import {
 import Seo from '../components/Seo';
 import { useCmsPage } from '../features/cms/hooks';
 
-const WHATSAPP_NUMBER = '2348144123316';
+const WHATSAPP_NUMBER = '2349069999851';
 const WHATSAPP_MESSAGE = encodeURIComponent(
   "Hello! I'd like to book a delivery in Ilorin, Kwara State. Please assist me."
 );
