@@ -56,7 +56,7 @@ const Hero = () => (
 
       <span className="inline-flex items-center gap-2 bg-accent/20 text-accent-dark text-[10px] font-bold uppercase tracking-[0.22em] px-5 py-2.5 rounded-full animate-in fade-in duration-500">
         <Bike className="w-3.5 h-3.5" />
-        Bike Delivery in Ilorin, Kwara
+        Last-Mile Delivery in Ilorin, Kwara
       </span>
 
       <h1 className="text-4xl md:text-6xl font-bold text-primary leading-[1.1] tracking-tight animate-in fade-in slide-in-from-bottom-6 duration-700">
