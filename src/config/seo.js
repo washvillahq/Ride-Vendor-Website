@@ -34,6 +34,7 @@ export const getMetaTags = (options = {}) => {
     url,
     type = 'website',
     metaTitle,
+    keywords,
   } = options;
 
   const config = getSeoConfig();
@@ -47,7 +48,8 @@ export const getMetaTags = (options = {}) => {
     { charset: 'utf-8' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { name: 'description', content: pageDescription },
-    
+    ...(keywords ? [{ name: 'keywords', content: keywords }] : []),
+
     { property: 'og:title', content: pageTitle },
     { property: 'og:description', content: pageDescription },
     { property: 'og:image', content: pageImage },
@@ -96,7 +98,7 @@ export const getJsonLd = (type = 'Organization') => {
       ],
     };
   }
-  
+
   if (type === 'Product') {
     return {
       '@context': 'https://schema.org',

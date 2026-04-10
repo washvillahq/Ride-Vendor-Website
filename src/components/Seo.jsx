@@ -21,7 +21,7 @@ const clearManagedTags = () => {
 const appendMeta = (attrs) => {
   const name = attrs.name;
   const property = attrs.property;
-  
+
   if (name) {
     const existing = document.querySelector(`meta[name="${name}"]:not([${MANAGED_ATTR}="true"])`);
     if (existing) {
@@ -32,7 +32,7 @@ const appendMeta = (attrs) => {
       return;
     }
   }
-  
+
   if (property) {
     const existing = document.querySelector(`meta[property="${property}"]:not([${MANAGED_ATTR}="true"])`);
     if (existing) {
@@ -43,7 +43,7 @@ const appendMeta = (attrs) => {
       return;
     }
   }
-  
+
   const el = document.createElement('meta');
   Object.entries(attrs).forEach(([key, val]) => {
     el.setAttribute(key, val);
@@ -54,7 +54,7 @@ const appendMeta = (attrs) => {
 
 const appendLink = (attrs) => {
   const rel = attrs.rel;
-  
+
   if (rel) {
     const existing = document.querySelector(`link[rel="${rel}"]:not([${MANAGED_ATTR}="true"])`);
     if (existing) {
@@ -65,7 +65,7 @@ const appendLink = (attrs) => {
       return;
     }
   }
-  
+
   const el = document.createElement('link');
   Object.entries(attrs).forEach(([key, val]) => {
     el.setAttribute(key, val);
@@ -89,7 +89,7 @@ const shouldNoIndex = (pathname) => {
   return noIndexPrefixes.some((prefix) => pathname.startsWith(prefix)) || noIndexPaths.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 };
 
-const Seo = ({ title, metaTitle, description, image, url, type = 'website', jsonLdType = 'Organization', robots }) => {
+const Seo = ({ title, metaTitle, description, image, url, type = 'website', jsonLdType = 'Organization', robots, keywords, jsonLd }) => {
   useEffect(() => {
     const config = getSeoConfig();
     const pathname = window.location.pathname;
@@ -97,7 +97,7 @@ const Seo = ({ title, metaTitle, description, image, url, type = 'website', json
     const absoluteImage = getAbsoluteUrl(image || config.defaultImage);
 
     const titleSuffix = config.titleSuffix || config.siteName;
-    
+
     const finalTitle = metaTitle || (title ? `${title} | ${titleSuffix}` : config.siteName);
     document.title = finalTitle;
 
@@ -110,6 +110,7 @@ const Seo = ({ title, metaTitle, description, image, url, type = 'website', json
       image: absoluteImage,
       url: absoluteUrl,
       type,
+      keywords,
     });
 
     tags.forEach((tag) => {
@@ -127,9 +128,13 @@ const Seo = ({ title, metaTitle, description, image, url, type = 'website', json
     const robotsValue = robots || (shouldNoIndex(pathname) ? 'noindex,nofollow' : 'index,follow');
     appendMeta({ name: 'robots', content: robotsValue });
 
-    const jsonLd = getJsonLd(jsonLdType);
-    if (jsonLd) appendScript(jsonLd);
-  }, [title, description, image, url, type, jsonLdType, robots]);
+    const resolvedJsonLd = jsonLd || getJsonLd(jsonLdType);
+    if (Array.isArray(resolvedJsonLd)) {
+      resolvedJsonLd.filter(Boolean).forEach((item) => appendScript(item));
+    } else if (resolvedJsonLd) {
+      appendScript(resolvedJsonLd);
+    }
+  }, [title, metaTitle, description, image, url, type, jsonLdType, robots, keywords, jsonLd]);
 
   return null;
 };

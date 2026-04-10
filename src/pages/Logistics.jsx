@@ -13,12 +13,19 @@ import {
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
+import Seo from '../components/Seo';
+import { useCmsPage } from '../features/cms/hooks';
 
 const WHATSAPP_NUMBER = '2348144123316';
 const WHATSAPP_MESSAGE = encodeURIComponent(
   "Hello! I'd like to book a delivery in Ilorin, Kwara State. Please assist me."
 );
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
+const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://ridevendor.com';
+const DEFAULT_LOGISTICS_TITLE = 'Bike Delivery in Ilorin, Kwara State';
+const DEFAULT_LOGISTICS_META_TITLE = 'Bike Delivery in Ilorin, Kwara | Same-Day Last-Mile Delivery';
+const DEFAULT_LOGISTICS_DESCRIPTION = 'Book same-day bike delivery in Ilorin, Kwara State with RideVendor. Fast pickup, secure last-mile delivery, and WhatsApp booking for businesses and individuals.';
+const DEFAULT_LOGISTICS_KEYWORDS = 'bike delivery in Ilorin, same day delivery Ilorin, last mile delivery Kwara, dispatch rider Ilorin, logistics in Ilorin, WhatsApp delivery service Ilorin';
 
 const WhatsAppIcon = ({ className = 'w-5 h-5' }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -498,16 +505,77 @@ const BottomCTA = () => (
 // ─────────────────────────────────────────────────────────────────────────────
 // Page composition
 // ─────────────────────────────────────────────────────────────────────────────
-const LogisticsPage = () => (
-  <div className="flex flex-col bg-white w-full">
-    <Hero />
-    <PainSection />
-    <HowItWorks />
-    <Benefits />
-    <UseCases />
-    <FAQ />
-    <BottomCTA />
-  </div>
-);
+const LogisticsPage = () => {
+  const { data: pageData } = useCmsPage('logistics');
+  const page = pageData?.data;
+
+  const title = page?.title || DEFAULT_LOGISTICS_TITLE;
+  const metaTitle = page?.metaTitle || DEFAULT_LOGISTICS_META_TITLE;
+  const description = page?.metaDescription || DEFAULT_LOGISTICS_DESCRIPTION;
+  const canonicalUrl = page?.canonicalUrl || '/logistics';
+  const keywords = page?.focusKeyword || DEFAULT_LOGISTICS_KEYWORDS;
+  const absoluteCanonicalUrl = canonicalUrl.startsWith('http') ? canonicalUrl : `${SITE_URL}${canonicalUrl}`;
+
+  const logisticsJsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: 'RideVendor Bike Delivery',
+      serviceType: 'Same-day last-mile delivery',
+      description,
+      url: absoluteCanonicalUrl,
+      areaServed: [
+        { '@type': 'City', name: 'Ilorin' },
+        { '@type': 'AdministrativeArea', name: 'Kwara State' },
+        { '@type': 'Country', name: 'Nigeria' },
+      ],
+      provider: {
+        '@type': 'Organization',
+        name: 'RideVendor',
+        url: SITE_URL,
+        telephone: '+2348144123316',
+      },
+      availableChannel: {
+        '@type': 'ServiceChannel',
+        serviceUrl: WHATSAPP_LINK,
+        availableLanguage: 'English',
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.a,
+        },
+      })),
+    },
+  ];
+
+  return (
+    <div className="flex flex-col bg-white w-full">
+      <Seo
+        title={title}
+        metaTitle={metaTitle}
+        description={description}
+        image={page?.ogImage}
+        url={canonicalUrl}
+        robots={page?.robotsDirective}
+        keywords={keywords}
+        jsonLd={logisticsJsonLd}
+      />
+      <Hero />
+      <PainSection />
+      <HowItWorks />
+      <Benefits />
+      <UseCases />
+      <FAQ />
+      <BottomCTA />
+    </div>
+  );
+};
 
 export default LogisticsPage;
