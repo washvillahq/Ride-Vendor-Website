@@ -37,7 +37,7 @@ const Hero = () => (
     <div className="container px-2 md:px-4 text-center max-w-6xl mx-auto space-y-6">
       <div className="space-y-6 ">
         <h1 className="text-3xl md:text-5xl font-semibold text-primary leading-[1.15] tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-700">
-          Car Hire, Car Sales & Auto Services in <span className="bg-accent px-2 rounded-lg">Ilorin</span>
+          Car Hire, Car Sales & Logistics in <span className="bg-accent px-2 rounded-lg">Ilorin</span>
         </h1>
         <p className="text-gray-medium text-sm md:text-lg max-w-3xl mx-auto font-medium leading-relaxed">
           Buy, hire, lease, and manage vehicles with ease. Ride Vendor provides trusted car hire, car sales, and logistics services for individuals and businesses in Ilorin.
