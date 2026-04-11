@@ -57,12 +57,15 @@ export const useLogout = () => {
 
 export const useUser = () => {
   const { token, setUser } = useAuthStore();
-  
+
   return useQuery({
     queryKey: QUERY_KEYS.auth.me(),
     queryFn: authApi.getCurrentUser,
     enabled: !!token,
-    retry: false,  });
+    retry: false,
+    // Auth failures are handled silently — don't show a global error toast.
+    meta: { suppressErrorToast: true },
+  });
 };
 
 // Simple helper hook
