@@ -14,6 +14,9 @@ export const useCmsPage = (slug) => {
     queryFn: () => cmsApi.getPageBySlug(slug),
     enabled: Boolean(slug),
     retry: false,
+    // A missing CMS page is not an error — components have hardcoded fallbacks.
+    // Suppress the global QueryCache onError toast for this query.
+    meta: { suppressErrorToast: true },
   });
 };
 

@@ -6,8 +6,8 @@ export { QUERY_KEYS };
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
-    onError: (error) => {
-      if (error.code !== 401) {
+    onError: (error, query) => {
+      if (error.code !== 401 && !query.meta?.suppressErrorToast) {
         toast.error(error.message || 'Failed to fetch data');
       }
     },
