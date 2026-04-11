@@ -22,10 +22,10 @@ const WHATSAPP_MESSAGE = encodeURIComponent(
 );
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://ridevendor.com';
-const DEFAULT_LOGISTICS_TITLE = 'Bike Delivery in Ilorin, Kwara State | Ride Vendor Logistics';
-const DEFAULT_LOGISTICS_META_TITLE = 'Bike Delivery in Ilorin, Kwara | Same-Day Last-Mile Delivery';
-const DEFAULT_LOGISTICS_DESCRIPTION = 'Book same-day bike delivery in Ilorin, Kwara State with Ride Vendor Logistics. Fast pickup, secure last-mile delivery, and WhatsApp booking for businesses and individuals.';
-const DEFAULT_LOGISTICS_KEYWORDS = 'bike delivery in Ilorin, same day delivery Ilorin, last mile delivery Kwara, dispatch rider Ilorin, logistics in Ilorin, WhatsApp delivery service Ilorin';
+const DEFAULT_LOGISTICS_TITLE = 'Dispatch Rider & Logistics in Ilorin | Ride Vendor';
+const DEFAULT_LOGISTICS_META_TITLE = 'Ride Vendor Logistics | Same-Day Dispatch & Waybill Ilorin';
+const DEFAULT_LOGISTICS_DESCRIPTION = 'Best dispatch rider in Ilorin. Ride Vendor Logistics (RC: 8808136) offers same-day delivery, waybills, and warehousing for businesses and individuals at Oniyangi Complex. Book on WhatsApp!';
+const DEFAULT_LOGISTICS_KEYWORDS = 'dispatch rider ilorin, ride vendor logistics, waybill services ilorin, same day delivery ilorin, bike delivery kwara, warehouse in ilorin, offa garage dispatch, laundry delivery ilorin, errand service ilorin, bike delivery in Ilorin, same day delivery Ilorin, last mile delivery Kwara, dispatch rider Ilorin, logistics in Ilorin, WhatsApp delivery service Ilorin';
 
 const WhatsAppIcon = ({ className = 'w-5 h-5' }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
