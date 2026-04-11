@@ -23,7 +23,7 @@ const WHATSAPP_MESSAGE = encodeURIComponent(
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://ridevendor.com';
 const DEFAULT_LOGISTICS_TITLE = 'Dispatch Rider & Logistics in Ilorin | Ride Vendor';
-const DEFAULT_LOGISTICS_META_TITLE = 'Ride Vendor Logistics | Same-Day Dispatch & Waybill Ilorin';
+const DEFAULT_LOGISTICS_META_TITLE = 'Dispatch Rider & Logistics in Ilorin | Ride Vendor';
 const DEFAULT_LOGISTICS_DESCRIPTION = 'Best dispatch rider in Ilorin. Ride Vendor Logistics (RC: 8808136) offers same-day delivery, waybills, and warehousing for businesses and individuals at Oniyangi Complex. Book on WhatsApp!';
 const DEFAULT_LOGISTICS_KEYWORDS = 'dispatch rider ilorin, ride vendor logistics, waybill services ilorin, same day delivery ilorin, bike delivery kwara, warehouse in ilorin, offa garage dispatch, laundry delivery ilorin, errand service ilorin, bike delivery in Ilorin, same day delivery Ilorin, last mile delivery Kwara, dispatch rider Ilorin, logistics in Ilorin, WhatsApp delivery service Ilorin';
 
