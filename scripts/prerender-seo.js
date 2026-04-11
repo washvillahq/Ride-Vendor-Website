@@ -265,8 +265,150 @@ async function resolvePageMeta(slug, routePath, globalSeo) {
 }
 
 // ---------------------------------------------------------------------------
+// Dynamic route prerendering helper
+// ---------------------------------------------------------------------------
+
+async function prerenderDynamic(label, items, pathFn, metaFn, template) {
+  let ok = 0;
+  let failed = 0;
+  for (const item of items) {
+    const routePath = pathFn(item);
+    process.stdout.write(`  ${routePath.padEnd(45)}`);
+    try {
+      const meta = metaFn(item);
+      const html = injectIntoHtml(template, buildHeadBlock(meta));
+      writeRouteHtml(routePath, html);
+      console.log(`✓  "${meta.title}"`);
+      ok++;
+    } catch (err) {
+      console.log(`✗  ${err.message}`);
+      failed++;
+    }
+  }
+  console.log(`  → ${label}: ${ok} written${failed ? `, ${failed} failed` : ''}`);
+  return failed;
+}
+
+// ---------------------------------------------------------------------------
+// Meta builders for dynamic types
+// ---------------------------------------------------------------------------
+
+function blogPostMeta(post, globalSeo) {
+  const g = globalSeo || {};
+  const suffix = g.titleSuffix || SITE_DEFAULTS.titleSuffix;
+  const rawTitle = post.metaTitle || post.title || SITE_DEFAULTS.siteName;
+  const title = rawTitle.includes(suffix) ? rawTitle : `${rawTitle} | ${suffix}`;
+  const canonical = absoluteUrl(`/blog/${post.slug}`);
+  const ogImage = absoluteUrl(post.ogImage || post.coverImage?.url || g.defaultImage || SITE_DEFAULTS.defaultImage);
+
+  return {
+    title,
+    description: post.metaDescription || post.excerpt || g.siteDescription || SITE_DEFAULTS.siteDescription,
+    robots: 'index,follow',
+    keywords: Array.isArray(post.tags) ? post.tags.join(', ') : '',
+    canonical,
+    ogType: 'article',
+    ogImage,
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: post.title,
+        description: post.metaDescription || post.excerpt || '',
+        image: ogImage,
+        url: canonical,
+        datePublished: post.publishedAt || post.createdAt,
+        dateModified: post.updatedAt,
+        publisher: {
+          '@type': 'Organization',
+          name: g.siteName || SITE_DEFAULTS.siteName,
+          url: g.siteUrl || SITE_URL,
+        },
+      },
+    ],
+  };
+}
+
+function carMeta(car, isHire, globalSeo) {
+  const g = globalSeo || {};
+  const suffix = g.titleSuffix || SITE_DEFAULTS.titleSuffix;
+  const mode = isHire ? 'Hire' : 'Sale';
+  const rawTitle = `${car.brand} ${car.model} ${car.year} for ${mode} in Ilorin`;
+  const title = `${rawTitle} | ${suffix}`;
+  const routePath = isHire ? `/car-hire/${car._id}` : `/cars/${car._id}`;
+  const canonical = absoluteUrl(routePath);
+
+  const primaryImage =
+    (car.images || []).find((img) => img.isPrimary)?.url ||
+    car.images?.[0]?.url ||
+    g.defaultImage ||
+    SITE_DEFAULTS.defaultImage;
+  const ogImage = absoluteUrl(primaryImage);
+
+  const description = car.description
+    ? car.description.slice(0, 160) + (car.description.length > 160 ? '…' : '')
+    : `${car.brand} ${car.model} ${car.year} available for ${mode.toLowerCase()} in Ilorin, Kwara State.`;
+
+  const price = isHire ? car.pricePerDay : car.salePrice;
+
+  return {
+    title,
+    description,
+    robots: car.status === 'available' ? 'index,follow' : 'noindex,nofollow',
+    keywords: `${car.brand} ${car.model} ${car.year} ${mode.toLowerCase()} Ilorin`,
+    canonical,
+    ogType: 'product',
+    ogImage,
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: `${car.brand} ${car.model} ${car.year}`,
+        description,
+        image: ogImage,
+        url: canonical,
+        brand: { '@type': 'Brand', name: car.brand },
+        ...(price
+          ? {
+              offers: {
+                '@type': 'Offer',
+                price,
+                priceCurrency: 'NGN',
+                availability: 'https://schema.org/InStock',
+              },
+            }
+          : {}),
+      },
+    ],
+  };
+}
+
+function cmsCustomPageMeta(page, globalSeo) {
+  const g = globalSeo || {};
+  const suffix = g.titleSuffix || SITE_DEFAULTS.titleSuffix;
+  const rawTitle = page.metaTitle || page.title || SITE_DEFAULTS.siteName;
+  const title = rawTitle.includes(suffix) ? rawTitle : `${rawTitle} | ${suffix}`;
+  const canonical = absoluteUrl(page.canonicalUrl || `/${page.slug}`);
+
+  return {
+    title,
+    description: page.metaDescription || g.siteDescription || SITE_DEFAULTS.siteDescription,
+    robots: page.robotsDirective || 'index,follow',
+    keywords: page.focusKeyword || '',
+    canonical,
+    ogType: 'website',
+    ogImage: absoluteUrl(page.ogImage || g.defaultImage || SITE_DEFAULTS.defaultImage),
+    jsonLd: null,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
+
+// Slugs already covered by the static ROUTES array — skip these in the
+// CMS custom-pages loop to avoid overwriting with a less-specific version.
+const STATIC_SLUGS = new Set(ROUTES.map((r) => r.slug));
 
 async function main() {
   console.log('\n🔍 SEO Prerender — injecting per-route meta tags\n');
@@ -286,11 +428,14 @@ async function main() {
     console.warn('  ⚠  Could not fetch global SEO settings — using hardcoded defaults');
   }
 
+  let totalFailed = 0;
+
+  // ── Static CMS pages ──────────────────────────────────────────────────────
+  console.log('\n── Static pages ──');
   let ok = 0;
   let failed = 0;
-
   for (const { path: routePath, slug } of ROUTES) {
-    process.stdout.write(`  ${routePath.padEnd(30)}`);
+    process.stdout.write(`  ${routePath.padEnd(35)}`);
     try {
       const meta = await resolvePageMeta(slug, routePath, globalSeo);
       const html = injectIntoHtml(template, buildHeadBlock(meta));
@@ -302,9 +447,74 @@ async function main() {
       failed++;
     }
   }
+  console.log(`  → Static pages: ${ok} written${failed ? `, ${failed} failed` : ''}`);
+  totalFailed += failed;
 
-  console.log(`\n${ok} routes prerendered${failed ? `, ${failed} failed` : ''}\n`);
-  if (failed > 0) process.exit(1);
+  // ── Blog posts ────────────────────────────────────────────────────────────
+  console.log('\n── Blog posts ──');
+  const blogData = await fetchJson(`${API_BASE}/blog/posts?limit=500`);
+  const posts = blogData?.posts || [];
+  if (posts.length === 0) {
+    console.log('  ⚠  No published blog posts found or API unreachable — skipping');
+  } else {
+    totalFailed += await prerenderDynamic(
+      'Blog posts',
+      posts,
+      (post) => `/blog/${post.slug}`,
+      (post) => blogPostMeta(post, globalSeo),
+      template
+    );
+  }
+
+  // ── Cars ──────────────────────────────────────────────────────────────────
+  console.log('\n── Cars ──');
+  const carData = await fetchJson(`${API_BASE}/cars?limit=500`);
+  const cars = carData?.cars || [];
+  if (cars.length === 0) {
+    console.log('  ⚠  No cars found or API unreachable — skipping');
+  } else {
+    // Sale cars → /cars/:id
+    const saleCars = cars.filter((c) => c.type === 'sale');
+    totalFailed += await prerenderDynamic(
+      'Sale cars',
+      saleCars,
+      (car) => `/cars/${car._id}`,
+      (car) => carMeta(car, false, globalSeo),
+      template
+    );
+
+    // Rental cars → /car-hire/:id
+    const rentalCars = cars.filter((c) => c.type === 'rental');
+    totalFailed += await prerenderDynamic(
+      'Rental cars',
+      rentalCars,
+      (car) => `/car-hire/${car._id}`,
+      (car) => carMeta(car, true, globalSeo),
+      template
+    );
+  }
+
+  // ── CMS custom pages (non-system, non-static) ─────────────────────────────
+  console.log('\n── CMS custom pages ──');
+  const pagesData = await fetchJson(`${API_BASE}/cms/pages?limit=500`);
+  const allPages = pagesData?.pages || [];
+  const customPages = allPages.filter(
+    (p) => !p.isSystemPage && p.status === 'published' && !STATIC_SLUGS.has(p.slug)
+  );
+  if (customPages.length === 0) {
+    console.log('  ⚠  No custom CMS pages found — skipping');
+  } else {
+    totalFailed += await prerenderDynamic(
+      'CMS custom pages',
+      customPages,
+      (page) => `/${page.slug}`,
+      (page) => cmsCustomPageMeta(page, globalSeo),
+      template
+    );
+  }
+
+  console.log(`\n${totalFailed === 0 ? '✓ All routes prerendered successfully' : `✗ ${totalFailed} route(s) failed`}\n`);
+  if (totalFailed > 0) process.exit(1);
 }
 
 main();
