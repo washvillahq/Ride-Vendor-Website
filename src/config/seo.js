@@ -1,13 +1,13 @@
 export const seoConfig = {
-  siteName: 'RideVendor',
-  titleSuffix: 'RideVendor',
-  siteDescription: 'Car hire, car sales, and auto services in Ilorin, Kwara State. Trusted vehicle rentals, car sales, and logistics services for individuals and businesses.',
+  siteName: 'Ride Vendor',
+  titleSuffix: 'Ride Vendor',
+  siteDescription: 'Car hire, car sales, and logistics in Ilorin, Kwara State. Trusted vehicle rentals, car sales, and logistics services for individuals and businesses.',
   siteUrl: import.meta.env.VITE_SITE_URL || 'https://ridevendor.com',
   defaultImage: '/og-default.png',
   twitterHandle: '@ridevendor',
   locale: 'en_US',
   country: 'NG',
-  organizationName: 'RideVendor',
+  organizationName: 'Ride Vendor Limited',
   organizationPhone: '+2348144123316',
   organizationEmail: 'info@ridevendor.com',
 };
