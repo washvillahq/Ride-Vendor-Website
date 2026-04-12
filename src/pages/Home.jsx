@@ -40,7 +40,7 @@ const Hero = () => (
           Rent a Car, Buy a Tokunbo, or Dispatch a Rider in <span className="bg-accent px-2 rounded-lg">Ilorin</span>
         </h1>
         <p className="text-gray-medium text-sm md:text-lg max-w-3xl mx-auto font-medium leading-relaxed">
-          Stop wasting time on "I’m coming" drivers and overpriced junk cars. Ride Vendor is Ilorin’s #1 platform for verified car rentals, Tokunbo car sales, and lightning-fast bike delivery.
+          Stop wasting time on "I’m coming" drivers and overpriced junk cars. Ride Vendor is Ilorin’s #1 platform for verified car rentals, Tokunbo car sales, and lightning-fast bike delivery for individuals and businesses in Ilorin
         </p>
       </div>
 
