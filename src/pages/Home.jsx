@@ -40,7 +40,7 @@ const Hero = () => (
           Car Hire, Car Sales & Fast Delivery in <span className="bg-accent px-2 rounded-lg">Ilorin</span>
         </h1>
         <p className="text-gray-medium text-sm md:text-lg max-w-3xl mx-auto font-medium leading-relaxed">
-          Stop wasting money on "I’m coming" drivers and overpriced junk cars. Get Ilorin’s most reliable verified rentals, Tokunbo sales, and lightning-fast dispatch riders — No Stress, No Stories.
+          Stop wasting money on "I’m coming" drivers and overpriced junk cars. Get Ilorin’s most reliable verified rentals, Tokunbo sales, and lightning-fast dispatch riders.
         </p>
       </div>
 
